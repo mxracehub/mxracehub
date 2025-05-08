@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="{{ with .Site.Params.isoCode | default (.Site.LanguageCode | default "en") }} {{- . -}} {{ end }}" dir="{{ if .Site.Params.rtl | default false -}}
+    rtl
+  {{- else -}}
+    ltr
+  {{- end }}" class="scroll-smooth" data-default-appearance="{{ .Site.Params.defaultAppearance | default "dark" }}"
+  data-auto-appearance="{{ .Site.Params.autoSwitchAppearance | default "true" }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
+    <link rel="canonical" href="{{ .Permalink }}">
+    <link rel="stylesheet" href="{{ "css/styles.css" | relURL }}">
+    {{ partial "head.html" . }}
+    {{ block "head" . }}{{ end }}
+    
+    <!-- Global CSS Variables for MXRaceHub -->
+    <style>
+      :root {
+        --primary-color: #e20613; /* Red like Supercross */
+        --primary-color-dark: #c20510;
+        --primary-color-light: #f52d3a;
+        --secondary-color: #003366; /* Dark blue */
+        --text-color: #333333;
+        --light-gray: #f2f2f2;
+        --medium-gray: #dddddd;
+        --dark-gray: #555555;
+      }
+      
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --text-color: #f5f5f5;
+          --light-gray: #222;
+          --medium-gray: #444;
+          --dark-gray: #aaa;
+          --primary-color-light: #f52d3a;
+        }
+      }
+      
+      /* Make sure navbar appears on all pages with proper spacing */
+      .main-content {
+        padding-top: 140px; /* Adjusted for fixed navbar height */
+      }
+      
+      /* Layout adjustments */
+      .mx-rh-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      
+      @media (min-width: 768px) {
+        .mx-rh-container {
+          padding: 0 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="w-full max-w-full overflow-x-hidden">
+    <!-- Skip to content link -->
+    <div id="the-top" class="absolute flex self-center">
+      <a class="px-3 py-1 text-sm -translate-y-8 rounded-b-lg bg-primary-200 focus:translate-y-0 dark:bg-neutral-600"
+        href="#main-content"><span
+          class="font-bold text-primary-600 ltr:pr-2 rtl:pl-2 dark:text-primary-400">&darr;</span>Skip to main content</a>
+    </div>
+    
+    <!-- Fixed Responsive Navigation for all pages -->
+    {{ partial "navbar.html" . }}
+    
+    <div class="relative flex flex-col grow">
+      <main id="main-content" class="grow">
+        {{ block "main" . }}{{ end }}
+      </main>
+      
+      {{- partial "footer.html" . -}}
+    </div>
+    
+    <!-- Global JavaScript -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Monitor viewport size changes for responsive design
+        function handleViewportChange() {
+          const width = window.innerWidth;
+          document.documentElement.style.setProperty('--viewport-width', width + 'px');
+          
+          // Auto-detect mobile or desktop
+          const isMobile = width < 768;
+          document.documentElement.classList.toggle('is-mobile', isMobile);
+          document.documentElement.classList.toggle('is-desktop', !isMobile);
+        }
+        
+        // Initialize viewport handling
+        handleViewportChange();
+        window.addEventListener('resize', handleViewportChange);
+        
+        // Add smooth scrolling to all anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#') {
+              e.preventDefault();
+              document.querySelector(href).scrollIntoView({
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+      });
+    </script>
+    
+    <!-- GitHub Pages static site fallback script -->
+    <script src="{{ "js/static-site-fallback.js" | relURL }}"></script>
+    
+    {{ block "scripts" . }}{{ end }}
+  </body>
+</html>

@@ -1,0 +1,10 @@
+# MXRaceHub weekly update schedule
+# Run update_all.sh at midnight on Sunday (0 0 * * 0)
+0 0 * * 0 cd /path/to/hugo-site && ./scripts/update_all.sh >> /path/to/hugo-site/logs/updates.log 2>&1
+
+# To install this crontab, run:
+# crontab < /path/to/hugo-site/scripts/crontab.txt
+#
+# Make sure to replace /path/to/hugo-site with your actual site path
+# And ensure that the update_all.sh script is executable:
+# chmod +x /path/to/hugo-site/scripts/update_all.sh

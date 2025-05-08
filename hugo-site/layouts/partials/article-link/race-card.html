@@ -1,0 +1,80 @@
+{{ $disableImageOptimization := .Page.Site.Params.disableImageOptimization | default false }}
+<a href="{{ .RelPermalink }}" class="min-w-full">
+  <div class="min-h-full border border-neutral-200 dark:border-neutral-700 border-2 rounded overflow-hidden shadow-2xl relative hover:border-orange-500 hover:shadow-orange-500/20 transition duration-300">
+    {{- with $.Params.images -}}
+    {{- range first 6 . }}
+    <meta property="og:image" content="{{ . | absURL }}" />{{ end -}}
+    {{- else -}}
+    {{- $images := $.Resources.ByType "image" -}}
+    {{- $featured := $images.GetMatch "*feature*" -}}
+    {{- if not $featured }}{{ $featured = $images.GetMatch "{*cover*,*thumbnail*}" }}{{ end -}}
+    {{ if and .Params.featureimage (not $featured) }}
+    {{- $url:= .Params.featureimage -}}
+    {{ $featured = resources.GetRemote $url }}
+    {{ end }}
+    {{- if not $featured }}{{ with .Site.Params.defaultFeaturedImage }}{{ $featured = resources.Get . }}{{ end }}{{ end -}}
+    {{ if .Params.hideFeatureImage }}{{ $featured = false }}{{ end }}
+    {{- with $featured -}}
+    {{ if or $disableImageOptimization (strings.HasSuffix $featured ".svg")}}
+      {{ with . }}
+      <div class="w-full h-48 thumbnail_card nozoom" style="background-image:url({{ .RelPermalink }}); background-size: cover; background-position: center;"></div>
+      {{ end }}
+    {{ else }}
+      {{ with .Resize "800x" }}
+      <div class="w-full h-48 thumbnail_card nozoom" style="background-image:url({{ .RelPermalink }}); background-size: cover; background-position: center;"></div>
+      {{ end }}
+    {{ end }}
+    {{- else -}}
+    {{- with $.Site.Params.images }}
+    <meta property="og:image" content="{{ index . 0 | absURL }}" />{{ end -}}
+    {{- end -}}
+    {{- end -}}
+
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl text-neutral-800 dark:text-neutral-200 mb-2">{{ .Title | emojify }}</div>
+      
+      <div class="flex items-center mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400">
+          {{ if .Params.date }}{{ .Date.Format "January 2, 2006" }}{{ end }}
+        </span>
+      </div>
+      
+      {{ if .Params.location }}
+      <div class="flex items-center mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400">{{ .Params.location }}</span>
+      </div>
+      {{ end }}
+      
+      {{ if .Params.series }}
+      <div class="flex items-center mb-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg>
+        <span class="text-sm text-neutral-500 dark:text-neutral-400">{{ .Params.series }}</span>
+      </div>
+      {{ end }}
+      
+      {{ if .Params.showSummary | default (.Site.Params.list.showSummary | default false) }}
+      <div class="py-1 text-neutral-500 dark:text-neutral-400 text-sm">
+        {{ .Summary | plainify | truncate 100 }}
+      </div>
+      {{ end }}
+    </div>
+    
+    <div class="px-6 pb-4 flex justify-between">
+      <a href="{{ .RelPermalink }}" class="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded transition duration-300">
+        View Details
+      </a>
+      <a href="/betting/friend-bets?race={{ .Params.title | urlize }}" class="bg-neutral-700 hover:bg-neutral-800 text-white py-2 px-4 rounded transition duration-300">
+        Place Bet
+      </a>
+    </div>
+  </div>
+</a>

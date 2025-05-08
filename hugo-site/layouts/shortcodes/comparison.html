@@ -1,0 +1,64 @@
+{{ $title := .Get "title" | default "Comparison" }}
+{{ $background := .Get "background" }}
+
+{{ $leftTitle := .Get "leftTitle" }}
+{{ $leftSubtitle := .Get "leftSubtitle" }}
+{{ $leftImage := .Get "leftImage" }}
+
+{{ $rightTitle := .Get "rightTitle" }}
+{{ $rightSubtitle := .Get "rightSubtitle" }}
+{{ $rightImage := .Get "rightImage" }}
+
+{{ $middleTitle := .Get "middleTitle" | default "Comparison" }}
+{{ $middleSubtitle := .Get "middleSubtitle" }}
+
+<!-- Build the metrics map from parameters -->
+{{ $metrics := dict }}
+{{ range $index, $_ := seq 1 10 }}
+  {{ $metricName := $.Get (print "metric" $index) }}
+  {{ if $metricName }}
+    {{ $isNumeric := ($.Get (print "metric" $index "Numeric")) | default "false" }}
+    {{ $higherIsBetter := ($.Get (print "metric" $index "HigherIsBetter")) | default "true" }}
+    
+    {{ $metricData := dict "numeric" (eq $isNumeric "true") "higherIsBetter" (eq $higherIsBetter "true") }}
+    {{ $metrics = merge $metrics (dict $metricName $metricData) }}
+  {{ end }}
+{{ end }}
+
+<!-- Build left metrics map -->
+{{ $leftMetrics := dict }}
+{{ range $key, $val := $metrics }}
+  {{ $leftVal := $.Get (print "left" $key | replace " " "") }}
+  {{ if $leftVal }}
+    {{ $leftMetrics = merge $leftMetrics (dict $key $leftVal) }}
+  {{ end }}
+{{ end }}
+
+<!-- Build right metrics map -->
+{{ $rightMetrics := dict }}
+{{ range $key, $val := $metrics }}
+  {{ $rightVal := $.Get (print "right" $key | replace " " "") }}
+  {{ if $rightVal }}
+    {{ $rightMetrics = merge $rightMetrics (dict $key $rightVal) }}
+  {{ end }}
+{{ end }}
+
+<!-- Build the comparison data -->
+{{ $leftData := dict "title" $leftTitle "subtitle" $leftSubtitle "image" $leftImage "metrics" $leftMetrics }}
+{{ $rightData := dict "title" $rightTitle "subtitle" $rightSubtitle "image" $rightImage "metrics" $rightMetrics }}
+{{ $middleData := dict "title" $middleTitle "subtitle" $middleSubtitle }}
+
+{{ $comparisonData := dict 
+  "title" $title
+  "background" $background
+  "left" $leftData
+  "right" $rightData
+  "middle" $middleData
+  "metrics" $metrics
+}}
+
+{{ if .Inner }}
+  {{ $comparisonData = merge $comparisonData (dict "description" .Inner) }}
+{{ end }}
+
+{{ partial "comparison.html" $comparisonData }}

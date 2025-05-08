@@ -1,0 +1,342 @@
+{{ if (eq hugo.Environment "production") }}
+  <!-- Production Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
+{{ else }}
+  <!-- Test Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
+{{ end }}
+
+<div class="payment-form-container" id="stripe-payment-form">
+  <div class="payment-header">
+    <h2>Complete Your Payment</h2>
+    <p>Your details are secured with 256-bit encryption</p>
+  </div>
+  
+  <div class="payment-amount">
+    <label for="payment-amount">Amount to Deposit ($)</label>
+    <div class="input-with-icon">
+      <span class="currency-icon">$</span>
+      <input type="number" id="payment-amount" min="10" step="5" value="100">
+    </div>
+  </div>
+  
+  <div id="card-element">
+    <!-- Stripe Card Element will be inserted here -->
+  </div>
+  
+  <div id="card-errors" class="error-message" role="alert"></div>
+  
+  <button id="submit-payment" class="payment-button">
+    <span id="button-text">Process Payment</span>
+    <div id="spinner" class="spinner hidden"></div>
+  </button>
+  
+  <div class="payment-footer">
+    <p>By completing this payment, you agree to our <a href="/terms">Terms of Service</a></p>
+    <div class="secure-badges">
+      <span class="secure-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        Secure
+      </span>
+      <span class="secure-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+        </svg>
+        Protected
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize Stripe with your publishable key
+  let stripePublicKey = "{{ .Site.Params.stripePublicKey }}";
+  
+  // Fallback to environment variable
+  if (!stripePublicKey) {
+    stripePublicKey = "{{ os.Getenv "VITE_STRIPE_PUBLIC_KEY" }}";
+  }
+  
+  // Check if key is available
+  if (!stripePublicKey) {
+    console.error("Stripe public key not found. Please set VITE_STRIPE_PUBLIC_KEY environment variable.");
+    document.getElementById('card-errors').textContent = "Payment system configuration error. Please contact support.";
+    document.getElementById('submit-payment').disabled = true;
+    return;
+  }
+  
+  const stripe = Stripe(stripePublicKey);
+  const elements = stripe.elements();
+  
+  // Create and style the card Element
+  const style = {
+    base: {
+      color: '#32325d',
+      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+      fontSmoothing: 'antialiased',
+      fontSize: '16px',
+      '::placeholder': {
+        color: '#aab7c4'
+      }
+    },
+    invalid: {
+      color: '#fa755a',
+      iconColor: '#fa755a'
+    }
+  };
+  
+  const card = elements.create('card', { style: style });
+  card.mount('#card-element');
+  
+  // Handle real-time validation errors
+  card.on('change', function(event) {
+    const displayError = document.getElementById('card-errors');
+    if (event.error) {
+      displayError.textContent = event.error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  });
+  
+  // Handle form submission
+  const form = document.getElementById('stripe-payment-form');
+  const submitButton = document.getElementById('submit-payment');
+  const buttonText = document.getElementById('button-text');
+  const spinner = document.getElementById('spinner');
+  
+  submitButton.addEventListener('click', async function(event) {
+    event.preventDefault();
+    
+    const amountInput = document.getElementById('payment-amount');
+    const amount = parseFloat(amountInput.value);
+    
+    if (!amount || amount < 10) {
+      document.getElementById('card-errors').textContent = 'Please enter a valid amount (minimum $10)';
+      return;
+    }
+    
+    // Disable the button and show a spinner
+    submitButton.disabled = true;
+    spinner.classList.remove('hidden');
+    buttonText.textContent = 'Processing...';
+    
+    try {
+      // Create a payment intent on the server
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          amount: amount,
+          userId: getCurrentUserId(),
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
+      const data = await response.json();
+      
+      // Confirm the payment with Stripe.js
+      const result = await stripe.confirmCardPayment(data.clientSecret, {
+        payment_method: {
+          card: card,
+          billing_details: {
+            // You can collect this information from the user if needed
+            name: 'MX Race Hub User',
+          },
+        },
+      });
+      
+      if (result.error) {
+        // Show error to the customer
+        const errorElement = document.getElementById('card-errors');
+        errorElement.textContent = result.error.message;
+      } else {
+        if (result.paymentIntent.status === 'succeeded') {
+          // The payment succeeded!
+          window.location.href = '/betting/payment-success?amount=' + amount;
+        }
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      document.getElementById('card-errors').textContent = 'An unexpected error occurred. Please try again.';
+    } finally {
+      // Reset the button state
+      submitButton.disabled = false;
+      spinner.classList.add('hidden');
+      buttonText.textContent = 'Process Payment';
+    }
+  });
+  
+  // Helper function to get current user ID (this would come from your auth system)
+  function getCurrentUserId() {
+    // In a real application, this would be retrieved from session storage or a cookie
+    // For demo purposes, we'll use a placeholder
+    return 1;
+  }
+});
+</script>
+
+<style>
+.payment-form-container {
+  max-width: 550px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.payment-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.payment-header h2 {
+  margin-bottom: 0.5rem;
+  color: #32325d;
+}
+
+.payment-header p {
+  color: #6b7c93;
+  font-size: 0.9rem;
+}
+
+.payment-amount {
+  margin-bottom: 1.5rem;
+}
+
+.payment-amount label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #32325d;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.currency-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #32325d;
+  font-weight: bold;
+}
+
+#payment-amount {
+  width: 100%;
+  padding: 0.75rem;
+  padding-left: 2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.15s ease;
+}
+
+#payment-amount:focus {
+  outline: none;
+  border-color: #6772e5;
+  box-shadow: 0 0 0 1px #6772e5;
+}
+
+#card-element {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+}
+
+.error-message {
+  color: #fa755a;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  min-height: 20px;
+}
+
+.payment-button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: #5469d4;
+  color: white;
+  border: 0;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.payment-button:hover {
+  background-color: #4a5fc1;
+}
+
+.payment-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
+.hidden {
+  display: none;
+}
+
+.payment-footer {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #6b7c93;
+  text-align: center;
+}
+
+.payment-footer a {
+  color: #6772e5;
+  text-decoration: none;
+}
+
+.payment-footer a:hover {
+  text-decoration: underline;
+}
+
+.secure-badges {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.secure-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #43a047;
+}
+</style>

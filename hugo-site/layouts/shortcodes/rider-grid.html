@@ -1,0 +1,38 @@
+{{ $division := .Get "division" | default "450" }}
+{{ $columns := .Get "columns" | default 3 }}
+
+<div class="rider-grid grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ $columns }}">
+  {{ if .Inner }}
+    {{ .Inner }}
+  {{ else }}
+    {{ range where (where site.RegularPages "Section" "riders") "Params.class" $division }}
+      {{ $championshipData := dict }}
+      {{ if and .Params.championship_standings }}
+        {{ range $key, $value := .Params.championship_standings }}
+          {{ if hasPrefix $key "2024" }}
+            {{ $championshipData = dict "position" $value.position "points" $value.points }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
+      
+      {{ $riderData := dict 
+        "name" .Title
+        "number" .Params.number
+        "division" .Params.class
+        "image" .Params.profile_image
+        "team" .Params.team
+        "manufacturer" .Params.manufacturer
+        "nationality" .Params.nationality
+        "slug" (.File.ContentBaseName)
+      }}
+      
+      {{ if $championshipData }}
+        {{ $riderData = merge $riderData (dict "standings" $championshipData) }}
+      {{ end }}
+      
+      <div class="rider-grid-item">
+        {{ partial "rider-card.html" $riderData }}
+      </div>
+    {{ end }}
+  {{ end }}
+</div>

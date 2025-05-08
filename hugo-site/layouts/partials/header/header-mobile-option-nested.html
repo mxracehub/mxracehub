@@ -1,0 +1,143 @@
+<div class="mobile-dropdown">
+  <div class="mobile-dropdown__header">
+    {{ $currentPage := .Page }}
+    {{ if .URL }}
+    <a href="{{ .URL }}" {{ if or (strings.HasPrefix .URL "http:" ) (strings.HasPrefix .URL "https:" ) }}
+      target="_blank" {{ end }} class="mobile-dropdown__title">
+      {{ .Name | markdownify }}
+    </a>
+    {{ else if .PageRef }}
+      {{ if eq .PageRef "/" }}
+      <a href="/" class="mobile-dropdown__title {{ if and $currentPage $currentPage.IsHome }}active{{ end }}">
+      {{ else }}
+      <a href="/{{ .PageRef }}/" class="mobile-dropdown__title {{ if and $currentPage (eq $currentPage.RelPermalink (print "/" .PageRef "/")) }}active{{ end }}">
+      {{ end }}
+        {{ .Name | markdownify }}
+      </a>
+    {{ else }}
+    <span class="mobile-dropdown__title">
+      {{ .Name | markdownify }}
+    </span>
+    {{ end }}
+    
+    <button class="mobile-dropdown-toggle" aria-label="Toggle submenu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </button>
+  </div>
+  
+  <div class="mobile-dropdown-content">
+    {{ range .Children }}
+    <div class="mobile-dropdown-item">
+      {{ if .URL }}
+      <a href="{{ .URL }}" {{ if or (strings.HasPrefix .URL "http:" ) (strings.HasPrefix .URL "https:" ) }}
+        target="_blank" {{ end }} class="mobile-dropdown-link">
+        {{ .Name | markdownify }}
+      </a>
+      {{ else if .PageRef }}
+        {{ if eq .PageRef "/" }}
+        <a href="/" class="mobile-dropdown-link {{ if and $currentPage $currentPage.IsHome }}active{{ end }}">
+        {{ else }}
+        <a href="/{{ .PageRef }}/" class="mobile-dropdown-link {{ if and $currentPage (eq $currentPage.RelPermalink (print "/" .PageRef "/")) }}active{{ end }}">
+        {{ end }}
+          {{ .Name | markdownify }}
+        </a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add click event to all mobile dropdown toggles if not already added
+    if (!window.mobileDropdownsInitialized) {
+      const dropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+      
+      dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          const parent = this.closest('.mobile-dropdown');
+          const content = parent.querySelector('.mobile-dropdown-content');
+          
+          if (content) {
+            content.classList.toggle('open');
+            this.classList.toggle('active');
+          }
+        });
+      });
+      
+      window.mobileDropdownsInitialized = true;
+    }
+  });
+</script>
+
+<style>
+  .mobile-dropdown {
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  
+  .mobile-dropdown__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+  }
+  
+  .mobile-dropdown__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color, #333);
+    text-decoration: none;
+  }
+  
+  .mobile-dropdown__title.active {
+    color: var(--primary-color, #E2001A);
+  }
+  
+  .mobile-dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .mobile-dropdown-toggle.active {
+    transform: rotate(180deg);
+  }
+  
+  .mobile-dropdown-content {
+    display: none;
+    padding-left: 1rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .mobile-dropdown-content.open {
+    display: block;
+  }
+  
+  .mobile-dropdown-item {
+    margin-bottom: 0.5rem;
+  }
+  
+  .mobile-dropdown-link {
+    color: var(--text-color, #333);
+    text-decoration: none;
+    font-size: 0.875rem;
+    padding: 0.25rem 0;
+    display: block;
+  }
+  
+  .mobile-dropdown-link.active {
+    color: var(--primary-color, #E2001A);
+    font-weight: 600;
+  }
+</style>

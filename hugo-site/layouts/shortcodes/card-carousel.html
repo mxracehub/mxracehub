@@ -1,0 +1,239 @@
+{{ $id := delimit (slice "card-carousel" (partial "functions/uid.html" .)) "-" }}
+{{ $interval := default "5000" (.Get "interval") }}
+{{ $title := default "Featured Items" (.Get "title") }}
+{{ $type := default "rider" (.Get "type") }}
+{{ $itemsPerSlide := default 3 (.Get "itemsPerSlide") }}
+{{ $itemsPerSlideMobile := default 1 (.Get "itemsPerSlideMobile") }}
+{{ $itemsPerSlideTablet := default 2 (.Get "itemsPerSlideTablet") }}
+{{ $autoplay := default true (.Get "autoplay") }}
+{{ $controls := default true (.Get "controls") }}
+{{ $indicators := default true (.Get "indicators") }}
+{{ $dots := default true (.Get "dots") }}
+{{ $defaultClass := "bg-gray-200 flex items-center justify-center p-4 rounded" }}
+
+{{ $content := .Inner }}
+
+<div class="mb-8">
+  <h2 class="text-2xl font-bold mb-6">{{ $title }}</h2>
+  
+  <div id="{{ $id }}" class="card-carousel relative overflow-hidden">
+    <div class="card-carousel-container transition-transform duration-500 ease-in-out flex">
+      {{ if eq (trim .Inner " \n") "" }}
+        <!-- Generate fallback items based on the type -->
+        {{ range seq 3 }}
+          <div class="card-carousel-item">
+            <div class="{{ $defaultClass }} h-64 flex flex-col items-center justify-center">
+              {{ if eq $type "rider" }}
+                <img src="/img/sample/default-rider.svg" alt="Sample Rider" class="w-full h-full object-cover">
+              {{ else }}
+                <img src="/img/sample/default-track.svg" alt="Sample Track" class="w-full h-full object-cover">
+              {{ end }}
+            </div>
+          </div>
+        {{ end }}
+      {{ else }}
+        {{ .Inner }}
+      {{ end }}
+    </div>
+    
+    <!-- Controls -->
+    {{ if $controls }}
+    <button class="card-carousel-control-prev absolute top-1/2 left-2 transform -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-all text-white focus:outline-none"
+            type="button" aria-label="Previous">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <button class="card-carousel-control-next absolute top-1/2 right-2 transform -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-all text-white focus:outline-none"
+            type="button" aria-label="Next">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+    {{ end }}
+    
+    <!-- Indicators -->
+    {{ if $indicators }}
+    <div class="card-carousel-indicators absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+      <!-- Indicators will be added by JavaScript -->
+    </div>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+  .card-carousel-item {
+    flex: 0 0 calc(100% / {{ $itemsPerSlide }});
+    padding: 0 10px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  
+  @media (max-width: 1024px) {
+    .card-carousel-item {
+      flex: 0 0 calc(100% / {{ $itemsPerSlideTablet }});
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .card-carousel-item {
+      flex: 0 0 calc(100% / {{ $itemsPerSlideMobile }});
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('{{ $id }}');
+    if (!carousel) return;
+    
+    const container = carousel.querySelector('.card-carousel-container');
+    const items = carousel.querySelectorAll('.card-carousel-item');
+    const prevBtn = carousel.querySelector('.card-carousel-control-prev');
+    const nextBtn = carousel.querySelector('.card-carousel-control-next');
+    const indicatorsContainer = carousel.querySelector('.card-carousel-indicators');
+    
+    if (!container || items.length === 0) return;
+    
+    let currentIndex = 0;
+    let interval = {{ $interval }};
+    let slideInterval;
+    let itemsPerView = {{ $itemsPerSlide }};
+    
+    function updateItemsPerView() {
+      if (window.innerWidth <= 640) {
+        itemsPerView = {{ $itemsPerSlideMobile }};
+      } else if (window.innerWidth <= 1024) {
+        itemsPerView = {{ $itemsPerSlideTablet }};
+      } else {
+        itemsPerView = {{ $itemsPerSlide }};
+      }
+    }
+    
+    // Initialize indicators
+    function setupIndicators() {
+      if (!indicatorsContainer) return;
+      
+      indicatorsContainer.innerHTML = '';
+      const totalSlides = Math.ceil(items.length / itemsPerView);
+      
+      for (let i = 0; i < totalSlides; i++) {
+        const indicator = document.createElement('button');
+        indicator.classList.add('w-2', 'h-2', 'rounded-full', 'bg-white', 'bg-opacity-50', 'hover:bg-opacity-100', 'transition-all');
+        if (i === 0) indicator.classList.add('bg-opacity-100');
+        indicator.setAttribute('aria-label', `Slide ${i + 1}`);
+        indicator.dataset.slideTo = i;
+        
+        indicator.addEventListener('click', function() {
+          goToSlide(i);
+          resetInterval();
+        });
+        
+        indicatorsContainer.appendChild(indicator);
+      }
+    }
+    
+    // Update indicators
+    function updateIndicators() {
+      if (!indicatorsContainer) return;
+      
+      const indicators = indicatorsContainer.querySelectorAll('button');
+      indicators.forEach((indicator, i) => {
+        if (i === currentIndex) {
+          indicator.classList.add('bg-opacity-100');
+        } else {
+          indicator.classList.remove('bg-opacity-100');
+        }
+      });
+    }
+    
+    // Show specific slide
+    function goToSlide(index) {
+      updateItemsPerView();
+      const totalSlides = Math.ceil(items.length / itemsPerView);
+      
+      if (index < 0) index = totalSlides - 1;
+      if (index >= totalSlides) index = 0;
+      
+      currentIndex = index;
+      const offset = -(currentIndex * (100 / itemsPerView) * itemsPerView);
+      container.style.transform = `translateX(${offset}%)`;
+      
+      updateIndicators();
+    }
+    
+    // Next slide function
+    function nextSlide() {
+      goToSlide(currentIndex + 1);
+    }
+    
+    // Previous slide function
+    function prevSlide() {
+      goToSlide(currentIndex - 1);
+    }
+    
+    // Reset interval
+    function resetInterval() {
+      if ({{ $autoplay }}) {
+        clearInterval(slideInterval);
+        startSlideInterval();
+      }
+    }
+    
+    // Initialize automatic sliding
+    function startSlideInterval() {
+      if ({{ $autoplay }}) {
+        slideInterval = setInterval(nextSlide, interval);
+      }
+    }
+    
+    // Set up event listeners
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        prevSlide();
+        resetInterval();
+      });
+    }
+    
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        nextSlide();
+        resetInterval();
+      });
+    }
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', function() {
+      if ({{ $autoplay }}) {
+        clearInterval(slideInterval);
+      }
+    });
+    
+    carousel.addEventListener('mouseleave', function() {
+      resetInterval();
+    });
+    
+    // Handle focus for accessibility
+    carousel.addEventListener('focusin', function() {
+      if ({{ $autoplay }}) {
+        clearInterval(slideInterval);
+      }
+    });
+    
+    carousel.addEventListener('focusout', function() {
+      resetInterval();
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      updateItemsPerView();
+      setupIndicators();
+      goToSlide(currentIndex);
+    });
+    
+    // Initialize
+    updateItemsPerView();
+    setupIndicators();
+    startSlideInterval();
+  });
+</script>
