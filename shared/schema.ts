@@ -183,35 +183,6 @@ export const memberships = pgTable("memberships", {
   };
 });
 
-// Bank accounts table
-// Saved bet forms for autosave functionality
-export const savedBetForms = pgTable("saved_bet_forms", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").references(() => users.id).notNull(),
-  formType: varchar("form_type", { length: 50 }).notNull(),
-  formData: text("form_data").notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-}, (table) => {
-  return {
-    userFormTypeIdx: uniqueIndex("user_form_type_idx").on(table.userId, table.formType),
-  };
-});
-
-export const bankAccounts = pgTable("bank_accounts", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().references(() => users.id),
-  accountHolderName: varchar("account_holder_name", { length: 100 }).notNull(),
-  accountNumber: varchar("account_number", { length: 255 }).notNull(), // Encrypted/masked account number
-  routingNumber: varchar("routing_number", { length: 255 }).notNull(), // Encrypted/masked routing number
-  accountType: varchar("account_type", { length: 20 }).notNull(), // checking, savings
-  bankName: varchar("bank_name", { length: 100 }),
-  isVerified: boolean("is_verified").default(false).notNull(),
-  isDefault: boolean("is_default").default(false).notNull(),
-  lastUsed: timestamp("last_used"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
-
 // Relation definitions
 export const usersRelations = relations(users, ({ many }) => ({
   createdBets: many(friendBets, { relationName: "creatorBets" }),
@@ -221,8 +192,6 @@ export const usersRelations = relations(users, ({ many }) => ({
   betParticipations: many(groupBetParticipations),
   transactions: many(transactions),
   memberships: many(memberships),
-  bankAccounts: many(bankAccounts),
-  savedForms: many(savedBetForms),
 }));
 
 export const tracksRelations = relations(tracks, ({ many }) => ({
@@ -323,20 +292,6 @@ export const membershipsRelations = relations(memberships, ({ one }) => ({
   }),
 }));
 
-export const bankAccountsRelations = relations(bankAccounts, ({ one }) => ({
-  user: one(users, {
-    fields: [bankAccounts.userId],
-    references: [users.id],
-  }),
-}));
-
-export const savedBetFormsRelations = relations(savedBetForms, ({ one }) => ({
-  user: one(users, {
-    fields: [savedBetForms.userId],
-    references: [users.id],
-  }),
-}));
-
 // Create schemas using drizzle-zod
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
 export const insertRiderSchema = createInsertSchema(riders).omit({ id: true, createdAt: true });
@@ -350,8 +305,6 @@ export const insertGroupBetOptionSchema = createInsertSchema(groupBetOptions).om
 export const insertGroupBetParticipationSchema = createInsertSchema(groupBetParticipations).omit({ id: true, createdAt: true });
 export const insertTransactionSchema = createInsertSchema(transactions).omit({ id: true, createdAt: true });
 export const insertMembershipSchema = createInsertSchema(memberships).omit({ id: true, createdAt: true });
-export const insertBankAccountSchema = createInsertSchema(bankAccounts).omit({ id: true, createdAt: true, lastUsed: true });
-export const insertSavedBetFormSchema = createInsertSchema(savedBetForms).omit({ id: true, createdAt: true, updatedAt: true });
 
 // Export types
 export type User = typeof users.$inferSelect;
@@ -389,9 +342,3 @@ export type InsertTransaction = z.infer<typeof insertTransactionSchema>;
 
 export type Membership = typeof memberships.$inferSelect;
 export type InsertMembership = z.infer<typeof insertMembershipSchema>;
-
-export type BankAccount = typeof bankAccounts.$inferSelect;
-export type InsertBankAccount = z.infer<typeof insertBankAccountSchema>;
-
-export type SavedBetForm = typeof savedBetForms.$inferSelect;
-export type InsertSavedBetForm = z.infer<typeof insertSavedBetFormSchema>;

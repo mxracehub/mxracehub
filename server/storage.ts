@@ -87,6 +87,14 @@ export interface IStorage {
   getUserMembership(userId: number): Promise<Membership | undefined>;
   cancelMembership(membershipId: number): Promise<Membership>;
   
+  // Bank account operations
+  getUserBankAccounts(userId: number): Promise<BankAccount[]>;
+  getBankAccount(id: number): Promise<BankAccount | undefined>;
+  createBankAccount(insertBankAccount: InsertBankAccount): Promise<BankAccount>;
+  updateBankAccount(id: number, updates: Partial<InsertBankAccount>): Promise<BankAccount>;
+  deleteBankAccount(id: number): Promise<void>;
+  setDefaultBankAccount(userId: number, accountId: number): Promise<BankAccount>;
+  
   // Session store
   sessionStore: session.Store;
 }
@@ -417,6 +425,73 @@ export class DatabaseStorage implements IStorage {
       .where(eq(memberships.id, membershipId))
       .returning();
     return membership;
+  }
+
+  // Bank account operations
+  async getUserBankAccounts(userId: number): Promise<BankAccount[]> {
+    return await db.select().from(bankAccounts).where(eq(bankAccounts.userId, userId));
+  }
+
+  async getBankAccount(id: number): Promise<BankAccount | undefined> {
+    const [account] = await db.select().from(bankAccounts).where(eq(bankAccounts.id, id));
+    return account;
+  }
+
+  async createBankAccount(insertBankAccount: InsertBankAccount): Promise<BankAccount> {
+    // Reset default status of other accounts if this one is set as default
+    if (insertBankAccount.isDefault) {
+      await db
+        .update(bankAccounts)
+        .set({ isDefault: false })
+        .where(eq(bankAccounts.userId, insertBankAccount.userId));
+    }
+
+    const [account] = await db.insert(bankAccounts).values(insertBankAccount).returning();
+    return account;
+  }
+
+  async updateBankAccount(id: number, updates: Partial<InsertBankAccount>): Promise<BankAccount> {
+    // If setting as default, reset other accounts first
+    if (updates.isDefault) {
+      const [account] = await db.select().from(bankAccounts).where(eq(bankAccounts.id, id));
+      if (account) {
+        await db
+          .update(bankAccounts)
+          .set({ isDefault: false })
+          .where(eq(bankAccounts.userId, account.userId));
+      }
+    }
+
+    const [updatedAccount] = await db
+      .update(bankAccounts)
+      .set(updates)
+      .where(eq(bankAccounts.id, id))
+      .returning();
+    return updatedAccount;
+  }
+
+  async deleteBankAccount(id: number): Promise<void> {
+    await db.delete(bankAccounts).where(eq(bankAccounts.id, id));
+  }
+
+  async setDefaultBankAccount(userId: number, accountId: number): Promise<BankAccount> {
+    // First, set all user's accounts to non-default
+    await db
+      .update(bankAccounts)
+      .set({ isDefault: false })
+      .where(eq(bankAccounts.userId, userId));
+    
+    // Then set the specified account as default
+    const [account] = await db
+      .update(bankAccounts)
+      .set({ 
+        isDefault: true,
+        lastUsed: new Date()
+      })
+      .where(eq(bankAccounts.id, accountId))
+      .returning();
+    
+    return account;
   }
 }
 

@@ -2,11 +2,12 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer } from "ws";
 import Stripe from "stripe";
+import crypto from "crypto";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
-import { users, friendBets, groups, groupBets, races, riders, tracks, transactions, memberships, savedBetForms } from "@shared/schema";
+import { users, friendBets, groups, groupBets, races, riders, tracks, transactions, memberships, bankAccounts } from "@shared/schema";
 
 // Initialize Stripe if the API key is available
 let stripe: Stripe | undefined;
@@ -535,6 +536,164 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Bank account endpoints
+  app.get("/api/bank-accounts", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    try {
+      const accounts = await storage.getUserBankAccounts(req.user!.id);
+      res.json(accounts);
+    } catch (error) {
+      console.error("Error fetching bank accounts:", error);
+      res.status(500).json({ message: "Failed to fetch bank accounts" });
+    }
+  });
+
+  app.get("/api/bank-accounts/:id", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const accountId = parseInt(req.params.id, 10);
+    
+    try {
+      const account = await storage.getBankAccount(accountId);
+      
+      if (!account) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      // Security check - users can only access their own accounts
+      if (account.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      res.json(account);
+    } catch (error) {
+      console.error("Error fetching bank account:", error);
+      res.status(500).json({ message: "Failed to fetch bank account" });
+    }
+  });
+
+  app.post("/api/bank-accounts", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const { accountHolderName, accountNumber, routingNumber, accountType, bankName, isDefault = false } = req.body;
+    
+    if (!accountHolderName || !accountNumber || !routingNumber || !accountType) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    try {
+      // In a production environment, you'd want to encrypt the accountNumber and routingNumber
+      // before storing them in the database
+      const newAccount = await storage.createBankAccount({
+        userId: req.user!.id,
+        accountHolderName,
+        accountNumber,
+        routingNumber,
+        accountType,
+        bankName,
+        isDefault,
+        isVerified: false // New accounts start as unverified
+      });
+      
+      res.status(201).json(newAccount);
+    } catch (error) {
+      console.error("Error creating bank account:", error);
+      res.status(500).json({ message: "Failed to create bank account" });
+    }
+  });
+
+  app.put("/api/bank-accounts/:id", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const accountId = parseInt(req.params.id, 10);
+    const { accountHolderName, bankName, isDefault } = req.body;
+    
+    // Only allow updating non-sensitive information
+    const updates: any = {};
+    if (accountHolderName !== undefined) updates.accountHolderName = accountHolderName;
+    if (bankName !== undefined) updates.bankName = bankName;
+    if (isDefault !== undefined) updates.isDefault = isDefault;
+    
+    try {
+      // Check if the account exists and belongs to the user
+      const existingAccount = await storage.getBankAccount(accountId);
+      if (!existingAccount) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      if (existingAccount.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      const updatedAccount = await storage.updateBankAccount(accountId, updates);
+      res.json(updatedAccount);
+    } catch (error) {
+      console.error("Error updating bank account:", error);
+      res.status(500).json({ message: "Failed to update bank account" });
+    }
+  });
+
+  app.delete("/api/bank-accounts/:id", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const accountId = parseInt(req.params.id, 10);
+    
+    try {
+      // Check if the account exists and belongs to the user
+      const existingAccount = await storage.getBankAccount(accountId);
+      if (!existingAccount) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      if (existingAccount.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      await storage.deleteBankAccount(accountId);
+      res.sendStatus(204); // No content
+    } catch (error) {
+      console.error("Error deleting bank account:", error);
+      res.status(500).json({ message: "Failed to delete bank account" });
+    }
+  });
+
+  app.post("/api/bank-accounts/:id/set-default", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const accountId = parseInt(req.params.id, 10);
+    
+    try {
+      // Check if the account exists and belongs to the user
+      const existingAccount = await storage.getBankAccount(accountId);
+      if (!existingAccount) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      if (existingAccount.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      const updatedAccount = await storage.setDefaultBankAccount(req.user!.id, accountId);
+      res.json(updatedAccount);
+    } catch (error) {
+      console.error("Error setting default bank account:", error);
+      res.status(500).json({ message: "Failed to set default bank account" });
+    }
+  });
+
   // Transaction endpoints
   app.get("/api/transactions", async (req, res) => {
     if (!req.isAuthenticated()) {
@@ -551,103 +710,108 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Saved Forms endpoints
-  app.get("/api/bets/saved-forms", async (req, res) => {
+  // Withdrawal endpoints
+  app.post("/api/withdraw/bank", async (req, res) => {
     if (!req.isAuthenticated()) {
       return res.status(401).json({ message: "Not authenticated" });
     }
     
     try {
       const userId = req.user!.id;
+      const { amount, accountId } = req.body;
       
-      // Query for saved forms in the DB
-      const savedForms = await db
-        .select()
-        .from(savedBetForms)
-        .where(eq(savedBetForms.userId, userId));
-      
-      res.json(savedForms);
-    } catch (error) {
-      console.error("Error fetching saved forms:", error);
-      res.status(500).json({ message: "Failed to fetch saved forms" });
-    }
-  });
-  
-  app.post("/api/bets/saved-forms", async (req, res) => {
-    if (!req.isAuthenticated()) {
-      return res.status(401).json({ message: "Not authenticated" });
-    }
-    
-    try {
-      const userId = req.user!.id;
-      const { formType, formData } = req.body;
-      
-      if (!formType || !formData) {
-        return res.status(400).json({ message: "Missing required fields" });
+      if (!amount || !accountId) {
+        return res.status(400).json({ message: "Missing required parameters" });
       }
       
-      // Check if a saved form already exists
-      const existingForm = await db
-        .select()
-        .from(savedBetForms)
-        .where(eq(savedBetForms.userId, userId))
-        .where(eq(savedBetForms.formType, formType));
-      
-      if (existingForm.length > 0) {
-        // Update existing form
-        const updatedForm = await db
-          .update(savedBetForms)
-          .set({ 
-            formData: formData,
-            updatedAt: new Date()
-          })
-          .where(eq(savedBetForms.id, existingForm[0].id))
-          .returning();
-          
-        res.json(updatedForm[0]);
-      } else {
-        // Create new form
-        const newForm = await db
-          .insert(savedBetForms)
-          .values({
-            userId,
-            formType,
-            formData,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          })
-          .returning();
-          
-        res.status(201).json(newForm[0]);
+      // Validate the amount
+      if (amount < 10) {
+        return res.status(400).json({ message: "Minimum withdrawal amount is $10" });
       }
-    } catch (error) {
-      console.error("Error saving form data:", error);
-      res.status(500).json({ message: "Failed to save form data" });
-    }
-  });
-  
-  app.delete("/api/bets/saved-forms/:formType", async (req, res) => {
-    if (!req.isAuthenticated()) {
-      return res.status(401).json({ message: "Not authenticated" });
-    }
-    
-    try {
-      const userId = req.user!.id;
-      const { formType } = req.params;
       
-      // Delete the form
+      // Get user
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Check if user has sufficient balance
+      if (parseFloat(user.balance.toString()) < amount) {
+        return res.status(400).json({ message: "Insufficient balance" });
+      }
+      
+      // Get bank account
+      const account = await storage.getBankAccount(accountId);
+      if (!account) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      // Verify ownership
+      if (account.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      // Generate a reference ID for the withdrawal
+      const referenceId = crypto.randomUUID();
+      
+      // Create transaction and update user balance
+      const transaction = await storage.createTransaction({
+        userId,
+        amount: -amount, // Negative amount for withdrawal
+        type: "bank_withdrawal",
+        status: "processing",
+        referenceId: referenceId,
+        description: `Bank withdrawal to ${account.bankName || 'account'} ****${account.accountNumber.slice(-4)}`,
+      });
+      
+      // Update user balance
       await db
-        .delete(savedBetForms)
-        .where(eq(savedBetForms.userId, userId))
-        .where(eq(savedBetForms.formType, formType));
+        .update(users)
+        .set({ 
+          balance: parseFloat(user.balance.toString()) - amount,
+          updatedAt: new Date() 
+        })
+        .where(eq(users.id, userId));
       
-      res.status(200).json({ message: "Form data deleted successfully" });
+      // Return success response
+      res.status(201).json({
+        success: true,
+        transactionId: transaction.id,
+        referenceId,
+        status: "processing",
+        amount,
+        accountLast4: account.accountNumber.slice(-4),
+        estimatedArrival: "1-3 business days"
+      });
     } catch (error) {
-      console.error("Error deleting form data:", error);
-      res.status(500).json({ message: "Failed to delete form data" });
+      console.error("Error processing bank withdrawal:", error);
+      res.status(500).json({ message: "Failed to process withdrawal" });
     }
   });
-
+  
+  app.get("/api/withdrawals", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+    
+    try {
+      const userId = req.user!.id;
+      
+      // Get all transactions
+      const transactions = await storage.getUserTransactions(userId);
+      
+      // Filter to only include withdrawals
+      const withdrawals = transactions.filter(tx => 
+        tx.type.includes("withdrawal") && parseFloat(tx.amount.toString()) < 0
+      );
+      
+      res.json(withdrawals);
+    } catch (error) {
+      console.error("Error fetching withdrawals:", error);
+      res.status(500).json({ message: "Failed to fetch withdrawals" });
+    }
+  });
+  
   // Create HTTP server and attach Express app
   const httpServer = createServer(app);
   
