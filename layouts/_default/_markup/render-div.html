@@ -1,6 +1,5 @@
-
 {{ $class := .Attributes.class }}
 {{ $id := .Attributes.id }}
-<div {{ with $class }}class="{{ . }}"{{ end }}{{ with $id }} id="{{ . }}"{{ end }}>
-{{ .Inner | $.Page.RenderString (dict "display" "block") }}
+<div {{ with $class }}class="{{ . }}"{{ end }}{{ with $id }}id="{{ . }}"{{ end }}>
+{{ .Inner | markdownify }}
 </div>

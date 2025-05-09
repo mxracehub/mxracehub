@@ -166,10 +166,110 @@
   text-align: center;
 }
 
+/* Team page styles */
+.team-header {
+  background-color: var(--team-color, #333);
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  color: white;
+}
+
 .team-logo {
-  max-width: 180px;
-  max-height: 80px;
+  max-width: 220px;
+  max-height: 100px;
   margin: 0 auto;
+  filter: brightness(0) invert(1);
+}
+
+.team-profile {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.team-content {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.team-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+  margin: 1.5rem 0;
+}
+
+.team-riders {
+  margin: 2rem 0;
+}
+
+.team-riders h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.team-riders-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.rider-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 6px;
+  transition: transform 0.2s;
+}
+
+.rider-card:hover {
+  transform: translateY(-2px);
+}
+
+.team-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--team-color, #333);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .team-header {
+    padding: 2rem 1rem;
+  }
+  
+  .team-content {
+    padding: 1.5rem;
+  }
+  
+  .team-riders-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 .team-card-content {
