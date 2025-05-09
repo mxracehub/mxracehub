@@ -1,4 +1,3 @@
-
 /* Content styling */
 .content-wrapper {
   width: 100%;
@@ -37,8 +36,34 @@
 /* Markdown content styling */
 .team-profile {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 2rem auto;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.team-header {
+  padding: 4rem;
+  text-align: center;
+}
+
+.team-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+.team-description {
   padding: 2rem;
+  line-height: 1.6;
+}
+
+.team-section {
+  padding: 2rem;
+  background: #f8f8f8;
 }
 
 .team-profile p {
@@ -363,16 +388,16 @@ p, li, a {
 @media (max-width: 767px) {
   .mobile-only { display: block; }
   .desktop-only { display: none !important; }
-  
+
   /* Mobile specific styling */
   body {
     font-size: 15px;
   }
-  
+
   h1 { font-size: 1.75rem; }
   h2 { font-size: 1.5rem; }
   h3 { font-size: 1.25rem; }
-  
+
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -382,12 +407,12 @@ p, li, a {
 @media (min-width: 768px) {
   .mobile-only { display: none !important; }
   .desktop-only { display: block; }
-  
+
   /* Desktop specific styling */
   body {
     font-size: 16px;
   }
-  
+
   .container {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -521,21 +546,21 @@ img, video, iframe {
     display: flex;
     gap: 1.5rem;
   }
-  
+
   .nav-item {
     font-weight: 500;
   }
-  
+
   .nav-link {
     color: var(--text-color, #333);
     text-decoration: none;
     transition: color 0.2s ease;
   }
-  
+
   .nav-link:hover {
     color: var(--primary-color, #0066cc);
   }
-  
+
   .nav-link.active {
     color: var(--primary-color, #0066cc);
     font-weight: 600;

@@ -5,7 +5,7 @@ description: "KTM's factory Supercross/Motocross team with Chase Sexton, Aaron P
 layout: "single"
 ---
 
-<div class="team-profile ktm-theme">
+<div class="team-profile ktm-theme" style="background: var(--ktm-light);">
   <div class="team-header" style="background: linear-gradient(135deg, #ff6600 0%, #cc5200 100%);">
     <img src="/img/teams/ktm-logo.svg" alt="Red Bull KTM Factory Racing" class="team-logo animate-fade-in">
   </div>
