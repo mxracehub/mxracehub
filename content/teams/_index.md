@@ -4,9 +4,10 @@ description: "Official Supercross and Motocross factory teams and their riders"
 layout: "list"
 ---
 
-# MX/SX Factory Teams
-
-Explore the top factory teams in professional Supercross and Motocross racing. These teams represent the elite level of the sport, with the best riders, equipment, and technical support.
+<div class="team-header">
+  <h1>MX/SX Factory Teams</h1>
+  <p>Explore the top factory teams in professional Supercross and Motocross racing. These teams represent the elite level of the sport, with the best riders, equipment, and technical support.</p>
+</div>
 
 <div class="teams-grid">
   <!-- Honda Team -->
