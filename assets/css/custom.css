@@ -1,8 +1,23 @@
 
 /* Custom div styling */
-.content div {
-  margin: 1rem 0;
+.content-div {
+  margin: 1.5rem 0;
   width: 100%;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  background: var(--background-color, #fff);
+}
+
+.content-div > * {
+  margin: 0.75rem 0;
+}
+
+.content-div:first-child {
+  margin-top: 0;
+}
+
+.content-div:last-child {
+  margin-bottom: 0;
 }
 
 .content div > * {
