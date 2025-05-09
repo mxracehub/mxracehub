@@ -77,3 +77,21 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
 }
+
+/* Supercross page specific styles */
+.event-card {
+  transition: transform 0.2s ease-in-out;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+}
+
+.event-card .calendar-icon {
+  color: var(--primary-color);
+}
+
+.event-card .status-badge {
+  background: var(--primary-color);
+  color: white;
+}
