@@ -1,9 +1,11 @@
-# -- Markup --
-# These settings are required for the theme to function.
 
 [goldmark]
 [goldmark.renderer]
   unsafe = true
+  
+[goldmark.parser]
+  autoHeadingID = true
+  wrapStandAloneImageWithinParagraph = true
 
 [highlight]
   noClasses = false
