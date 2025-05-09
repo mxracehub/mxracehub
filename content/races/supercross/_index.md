@@ -1,3 +1,4 @@
+
 ---
 title: "Supercross"
 description: "Everything you need to know about AMA Supercross racing, including schedules, results, and standings."
@@ -12,10 +13,8 @@ Supercross is the indoor variant of motocross racing, held in stadiums on artifi
 
 The 2025 AMA Supercross Championship features 17 rounds across the United States, visiting iconic venues like Angel Stadium, Daytona International Speedway, and AT&T Stadium. Follow all the action, from the season opener in Anaheim to the final showdown in Salt Lake City.
 
-{{< rawhtml >}}
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-  {{< partial "article-link/race-card" "." >}}
-</div>
-{{< /rawhtml >}}
+## Upcoming Supercross Events
+
+{{< partial "article-link/race-card" "." >}}
 
 {{< tailwind-carousel height="500px" mobileHeight="300px" type="track" >}}
