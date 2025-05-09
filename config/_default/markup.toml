@@ -1,12 +1,17 @@
+
 [goldmark]
+[goldmark.renderer]
+unsafe = true
+hardWraps = false
+
 [goldmark.extensions]
+typographer = true
 definitionList = true
 footnote = true
 linkify = true
 strikethrough = true
 table = true
 taskList = true
-typographer = true
 
 [goldmark.parser]
 autoHeadingID = true
@@ -15,10 +20,6 @@ autoHeadingIDType = "github"
 [goldmark.parser.attribute]
 block = true
 title = true
-
-[goldmark.renderer]
-unsafe = true
-hardWraps = false
 
 [highlight]
 noClasses = false
