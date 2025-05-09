@@ -1,5 +1,5 @@
 
 {{ $class := .Attributes.class }}
 <div {{ with $class }}class="{{ . }}"{{ end }}>
-  {{ .Inner | markdownify }}
+{{ .Inner | markdownify }}
 </div>
