@@ -1,4 +1,15 @@
 
+/* Custom div styling */
+.content div {
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.content div > * {
+  margin: 0.5rem 0;
+}
+
+
 /* Custom div styles */
 div {
   display: block;
