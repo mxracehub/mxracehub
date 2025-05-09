@@ -1,0 +1,127 @@
+<div class="dropdown-menu">
+  <div class="dropdown-menu__trigger">
+    {{ $currentPage := .Page }}
+    
+    {{ if .URL }}
+    <a href="{{ .URL }}" {{ if or (strings.HasPrefix .URL "http:" ) (strings.HasPrefix .URL "https:" ) }}
+      target="_blank" {{ end }} class="nav-link dropdown-menu__link">
+      {{ .Name | markdownify }}
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-arrow">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </a>
+    {{ else if .PageRef }}
+      {{ if eq .PageRef "/" }}
+      <a href="/" class="nav-link dropdown-menu__link {{ if and $currentPage $currentPage.IsHome }}active{{ end }}">
+      {{ else }}
+      <a href="/{{ .PageRef }}/" class="nav-link dropdown-menu__link {{ if and $currentPage (eq $currentPage.RelPermalink (print "/" .PageRef "/")) }}active{{ end }}">
+      {{ end }}
+        {{ .Name | markdownify }}
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-arrow">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
+    {{ else }}
+    <span class="nav-link dropdown-menu__link">
+      {{ .Name | markdownify }}
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dropdown-arrow">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </span>
+    {{ end }}
+  </div>
+  
+  <div class="dropdown-menu__content">
+    <div class="dropdown-menu__items">
+      {{ range .Children }}
+      {{ if .URL }}
+      <a href="{{ .URL }}" {{ if or (strings.HasPrefix .URL "http:" ) (strings.HasPrefix .URL "https:" ) }}
+        target="_blank" {{ end }} class="dropdown-menu__item">
+        {{ .Name | markdownify }}
+      </a>
+      {{ else if .PageRef }}
+        {{ if eq .PageRef "/" }}
+        <a href="/" class="dropdown-menu__item {{ if and $currentPage $currentPage.IsHome }}active{{ end }}">
+        {{ else }}
+        <a href="/{{ .PageRef }}/" class="dropdown-menu__item {{ if and $currentPage (eq $currentPage.RelPermalink (print "/" .PageRef "/")) }}active{{ end }}">
+        {{ end }}
+          {{ .Name | markdownify }}
+        </a>
+      {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+<style>
+  .dropdown-menu {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-menu__trigger {
+    cursor: pointer;
+  }
+  
+  .dropdown-menu__link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--text-color, #333);
+    font-weight: 600;
+    padding: 0.5rem;
+    text-decoration: none;
+  }
+  
+  .dropdown-menu__link:hover {
+    color: var(--primary-color, #E2001A);
+  }
+  
+  .dropdown-menu__link.active {
+    color: var(--primary-color, #E2001A);
+    border-bottom: 2px solid var(--primary-color, #E2001A);
+  }
+  
+  .dropdown-arrow {
+    transition: transform 0.2s ease;
+  }
+  
+  .dropdown-menu:hover .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+  
+  .dropdown-menu__content {
+    display: none;
+    position: absolute;
+    min-width: 200px;
+    z-index: 100;
+    background-color: var(--background-color, #ffffff);
+    border-radius: 0.375rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+  }
+  
+  .dropdown-menu:hover .dropdown-menu__content {
+    display: block;
+  }
+  
+  .dropdown-menu__item {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--text-color, #333);
+    text-decoration: none;
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+  
+  .dropdown-menu__item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--primary-color, #E2001A);
+  }
+  
+  .dropdown-menu__item.active {
+    color: var(--primary-color, #E2001A);
+    font-weight: 600;
+  }
+</style>
