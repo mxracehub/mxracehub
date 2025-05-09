@@ -51,7 +51,7 @@
   .mobile-nav-toggle {
     display: block !important;
   }
-  
+
   .desktop-nav {
     display: none !important;
   }
@@ -110,4 +110,23 @@
 
 .race-content img {
   @apply rounded-lg shadow-lg my-8;
+}
+
+.race-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .race-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .race-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
