@@ -14,6 +14,10 @@ The 2025 AMA Pro Motocross Championship brings the world's top riders to America
 
 ## Upcoming Motocross Nationals
 
-{{< partial "article-link/race-card" "." >}}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+{{ range where .Site.RegularPages "Section" "races" }}
+  {{ partial "article-link/race-card" . }}
+{{ end }}
+</div>
 
 {{< tailwind-carousel height="500px" mobileHeight="300px" type="track" >}}

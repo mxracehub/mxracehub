@@ -1,4 +1,3 @@
-
 ---
 title: "Supercross"
 description: "Everything you need to know about AMA Supercross racing, including schedules, results, and standings."
@@ -15,6 +14,10 @@ The 2025 AMA Supercross Championship features 17 rounds across the United States
 
 ## Upcoming Supercross Events
 
-{{< partial "article-link/race-card" "." >}}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+{{ range where .Site.RegularPages "Section" "races" }}
+  {{ partial "article-link/race-card" . }}
+{{ end }}
+</div>
 
 {{< tailwind-carousel height="500px" mobileHeight="300px" type="track" >}}
