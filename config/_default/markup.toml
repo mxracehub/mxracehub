@@ -18,6 +18,15 @@ title = true
 
 [goldmark.renderer]
 unsafe = true
+hardWraps = true
+
+[goldmark.extensions.typographer]
+apostrophe = true
+disable = false
+ellipsis = true
+emDash = true
+enDash = true
+quotes = true
 
 [highlight]
   noClasses = false
