@@ -1,44 +1,27 @@
-
 {{ define "main" }}
-<div class="content-wrapper max-w-5xl mx-auto px-4 py-8">
-  <article class="content">
-    <header class="content-header mb-8">
-      <h1 class="title text-4xl font-bold mb-4">{{ .Title }}</h1>
-      {{ with .Description }}
-        <p class="description text-xl text-gray-600 dark:text-gray-300">{{ . }}</p>
-      {{ end }}
-      <div class="meta mt-4 text-sm text-gray-500">
-        {{ with .Date }}
-          <span class="date mr-4">
-            <i class="fas fa-calendar-alt mr-1"></i> 
-            {{ .Format "January 2, 2006" }}
-          </span>
-        {{ end }}
-        {{ with .Params.author }}
-          <span class="author mr-4">
-            <i class="fas fa-user mr-1"></i> 
-            {{ . }}
-          </span>
-        {{ end }}
-      </div>
-    </header>
-
-    <div class="content-body prose dark:prose-invert max-w-none">
-      {{ .Content }}
-    </div>
-
-    {{ with .Params.tags }}
-    <div class="tags mt-8 pt-4 border-t">
-      <h3 class="text-lg font-semibold mb-2">Tags:</h3>
-      <div class="flex flex-wrap gap-2">
-        {{ range . }}
-        <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="tag px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full text-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-          #{{ . }}
-        </a>
-        {{ end }}
-      </div>
-    </div>
+<article class="content-wrapper max-w-5xl mx-auto px-4 py-8">
+  <header class="content-header mb-8">
+    <h1 class="title text-4xl font-bold mb-4">{{ .Title }}</h1>
+    {{ with .Description }}
+      <p class="description text-xl text-gray-600">{{ . }}</p>
     {{ end }}
-  </article>
-</div>
+  </header>
+
+  <div class="content prose max-w-none">
+    {{ .Content }}
+  </div>
+
+  {{ with .Params.tags }}
+  <div class="tags mt-8 pt-4 border-t">
+    <h3 class="text-lg font-semibold mb-2">Tags:</h3>
+    <div class="flex flex-wrap gap-2">
+      {{ range . }}
+      <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" class="tag px-3 py-1 bg-gray-100 rounded-full text-sm hover:bg-gray-200 transition">
+        #{{ . }}
+      </a>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+</article>
 {{ end }}
