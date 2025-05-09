@@ -1,3 +1,19 @@
+
+/* Custom div styles */
+div {
+  display: block;
+  margin: 1rem 0;
+}
+
+div[class*="content"] {
+  width: 100%;
+  max-width: 100%;
+}
+
+div > p {
+  margin: 0.5rem 0;
+}
+
 /* Tailwind-inspired responsive utility classes */
 
 /* Core layout and sizing variables */
