@@ -1,0 +1,7 @@
+
+{{ $class := .Attributes.class }}
+{{ $id := .Attributes.id }}
+{{ $style := .Attributes.style }}
+<div{{ with $class }} class="{{ . }}"{{ end }}{{ with $id }} id="{{ . }}"{{ end }}{{ with $style }} style="{{ . }}"{{ end }}>
+{{ .Inner | .Page.RenderString (dict "display" "block" "markup" "markdown") }}
+</div>
