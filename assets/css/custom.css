@@ -1,4 +1,39 @@
 
+/* Content styling */
+.content-wrapper {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.content-block {
+  margin: 1.5rem 0;
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  background: var(--bg-content);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.content-body {
+  line-height: 1.7;
+}
+
+.content-body h2 {
+  font-size: 1.875rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.content-body p {
+  margin-bottom: 1.25rem;
+}
+
+.content-body ul,
+.content-body ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
 /* Custom div styling */
 .content-div {
   margin: 1.5rem 0;
