@@ -34,6 +34,33 @@
   margin-bottom: 1.25rem;
 }
 
+/* Markdown content styling */
+.team-profile {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.team-profile p {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.team-profile h1,
+.team-profile h2,
+.team-profile h3 {
+  margin: 1.5rem 0 1rem;
+  font-weight: bold;
+}
+
+.team-profile h1 { font-size: 2.5rem; }
+.team-profile h2 { font-size: 2rem; }
+.team-profile h3 { font-size: 1.5rem; }
+
+.team-description {
+  margin: 2rem 0;
+}
+
 /* Custom div styling */
 .content-div {
   margin: 1.5rem 0;
