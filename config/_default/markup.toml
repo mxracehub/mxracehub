@@ -1,24 +1,17 @@
 [goldmark]
+[goldmark.renderer]
+unsafe = true
+hardWraps = false
+xhtml = false
+
 [goldmark.extensions]
+typographer = true
 definitionList = true
 footnote = true
 linkify = true
 strikethrough = true
 table = true
 taskList = true
-typographer = true
-
-[goldmark.parser]
-autoHeadingID = true
-autoHeadingIDType = "github"
-
-[goldmark.parser.attribute]
-block = true
-title = true
-
-[goldmark.renderer]
-unsafe = true
-hardWraps = true
 
 [goldmark.extensions.typographer]
 apostrophe = true
@@ -28,9 +21,17 @@ emDash = true
 enDash = true
 quotes = true
 
+[goldmark.parser]
+autoHeadingID = true
+autoHeadingIDType = "github"
+
+[goldmark.parser.attribute]
+block = true
+title = true
+
 [highlight]
-  noClasses = false
+noClasses = false
 
 [tableOfContents]
-  startLevel = 2
-  endLevel = 4
+startLevel = 2
+endLevel = 4
