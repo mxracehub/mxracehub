@@ -95,3 +95,19 @@
   background: var(--primary-color);
   color: white;
 }
+/* Race page styles */
+.race-content h1 {
+  @apply text-4xl font-bold mb-6;
+}
+
+.race-content h2 {
+  @apply text-3xl font-bold mb-4 mt-8;
+}
+
+.race-content p {
+  @apply mb-4 text-lg leading-relaxed;
+}
+
+.race-content img {
+  @apply rounded-lg shadow-lg my-8;
+}
