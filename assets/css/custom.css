@@ -181,7 +181,7 @@ div > p {
 /* Tailwind-inspired responsive utility classes */
 
 /* Core layout and sizing variables */
-:root {
+::root {
   --site-max-width: 1280px;
   --site-width: 90%;
   --site-padding-x: 1rem;
@@ -730,4 +730,111 @@ form {
   background: transparent;
   padding: 0;
   border: none;
+}
+
+/* Betting form styles */
+.bet-form {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--card-background);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--background);
+  color: var(--text-color);
+}
+
+.form-select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--background);
+  color: var(--text-color);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Status indicators */
+.status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-pending {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Betting history */
+.bet-history {
+  margin-top: 2rem;
+}
+
+.bet-item {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.bet-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Form validation */
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.success-message {
+  color: #28a745;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }

@@ -1,4 +1,7 @@
 
-<div {{ with .Attributes.class }}class="{{ . }}"{{ end }}>
-  {{ .Inner | markdownify }}
+{{ $class := .Attributes.class }}
+{{ $id := .Attributes.id }}
+{{ $style := .Attributes.style }}
+<div{{ with $class }} class="{{ . }}"{{ end }}{{ with $id }} id="{{ . }}"{{ end }}{{ with $style }} style="{{ . }}"{{ end }}>
+  {{ .Inner | markdownify | safeHTML }}
 </div>
