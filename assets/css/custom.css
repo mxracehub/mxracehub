@@ -637,3 +637,46 @@ img, video, iframe {
   background: none;
   padding: 0;
 }
+
+/* Enhanced form input styles */
+input, textarea, select {
+  color: #000000;
+  background-color: #ffffff;
+  border: 1px solid #666666;
+  padding: 8px 12px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #666666;
+}
+
+/* Improve text contrast */
+.content, .article, .page-content {
+  color: #1a1a1a;
+}
+
+/* Ensure form labels are clearly visible */
+label {
+  color: #1a1a1a;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Style form containers */
+form {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Remove code-like appearance from regular content */
+.content pre:not(.highlight),
+.article pre:not(.highlight) {
+  background: transparent;
+  padding: 0;
+  border: none;
+}
