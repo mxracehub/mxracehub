@@ -4,6 +4,57 @@
   max-width: 1200px;
 }
 
+/* Team page styling */
+.content article {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.content h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.content h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.content h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 1.5rem 0 1rem;
+}
+
+.content ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.content ul li {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.content ul li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+}
+
+.content strong {
+  font-weight: 600;
+  color: var(--color-text-bold);
+}
+
 .content-block {
   margin: 1.5rem 0;
   padding: 1.25rem;
