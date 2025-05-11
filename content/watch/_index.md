@@ -1,3 +1,4 @@
+
 ---
 title: "Watch Live"
 description: "Stream Supercross and Motocross races live through our Peacock integration"
@@ -7,11 +8,13 @@ description: "Stream Supercross and Motocross races live through our Peacock int
 
 Never miss a moment of the action with our Peacock streaming integration. Watch Supercross and Motocross events live and access on-demand replays.
 
-## Upcoming Live Events
+## Official YouTube Channels
 
-{{< lead >}}
-The next live broadcast will be available on race day
-{{< /lead >}}
+### Monster Energy Supercross
+{{< youtubeLite label="Supercross Live" id="supercrosslive" >}}
+
+### Pro Motocross 
+{{< youtubeLite label="American Motocross" id="AmericanMotocross" >}}
 
 ## Peacock Integration
 
