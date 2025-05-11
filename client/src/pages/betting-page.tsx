@@ -549,6 +549,20 @@ const BettingPage = () => {
                           Select <ChevronRight className="h-4 w-4 ml-1" />
                         </Button>
                       </div>
+                      <div className="p-4 hover:bg-gray-50 transition-colors">
+                        <h3 className="font-medium mb-1">Holeshot</h3>
+                        <p className="text-sm text-gray-600 mb-2">
+                          Pick the rider you think will get the holeshot.
+                        </p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-primary px-0"
+                          onClick={() => setActiveBetType("holeshot")}
+                        >
+                          Select <ChevronRight className="h-4 w-4 ml-1" />
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
