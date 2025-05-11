@@ -5,6 +5,7 @@ import { useFormAutosave } from "@/hooks/use-form-autosave";
 import { Form, FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 export function HoleshotBetting({ race, riders }) {
   const { formData, setFormData, isSaving } = useFormAutosave('/api/bets/holeshot');
@@ -37,8 +38,14 @@ export function HoleshotBetting({ race, riders }) {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <Card className="w-full max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle>Holeshot Betting</CardTitle>
+        <CardDescription>Place your bet on which rider will get the holeshot</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
           name="riderId"
@@ -46,7 +53,7 @@ export function HoleshotBetting({ race, riders }) {
             <FormItem>
               <FormLabel>Select Rider for Holeshot</FormLabel>
               <FormControl>
-                <select {...field} className="w-full p-2 border rounded">
+                <select {...field} className="w-full p-2 border rounded-md bg-background">
                   <option value="">Select a rider</option>
                   {riders.map((rider) => (
                     <option key={rider.id} value={rider.id}>
@@ -70,7 +77,7 @@ export function HoleshotBetting({ race, riders }) {
                   type="number" 
                   {...field}
                   min={1}
-                  className="w-full p-2 border rounded"
+                  className="w-full p-2 border rounded-md bg-background"
                 />
               </FormControl>
             </FormItem>
@@ -85,6 +92,8 @@ export function HoleshotBetting({ race, riders }) {
           {isSaving ? "Saving..." : "Place Holeshot Bet"}
         </Button>
       </form>
-    </Form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
