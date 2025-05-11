@@ -37,6 +37,7 @@ import { format } from "date-fns";
 import { useAuth } from "@/hooks/use-auth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import Form from "@rjsf/core";
 
 type BetType = "winner" | "podium" | "head_to_head";
 
@@ -76,6 +77,8 @@ const BettingPage = () => {
     loser: null,
   });
 
+  const [formData, setFormData] = useState({});
+
   // Fetch necessary data
   const { data: races, isLoading: isRacesLoading } = useQuery<Race[]>({
     queryKey: ['/api/races'],
@@ -102,7 +105,7 @@ const BettingPage = () => {
   const selectedGroup = groups?.find(group => group.id === selectedGroupId);
 
   // Handle bet submission
-  const placeBet = async () => {
+  const placeBet = async (data: any) => {
     if (!user) {
       toast({
         title: "Login Required",
@@ -133,20 +136,20 @@ const BettingPage = () => {
     const betInfo: BetInfo = {
       raceId: selectedRaceId,
       groupId: selectedGroupId,
-      betType: activeBetType,
-      amount: betAmount,
+      betType: data.formData.betType,
+      amount: data.formData.amount,
       betDetails: {},
     };
 
     // Add bet details based on bet type
-    if (activeBetType === "winner" && selectedRider) {
+    if (data.formData.betType === "winner" && selectedRider) {
       betInfo.betDetails = { riderId: selectedRider };
-    } else if (activeBetType === "podium" && selectedPodiumRider) {
+    } else if (data.formData.betType === "podium" && selectedPodiumRider) {
       betInfo.betDetails = { 
         riderId: selectedPodiumRider,
         position: isPodium ? "yes" : "no" 
       };
-    } else if (activeBetType === "head_to_head" && headToHeadRiders.winner && headToHeadRiders.loser) {
+    } else if (data.formData.betType === "head_to_head" && headToHeadRiders.winner && headToHeadRiders.loser) {
       betInfo.betDetails = { 
         winner: headToHeadRiders.winner,
         loser: headToHeadRiders.loser
@@ -163,19 +166,19 @@ const BettingPage = () => {
     try {
       setIsPlacingBet(true);
       await apiRequest("POST", "/api/bets", betInfo);
-      
+
       toast({
         title: "Bet Placed Successfully",
         description: "Your bet has been recorded.",
         variant: "default",
       });
-      
+
       // Reset form
       setSelectedRider(null);
       setSelectedPodiumRider(null);
       setIsPodium(true);
       setHeadToHeadRiders({ winner: null, loser: null });
-      
+
       // Refresh user bets
       refetchUserBets();
     } catch (error) {
@@ -195,6 +198,18 @@ const BettingPage = () => {
       setSelectedGroupId(groups[0].id);
     }
   }, [selectedRaceId, groups, selectedGroupId]);
+
+  const SchemaForm = ({ schema, uiSchema, formData, onChange, onSubmit }: any) => {
+    return (
+      <Form
+        schema={schema}
+        uiSchema={uiSchema}
+        formData={formData}
+        onChange={onChange}
+        onSubmit={onSubmit}
+      />
+    );
+  };
 
   return (
     <>
@@ -311,143 +326,47 @@ const BettingPage = () => {
                         <>
                           <div>
                             <label className="text-sm font-medium mb-2 block">Bet Type</label>
-                            <Tabs value={activeBetType} onValueChange={(value) => setActiveBetType(value as BetType)}>
-                              <TabsList className="grid grid-cols-3">
-                                <TabsTrigger value="winner">Race Winner</TabsTrigger>
-                                <TabsTrigger value="podium">Podium Finish</TabsTrigger>
-                                <TabsTrigger value="head_to_head">Head to Head</TabsTrigger>
-                              </TabsList>
-                              <TabsContent value="winner" className="mt-4">
-                                <div className="border rounded-lg p-4">
-                                  <h3 className="font-medium mb-3">Select Race Winner</h3>
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto">
-                                    {isRidersLoading ? (
-                                      [...Array(6)].map((_, i) => (
-                                        <Skeleton key={i} className="h-12 w-full" />
-                                      ))
-                                    ) : (
-                                      riders?.map(rider => (
-                                        <div 
-                                          key={rider.id} 
-                                          className={`flex justify-between items-center p-3 border ${selectedRider === rider.id ? 'border-primary bg-primary/5' : 'border-gray-200'} rounded cursor-pointer hover:border-primary transition-all`}
-                                          onClick={() => setSelectedRider(rider.id)}
-                                        >
-                                          <div className="flex items-center">
-                                            <span className="font-racing text-xl text-primary mr-2">{rider.number}</span>
-                                            <span>{rider.firstName} {rider.lastName}</span>
-                                          </div>
-                                          <span className="font-racing text-[#FFC107]">
-                                            +{Math.floor(200 + Math.random() * 300)}
-                                          </span>
-                                        </div>
-                                      ))
-                                    )}
-                                  </div>
-                                </div>
-                              </TabsContent>
-                              <TabsContent value="podium" className="mt-4">
-                                <div className="border rounded-lg p-4">
-                                  <h3 className="font-medium mb-3">Select Rider for Podium Prediction</h3>
-                                  <div className="mb-4">
-                                    <div className="flex justify-center space-x-4 mb-4">
-                                      <Button 
-                                        variant={isPodium ? "default" : "outline"}
-                                        onClick={() => setIsPodium(true)}
-                                      >
-                                        Will Podium
-                                      </Button>
-                                      <Button 
-                                        variant={!isPodium ? "default" : "outline"}
-                                        onClick={() => setIsPodium(false)}
-                                      >
-                                        Won't Podium
-                                      </Button>
-                                    </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-48 overflow-y-auto">
-                                      {isRidersLoading ? (
-                                        [...Array(4)].map((_, i) => (
-                                          <Skeleton key={i} className="h-12 w-full" />
-                                        ))
-                                      ) : (
-                                        riders?.map(rider => (
-                                          <div 
-                                            key={rider.id} 
-                                            className={`flex justify-between items-center p-3 border ${selectedPodiumRider === rider.id ? 'border-primary bg-primary/5' : 'border-gray-200'} rounded cursor-pointer hover:border-primary transition-all`}
-                                            onClick={() => setSelectedPodiumRider(rider.id)}
-                                          >
-                                            <div className="flex items-center">
-                                              <span className="font-racing text-xl text-primary mr-2">{rider.number}</span>
-                                              <span>{rider.firstName} {rider.lastName}</span>
-                                            </div>
-                                            <div>
-                                              <span className="font-racing text-green-600 mr-2">Yes +{Math.floor(150 + Math.random() * 100)}</span>
-                                              <span className="font-racing text-red-600">No -{Math.floor(200 + Math.random() * 100)}</span>
-                                            </div>
-                                          </div>
-                                        ))
-                                      )}
-                                    </div>
-                                  </div>
-                                </div>
-                              </TabsContent>
-                              <TabsContent value="head_to_head" className="mt-4">
-                                <div className="border rounded-lg p-4">
-                                  <h3 className="font-medium mb-3">Select Head to Head Matchup</h3>
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                      <label className="text-sm font-medium mb-2 block">Pick Winner</label>
-                                      <div className="space-y-2 max-h-48 overflow-y-auto">
-                                        {isRidersLoading ? (
-                                          [...Array(3)].map((_, i) => (
-                                            <Skeleton key={i} className="h-12 w-full" />
-                                          ))
-                                        ) : (
-                                          riders?.map(rider => (
-                                            <div 
-                                              key={rider.id} 
-                                              className={`flex items-center p-3 border ${headToHeadRiders.winner === rider.id ? 'border-primary bg-primary/5' : 'border-gray-200'} rounded cursor-pointer hover:border-primary transition-all ${headToHeadRiders.loser === rider.id ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                              onClick={() => {
-                                                if (headToHeadRiders.loser !== rider.id) {
-                                                  setHeadToHeadRiders({...headToHeadRiders, winner: rider.id});
-                                                }
-                                              }}
-                                            >
-                                              <span className="font-racing text-xl text-primary mr-2">{rider.number}</span>
-                                              <span>{rider.firstName} {rider.lastName}</span>
-                                            </div>
-                                          ))
-                                        )}
-                                      </div>
-                                    </div>
-                                    <div>
-                                      <label className="text-sm font-medium mb-2 block">Pick Loser</label>
-                                      <div className="space-y-2 max-h-48 overflow-y-auto">
-                                        {isRidersLoading ? (
-                                          [...Array(3)].map((_, i) => (
-                                            <Skeleton key={i} className="h-12 w-full" />
-                                          ))
-                                        ) : (
-                                          riders?.map(rider => (
-                                            <div 
-                                              key={rider.id} 
-                                              className={`flex items-center p-3 border ${headToHeadRiders.loser === rider.id ? 'border-primary bg-primary/5' : 'border-gray-200'} rounded cursor-pointer hover:border-primary transition-all ${headToHeadRiders.winner === rider.id ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                              onClick={() => {
-                                                if (headToHeadRiders.winner !== rider.id) {
-                                                  setHeadToHeadRiders({...headToHeadRiders, loser: rider.id});
-                                                }
-                                              }}
-                                            >
-                                              <span className="font-racing text-xl text-primary mr-2">{rider.number}</span>
-                                              <span>{rider.firstName} {rider.lastName}</span>
-                                            </div>
-                                          ))
-                                        )}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </TabsContent>
-                            </Tabs>
+                            <SchemaForm
+                              schema={{
+                                type: "object",
+                                required: ["betType", "amount"],
+                                properties: {
+                                  betType: {
+                                    type: "string",
+                                    enum: ["winner", "podium", "head_to_head"],
+                                    title: "Bet Type"
+                                  },
+                                  amount: {
+                                    type: "number",
+                                    minimum: 5,
+                                    maximum: 1000,
+                                    title: "Bet Amount"
+                                  },
+                                  rider: {
+                                    type: "string",
+                                    title: "Select Rider"
+                                  }
+                                }
+                              }}
+                              uiSchema={{
+                                betType: {
+                                  "ui:widget": "radio"
+                                },
+                                amount: {
+                                  "ui:widget": "updown"
+                                },
+                                rider: {
+                                  "ui:widget": "select"
+                                }
+                              }}
+                              formData={formData}
+                              onChange={(data) => {
+                                setFormData(data.formData);
+                              }}
+                              onSubmit={(data) => {
+                                placeBet(data);
+                              }}
+                            />
                           </div>
 
                           <div>
@@ -515,7 +434,7 @@ const BettingPage = () => {
                       )}
                     </div>
                     <Button 
-                      onClick={placeBet}
+                      onClick={() => placeBet({formData: {betType: activeBetType, amount: betAmount}})}
                       disabled={
                         isPlacingBet || 
                         !selectedRaceId || 
@@ -652,7 +571,7 @@ const BettingPage = () => {
                     </div>
                   </CardContent>
                 </Card>
-                
+
                 {selectedRace && (
                   <Card className="mb-6">
                     <CardHeader>
@@ -681,7 +600,7 @@ const BettingPage = () => {
                     </CardContent>
                   </Card>
                 )}
-                
+
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center">
