@@ -1,10 +1,9 @@
 
-import { withTheme } from "@rjsf/core";
-import { RJSFSchema, UiSchema } from "@rjsf/utils";
+import { useEffect } from "react";
+import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
-import { useCallback } from "react";
-
-const Form = withTheme({});
+import { getDefaultRegistry } from "@rjsf/core";
+import { RJSFSchema, UiSchema } from "@rjsf/utils";
 
 interface SchemaFormProps {
   schema: RJSFSchema;
@@ -15,25 +14,15 @@ interface SchemaFormProps {
   onError?: (errors: any) => void;
 }
 
-export function SchemaForm({ 
-  schema, 
+export function SchemaForm({
+  schema,
   uiSchema,
   formData,
   onChange,
   onSubmit,
-  onError 
+  onError
 }: SchemaFormProps) {
-  const handleSubmit = useCallback(({ formData }) => {
-    onSubmit?.(formData);
-  }, [onSubmit]);
-
-  const handleError = useCallback((errors) => {
-    onError?.(errors);
-  }, [onError]);
-
-  const handleChange = useCallback(({ formData }) => {
-    onChange?.(formData);
-  }, [onChange]);
+  const { fields } = getDefaultRegistry();
 
   return (
     <Form
@@ -41,9 +30,11 @@ export function SchemaForm({
       uiSchema={uiSchema}
       validator={validator}
       formData={formData}
-      onChange={handleChange}
-      onSubmit={handleSubmit}
-      onError={handleError}
+      fields={fields}
+      onChange={e => onChange?.(e)}
+      onSubmit={e => onSubmit?.(e.formData)}
+      onError={e => onError?.(e)}
+      className="space-y-4"
     />
   );
 }

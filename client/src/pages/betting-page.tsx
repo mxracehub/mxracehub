@@ -37,7 +37,7 @@ import { format } from "date-fns";
 import { useAuth } from "@/hooks/use-auth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import Form from "@rjsf/core";
+import { SchemaForm } from "@/components/ui/schema-form";
 
 type BetType = "winner" | "podium" | "head_to_head";
 
@@ -199,18 +199,6 @@ const BettingPage = () => {
     }
   }, [selectedRaceId, groups, selectedGroupId]);
 
-  const SchemaForm = ({ schema, uiSchema, formData, onChange, onSubmit }: any) => {
-    return (
-      <Form
-        schema={schema}
-        uiSchema={uiSchema}
-        formData={formData}
-        onChange={onChange}
-        onSubmit={onSubmit}
-      />
-    );
-  };
-
   return (
     <>
       <Helmet>
@@ -329,29 +317,22 @@ const BettingPage = () => {
                             <SchemaForm
                               schema={{
                                 type: "object",
-                                required: ["betType", "amount"],
+                                required: ["amount", "rider"],
                                 properties: {
-                                  betType: {
-                                    type: "string",
-                                    enum: ["winner", "podium", "head_to_head"],
-                                    title: "Bet Type"
-                                  },
                                   amount: {
                                     type: "number",
-                                    minimum: 5,
-                                    maximum: 1000,
-                                    title: "Bet Amount"
+                                    title: "Bet Amount",
+                                    minimum: 1
                                   },
                                   rider: {
-                                    type: "string",
-                                    title: "Select Rider"
+                                    type: "string", 
+                                    title: "Select Rider",
+                                    enum: riders.map(r => r.id),
+                                    enumNames: riders.map(r => r.name)
                                   }
                                 }
                               }}
                               uiSchema={{
-                                betType: {
-                                  "ui:widget": "radio"
-                                },
                                 amount: {
                                   "ui:widget": "updown"
                                 },
