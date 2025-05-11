@@ -18,7 +18,7 @@ buildFuture = false
 enableEmoji = true
 
 # Site title and description
-title = "MXRaceHub"
+# title = "MXRaceHub"
 copyright = "© 2025 MXRaceHub - Supercross and Motocross Fan Platform"
 
 [pagination]
