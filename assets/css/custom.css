@@ -728,7 +728,7 @@ img, video, iframe {
   }
 
   .nav-link {
-    color: var(--text-color, #333);
+    color: var(--text-color, #e3dfdf);
     text-decoration: none;
     transition: color 0.2s ease;
   }

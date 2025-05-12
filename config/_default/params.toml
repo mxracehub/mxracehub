@@ -2,7 +2,7 @@
 # Customized for Supercross/Motocross fan platform
 
 colorScheme = "orange" # Custom color scheme for motocross theme
-defaultAppearance = "dark" # Motocross websites often use dark themes
+# defaultAppearance = "dark" # Motocross websites often use dark themes
 autoSwitchAppearance = true
 
 enableSearch = false

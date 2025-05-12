@@ -10,7 +10,7 @@
   --text-color-secondary: 64, 64, 64;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme) {
   :root {
     --text-color: 245, 245, 245;
     --text-color-secondary: 229, 229, 229;
@@ -68,7 +68,7 @@ body {
 }
 
 .nav-buttons a {
-  color: #1a1a1a;
+  color: #efeaea;
 }
 
 .team-stats {
