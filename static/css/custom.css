@@ -262,11 +262,11 @@
   .team-header {
     padding: 2rem 1rem;
   }
-  
+
   .team-content {
     padding: 1.5rem;
   }
-  
+
   .team-riders-list {
     grid-template-columns: 1fr;
   }
@@ -358,7 +358,7 @@
   .teams-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .team-details {
     grid-template-columns: 1fr;
   }
@@ -374,4 +374,40 @@
   .race-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.transfer-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.transfer-card h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
+}
+
+.transfer-card p {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.transfer-card label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.transfer-card .hint-text {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 0.25rem;
 }
