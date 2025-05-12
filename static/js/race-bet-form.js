@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
   // Get elements
   const betTypeSelect = document.getElementById('bet-type');
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const friendSearch = document.getElementById('friend-search');
   const friendSearchResults = document.getElementById('friend-search-results');
-  
+
   // Sample friends data - in real app, fetch from API
   const friends = [
     { id: 1, username: 'johndoe', firstName: 'John', lastName: 'Doe' },
@@ -61,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
   friendSearch.addEventListener('input', function() {
     const searchTerm = this.value.toLowerCase();
     friendSearchResults.innerHTML = '';
-    
+
     if (searchTerm.length < 2) {
       friendSearchResults.style.display = 'none';
       return;
@@ -105,14 +104,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Form submission handling
   const betForm = document.getElementById('bet-form');
-  betForm.addEventListener('submit', function(e) {
+  betForm.addEventListener('submit', async function(e) { // Make the function async
     e.preventDefault();
     if (!selectedFriend) {
       alert('Please select a friend to challenge');
       return;
     }
-    // Handle form submission
-    console.log('Selected friend:', selectedFriend);
-    // Add your form submission logic here
+
+    // Simulate form submission and bet placement (replace with actual API call)
+    // Assuming the API returns bet data upon successful placement
+    try {
+      const response = await fetch('/api/place_bet', { // Replace with your actual API endpoint
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ // Replace with your actual form data
+          betType: betTypeSelect.value,
+          riderId: riderSelect.value,
+          friendId: selectedFriend.id
+        })
+      });
+
+      if (response.ok) {
+        const betData = await response.json();
+        // Save bet to user's profile and bets page
+        await fetch('/api/user/bets', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            betId: betData.id,
+            profile: true,
+            history: true
+          })
+        });
+
+        window.location.href = '/account/bets/';
+      } else {
+        console.error('Failed to place bet');
+        alert('Failed to place bet. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error placing bet:', error);
+      alert('An error occurred while placing the bet. Please try again.');
+    }
   });
 });
