@@ -152,3 +152,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+// Populate rider select lists
+async function populateRiderList() {
+  try {
+    const response = await fetch('/api/riders');
+    const riders = await response.json();
+    const riderSelects = document.querySelectorAll('.rider-select');
+
+    riderSelects.forEach(select => {
+      riders.forEach(rider => {
+        const option = document.createElement('option');
+        option.value = rider.id;
+        option.textContent = `${rider.number} - ${rider.firstName} ${rider.lastName}`;
+        select.appendChild(option);
+      });
+    });
+  } catch (error) {
+    console.error('Error loading riders:', error);
+  }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+  populateRiderList();
+});
+
+// Filter results to prioritize saved friends
+const sortedResults = results.sort((a, b) => 
+  savedFriends.some(f => f.id === a.id) ? -1 : 1
+);
+updateSearchResults(sortedResults);
