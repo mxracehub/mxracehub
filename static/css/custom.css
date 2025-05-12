@@ -8,6 +8,63 @@ body {
   line-height: 1.5;
 }
 
+/* Ensure text contrasts with backgrounds */
+.team-header {
+  color: #ffffff;
+  background-color: var(--team-color, #333);
+}
+
+.rider-card, .team-card, .track-card, .event-card {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+.card-subtitle {
+  color: #4b5563;
+}
+
+.transfer-card {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+.nav-buttons a {
+  color: #1a1a1a;
+}
+
+.team-stats {
+  background-color: #f8f9fa;
+  color: #1a1a1a;
+}
+
+.stat-label {
+  color: #4b5563;
+}
+
+[data-theme="dark"] {
+  .rider-card, .team-card, .track-card, .event-card, .transfer-card {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .card-subtitle {
+    color: #9ca3af;
+  }
+  
+  .team-stats {
+    background-color: #2d2d2d;
+    color: #ffffff;
+  }
+  
+  .stat-label {
+    color: #d1d5db;
+  }
+  
+  .nav-buttons a {
+    color: #ffffff;
+  }
+}
+
 /* Ensure navbar appears on all pages with consistent styling */
 .navbar-main {
   position: fixed;
