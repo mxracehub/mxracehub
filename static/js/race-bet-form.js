@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   const ridersList = document.getElementById('riders-list');
   const friendDetails = document.querySelector('.friend-bet-details');
   const feeAmount = document.getElementById('fee-amount');
-  
+
   // Modal Elements
   const confirmationModal = document.getElementById('confirmation-modal');
   const closeBtn = document.querySelector('.close-btn');
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   const confirmFriendSection = document.getElementById('confirm-friend-section');
   const confirmFriend = document.getElementById('confirm-friend');
   const confirmMessage = document.getElementById('confirm-message');
-  
+
   // Success Message Elements
   const successMessage = document.getElementById('success-message');
   const placeAnother = document.getElementById('place-another');
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   let currentRace = null;
   let selectedRider = null;
   let selectedOdds = 0;
-  
+
   // Fetch riders data
   async function loadRiders() {
     try {
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Get race ID from query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const raceId = urlParams.get('race');
-    
+
     if (raceId) {
       loadRaceData(raceId);
     } else {
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     cancelBet.addEventListener('click', closeModal);
     confirmBet.addEventListener('click', submitBet);
     placeAnother.addEventListener('click', resetForm);
-    
+
     // Close modals when clicking outside
     window.addEventListener('click', function(event) {
       if (event.target === confirmationModal) {
@@ -174,77 +174,72 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     });
 
-  function loadRaceData(raceSlug) {
-    // In a real implementation, this would fetch the race data from an API
-    // For now, we'll use the race-updater.js data
-    
-    // Find the race data from our existing races
-    const races = window.races || getDefaultRaces();
-    
-    // Find race by URL slug
-    const race = races.find(race => {
-      const url = race.url;
-      return url.includes(raceSlug);
-    });
-    
-    if (race) {
-      displayRaceData(race);
-    } else {
-      // If race not found, load the first upcoming race
-      loadUpcomingRace();
+  async function loadRaceData(raceSlug) {
+    try {
+      const response = await fetch('/api/races/next');
+      const raceData = await response.json();
+
+      if (raceData) {
+        displayRaceData(raceData);
+      } else {
+        displayError("No upcoming races found");
+      }
+    } catch (error) {
+      console.error('Error loading race data:', error);
+      displayError("Failed to load race data");
     }
   }
-  
+
   function loadUpcomingRace() {
     // Get the next upcoming race
     const today = new Date();
     const races = window.races || getDefaultRaces();
-    
+
     // Filter for upcoming races
     let upcomingRaces = races.filter(race => new Date(race.date) >= today);
-    
+
     // If no upcoming races, use the first race in the array
     if (upcomingRaces.length === 0) {
       upcomingRaces = [races[0]];
     }
-    
+
     // Sort by date and get the next race
     upcomingRaces.sort((a, b) => new Date(a.date) - new Date(b.date));
     const nextRace = upcomingRaces[0];
-    
+
     if (nextRace) {
       displayRaceData(nextRace);
     } else {
       displayError("No race data available");
     }
   }
-  
+
   function displayRaceData(race) {
     currentRace = race;
-    
+
     // Update race info
     raceTitle.textContent = race.title;
     raceVenue.textContent = race.venue;
-    
+
     // Format date
     const raceDateTime = new Date(race.date);
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     raceDate.textContent = raceDateTime.toLocaleDateString('en-US', options);
-    
+
     raceSeries.textContent = race.series;
-    
+
     // Populate riders and odds
     populateRiders(race.odds);
   }
-  
+
   function populateRiders(odds) {
     ridersList.innerHTML = '';
-    
+
     // Create rider rows
     Object.entries(odds).forEach(([rider, odd]) => {
       const riderRow = document.createElement('div');
       riderRow.className = 'rider-row';
-      
+
       riderRow.innerHTML = `
         <div class="rider-col">${rider}</div>
         <div class="odds-col">${odd.toFixed(1)}</div>
@@ -252,9 +247,9 @@ document.addEventListener('DOMContentLoaded', async function() {
           <input type="radio" name="rider-selection" value="${rider}" data-odds="${odd}" required>
         </div>
       `;
-      
+
       ridersList.appendChild(riderRow);
-      
+
       // Add event listener to radio button
       const radioBtn = riderRow.querySelector('input[type="radio"]');
       radioBtn.addEventListener('change', function() {
@@ -264,7 +259,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       });
     });
   }
-    
+
   function toggleFriendDetails() {
     if (friendSelect.value) {
       friendDetails.style.display = 'block';
@@ -272,12 +267,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       friendDetails.style.display = 'none';
     }
   }
-  
+
   function showConfirmationModal() {
     // Populate confirmation details
     confirmRace.textContent = currentRace.title;
     confirmRider.textContent = selectedRider;
-    
+
     let betTypeText = '';
     switch (betType.value) {
       case 'win':
@@ -290,13 +285,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         betTypeText = 'Top 5 Finish';
         break;
     }
-    
+
     confirmBetType.textContent = betTypeText;
     confirmAmount.textContent = betAmount.value;
-    
+
     const amount = parseFloat(betAmount.value) || 0;
     let multiplier = selectedOdds;
-    
+
     // Adjust odds based on bet type (same logic as calculateWinnings)
     switch (betType.value) {
       case 'podium':
@@ -306,14 +301,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         multiplier = selectedOdds * 0.3;
         break;
     }
-    
+
     const winnings = amount * multiplier;
     confirmWinnings.textContent = winnings.toFixed(2);
-    
+
     // Calculate fee
     const fee = amount * 0.01;
     confirmFee.textContent = fee.toFixed(2);
-    
+
     // Friend bet details
     if (friendSelect.value) {
       confirmFriendSection.style.display = 'block';
@@ -322,46 +317,46 @@ document.addEventListener('DOMContentLoaded', async function() {
     } else {
       confirmFriendSection.style.display = 'none';
     }
-    
+
     // Show modal
     confirmationModal.style.display = 'block';
   }
-  
+
   function closeModal() {
     confirmationModal.style.display = 'none';
   }
-  
+
   function submitBet() {
     // In a real implementation, this would submit the bet to an API
     // For now, we'll just simulate success
-    
+
     // Close confirmation modal
     closeModal();
-    
+
     // Show success message
     successMessage.style.display = 'block';
-    
+
     // In a real implementation, we would save the bet to the user's account here
   }
-  
+
   function resetForm() {
     // Hide success message
     successMessage.style.display = 'none';
-    
+
     // Reset form
     form.reset();
     selectedRider = null;
     selectedOdds = 0;
     potentialWinnings.textContent = '$0.00';
     friendDetails.style.display = 'none';
-    
+
     // Uncheck all rider selections
     const riderRadios = document.querySelectorAll('input[name="rider-selection"]');
     riderRadios.forEach(radio => {
       radio.checked = false;
     });
   }
-  
+
   function displayError(message) {
     raceTitle.textContent = 'Error Loading Race Data';
     raceVenue.textContent = '--';
@@ -369,7 +364,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     raceSeries.textContent = '--';
     ridersList.innerHTML = `<div class="error-message">${message}</div>`;
   }
-  
+
   // Fallback race data if race-updater.js isn't loaded
   function getDefaultRaces() {
     return [
