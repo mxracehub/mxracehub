@@ -2,22 +2,22 @@
 
 /* Base styles for consistent body colors */
 :root {
-  --text-color: 0, 0, 0;
+  --text-color: 10, 10, 10;
   --background-color: 255, 255, 255;
   --card-background: 255, 255, 255;
-  --card-text: 0, 0, 0;
-  --subtitle-text: 51, 51, 51;
-  --text-color-secondary: 89, 89, 89;
+  --card-text: 10, 10, 10;
+  --subtitle-text: 38, 38, 38;
+  --text-color-secondary: 64, 64, 64;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: 255, 255, 255;
-    --text-color-secondary: 212, 212, 212;
-    --background-color: 26, 26, 26;
-    --card-background: 26, 26, 26;
-    --card-text: 255, 255, 255;
-    --subtitle-text: 224, 224, 224;
+    --text-color: 245, 245, 245;
+    --text-color-secondary: 229, 229, 229;
+    --background-color: 18, 18, 18;
+    --card-background: 18, 18, 18;
+    --card-text: 245, 245, 245;
+    --subtitle-text: 229, 229, 229;
   }
 }
 
