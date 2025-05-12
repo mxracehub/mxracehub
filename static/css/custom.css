@@ -1,5 +1,13 @@
 /* MXRaceHub Custom CSS for Header/Navigation Consistency */
 
+/* Base styles for consistent body colors */
+body {
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
 /* Ensure navbar appears on all pages with consistent styling */
 .navbar-main {
   position: fixed;
