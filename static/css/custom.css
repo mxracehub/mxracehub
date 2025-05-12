@@ -10,7 +10,16 @@
   --text-color-secondary: 64, 64, 64;
 }
 
-
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: 245, 245, 245;
+    --text-color-secondary: 229, 229, 229;
+    --background-color: 18, 18, 18;
+    --card-background: 18, 18, 18;
+    --card-text: 245, 245, 245;
+    --subtitle-text: 229, 229, 229;
+  }
+}
 
 body {
   background-color: rgb(var(--background-color));
@@ -76,20 +85,20 @@ body {
     background-color: #1a1a1a;
     color: #ffffff;
   }
-
+  
   .card-subtitle {
     color: #9ca3af;
   }
-
+  
   .team-stats {
     background-color: #2d2d2d;
     color: #ffffff;
   }
-
+  
   .stat-label {
     color: #d1d5db;
   }
-
+  
   .nav-buttons a {
     color: #ffffff;
   }
@@ -528,5 +537,3 @@ body {
   color: #555;
   margin-top: 0.25rem;
 }
-
-@media (prefers-color-scheme) {
