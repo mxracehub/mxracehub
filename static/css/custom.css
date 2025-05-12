@@ -6,6 +6,13 @@
   --background-color: #ffffff;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #ffffff;
+    --background-color: #1a1a1a;
+  }
+}
+
 body {
   background-color: var(--background-color);
   color: var(--text-color);
