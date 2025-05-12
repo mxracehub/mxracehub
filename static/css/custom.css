@@ -1,9 +1,14 @@
 /* MXRaceHub Custom CSS for Header/Navigation Consistency */
 
 /* Base styles for consistent body colors */
+:root {
+  --text-color: #1a1a1a;
+  --background-color: #ffffff;
+}
+
 body {
-  background-color: #ffffff;
-  color: #1a1a1a;
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.5;
 }
