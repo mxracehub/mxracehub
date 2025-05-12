@@ -1,0 +1,99 @@
+<div class="transfer-card">
+            <h2 class="text-xl font-semibold mb-4">Withdraw Funds to Your Bank</h2>
+            <p class="mb-4">Transfer money from your MXRaceHub wallet to your bank account.</p>
+            
+            <div class="bank-accounts-section">
+              <h3 class="text-lg font-medium mb-3">Your Bank Accounts</h3>
+              
+              <div id="withdraw-bank-accounts-list" class="bank-accounts-list">
+                <!-- Loading state -->
+                <div class="loading-state hidden" id="withdraw-bank-accounts-loading">
+                  <div class="spinner"></div>
+                  <p>Loading your bank accounts...</p>
+                </div>
+                
+                <!-- Empty state -->
+                <div class="empty-state hidden" id="withdraw-bank-accounts-empty">
+                  <div class="empty-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+                      <line x1="2" y1="10" x2="22" y2="10"></line>
+                    </svg>
+                  </div>
+                  <p>You don't have any bank accounts connected yet.</p>
+                  <button id="add-withdraw-bank-account-btn" class="add-account-btn">Add Bank Account</button>
+                </div>
+                
+                <!-- Bank accounts will be populated here -->
+                <div id="withdraw-accounts-container" class="">
+                  <div class="bank-account-item" data-account-id="1">
+                    <div class="account-radio">
+                      <input type="radio" name="withdraw-account" id="withdraw-account-1" value="1" checked="">
+                      <label for="withdraw-account-1" class="radiomark"></label>
+                    </div>
+                    <div class="account-info">
+                      <div class="account-name">Personal Checking ••••5678</div>
+                      <div class="account-bank">Bank of America</div>
+                    </div>
+                  </div>
+                  
+                  <div class="bank-account-item" data-account-id="2">
+                    <div class="account-radio">
+                      <input type="radio" name="withdraw-account" id="withdraw-account-2" value="2">
+                      <label for="withdraw-account-2" class="radiomark"></label>
+                    </div>
+                    <div class="account-info">
+                      <div class="account-name">Savings Account ••••9012</div>
+                      <div class="account-bank">Chase Bank</div>
+                    </div>
+                  </div>
+                  
+                  <button id="add-withdraw-bank-account-btn-2" class="add-account-btn-alt">Add Another Bank Account</button>
+                </div>
+              </div>
+            </div>
+            
+            <form id="withdraw-form" class="transfer-form">
+              <div class="form-group">
+                <label for="withdraw-amount">Amount to Withdraw ($)</label>
+                <input type="number" id="withdraw-amount" name="withdraw-amount" min="10" step="5" required="">
+                <div class="error-message" id="withdraw-amount-error"></div>
+                <div class="hint-text">Minimum withdrawal: $10.00</div>
+              </div>
+              
+              <div class="form-group">
+                <label for="withdraw-description">Description (Optional)</label>
+                <input type="text" id="withdraw-description" name="withdraw-description" placeholder="e.g., Moving winnings to bank">
+              </div>
+              
+              <div id="withdraw-processing" class="processing-indicator hidden">
+                <div class="spinner"></div>
+                <span>Processing withdrawal, please wait...</span>
+              </div>
+              
+              <div id="withdraw-success" class="success-message hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Withdrawal request submitted! The funds will be sent to your bank account.</span>
+              </div>
+              
+              <div class="insufficient-funds-message hidden" id="insufficient-funds">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>You don't have enough funds in your wallet to make this withdrawal.</span>
+              </div>
+              
+              <div class="transfer-disclaimer">
+                <p>Bank transfers typically take 1-3 business days to complete. Your bank account will be credited once the transfer is processed.</p>
+              </div>
+              
+              <div class="form-actions">
+                <button type="submit" id="withdraw-submit-btn" class="submit-btn">Withdraw Funds</button>
+              </div>
+            </form>
+          </div>
