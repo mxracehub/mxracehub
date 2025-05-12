@@ -4,12 +4,18 @@
 :root {
   --text-color: #1a1a1a; 
   --background-color: #ffffff;
+  --card-background: #ffffff;
+  --card-text: #111827;
+  --subtitle-text: #4b5563;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #ffffff;
     --background-color: #1a1a1a;
+    --card-background: #1a1a1a;
+    --card-text: #ffffff;
+    --subtitle-text: #9ca3af;
   }
 }
 
@@ -27,17 +33,17 @@ body {
 }
 
 .rider-card, .team-card, .track-card, .event-card {
-  background-color: #ffffff;
-  color: #111827;
+  background-color: var(--card-background);
+  color: var(--card-text);
 }
 
 .card-subtitle {
-  color: #4b5563;
+  color: var(--subtitle-text);
 }
 
 .transfer-card {
-  background-color: #ffffff;
-  color: #1a1a1a;
+  background-color: var(--card-background);
+  color: var(--card-text);
 }
 
 .nav-buttons a {
