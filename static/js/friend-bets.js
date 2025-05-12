@@ -349,6 +349,45 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  const riderSelect = document.querySelector('.rider-select');
+  const headToHeadSection = document.getElementById('head-to-head-section');
+
+  if (riderSelect) {
+    fetch('/api/riders')
+      .then(response => response.json())
+      .then(riders => {
+        const group450 = document.createElement('optgroup');
+        group450.label = '450 Class';
+
+        const group250 = document.createElement('optgroup');
+        group250.label = '250 Class';
+
+        riders.forEach(rider => {
+          const option = document.createElement('option');
+          option.value = rider.id;
+          option.textContent = `${rider.number} - ${rider.firstName} ${rider.lastName}`;
+
+          if (rider.class === '450') {
+            group450.appendChild(option);
+          } else {
+            group250.appendChild(option);
+          }
+        });
+
+        riderSelect.appendChild(group450);
+        riderSelect.appendChild(group250);
+    });
+
+    riderSelect.addEventListener('change', function(e) {
+      const selectedRider = e.target.value;
+      if (selectedRider && headToHeadSection) {
+        headToHeadSection.style.display = 'block';
+      }
+    });
+  }
+});
+
 /**
  * Populate rider select element
  * @param {HTMLElement} selectElement - The select element to populate
