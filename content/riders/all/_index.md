@@ -32,16 +32,20 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentClass = 'all';
 
   function updateRiderVisibility() {
-    const searchTerm = searchInput.value.toLowerCase();
+    const searchTerm = searchInput.value.toLowerCase().trim();
     let visibleCount = 0;
 
     riders.forEach(rider => {
-      const riderName = rider.querySelector('.rider-name').textContent.toLowerCase();
-      const riderTeam = rider.querySelector('.rider-team').textContent.toLowerCase();
-      const riderNumber = rider.querySelector('.rider-number').textContent;
-      const matchesSearch = riderName.includes(searchTerm) || 
-                          riderTeam.includes(searchTerm) || 
-                          riderNumber.includes(searchTerm);
+      const riderName = (rider.querySelector('.rider-name')?.textContent || '').toLowerCase();
+      const riderTeam = (rider.querySelector('.rider-team')?.textContent || '').toLowerCase();
+      const riderNumber = (rider.querySelector('.rider-number')?.textContent || '').trim();
+      const searchTerms = searchTerm.split(' ').filter(term => term.length > 0);
+      
+      const matchesSearch = searchTerms.length === 0 || searchTerms.every(term => 
+        riderName.includes(term) || 
+        riderTeam.includes(term) || 
+        riderNumber.includes(term)
+      );
       const matchesClass = currentClass === 'all' || rider.dataset.class === currentClass;
 
       if (matchesSearch && matchesClass) {
@@ -53,6 +57,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     riderCount.textContent = visibleCount;
+    
+    // Update UI feedback
+    const noResultsMsg = document.getElementById('no-results-message');
+    if (visibleCount === 0 && searchTerm) {
+      if (!noResultsMsg) {
+        const msg = document.createElement('p');
+        msg.id = 'no-results-message';
+        msg.className = 'text-center text-gray-500 mt-4';
+        msg.textContent = 'No riders found matching your search.';
+        ridersGrid.parentNode.insertBefore(msg, ridersGrid.nextSibling);
+      }
+    } else if (noResultsMsg) {
+      noResultsMsg.remove();
+    }
   }
 
   // Initial count
