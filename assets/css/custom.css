@@ -892,6 +892,27 @@ form {
   margin-bottom: 0;
 }
 
+/* Dropdown styles */
+select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+select:hover {
+  border-color: #0066cc;
+}
+
+select:focus {
+  outline: none;
+  border-color: #0066cc;
+  box-shadow: 0 0 0 2px rgba(0,102,204,0.1);
+}
+
 /* Form validation */
 .error-message {
   color: #dc3545;
