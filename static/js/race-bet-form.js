@@ -1,11 +1,12 @@
+
 document.addEventListener('DOMContentLoaded', function() {
-  // Get all select elements
+  // Get elements
   const betTypeSelect = document.getElementById('bet-type');
   const riderSelect = document.querySelector('.rider-select');
   const friendSelect = document.getElementById('friend-select');
   const headToHeadSection = document.getElementById('head-to-head-section');
 
-  // Populate rider select with sample data (replace with API call later)
+  // Sample riders data (replace with API call)
   const riders = [
     { id: 1, name: 'Jett Lawrence' },
     { id: 2, name: 'Cooper Webb' },
@@ -14,53 +15,104 @@ document.addEventListener('DOMContentLoaded', function() {
     { id: 5, name: 'Ken Roczen' }
   ];
 
-  riders.forEach(rider => {
-    const option = document.createElement('option');
-    option.value = rider.id;
-    option.textContent = rider.name;
-    riderSelect.appendChild(option);
-  });
+  // Populate rider dropdowns
+  function populateRiders(selectElement) {
+    riders.forEach(rider => {
+      const option = document.createElement('option');
+      option.value = rider.id;
+      option.textContent = rider.name;
+      selectElement.appendChild(option);
+    });
+  }
+
+  populateRiders(riderSelect);
 
   // Handle bet type changes
   betTypeSelect.addEventListener('change', function() {
-    const selectedType = this.value;
-
-    if (selectedType === 'head_to_head') {
+    if (this.value === 'head_to_head') {
       headToHeadSection.style.display = 'block';
     } else {
       headToHeadSection.style.display = 'none';
     }
   });
 
-  // Sample friends data (replace with API call)
+  // Create searchable friend dropdown
+  friendSelect.insertAdjacentHTML('beforebegin', `
+    <div class="friend-search-container">
+      <input type="text" id="friend-search" placeholder="Search friends..." class="friend-search-input">
+      <div id="friend-search-results" class="friend-search-results"></div>
+    </div>
+  `);
+
+  const friendSearch = document.getElementById('friend-search');
+  const friendSearchResults = document.getElementById('friend-search-results');
+  
+  // Sample friends data - in real app, fetch from API
   const friends = [
-    { id: 1, name: 'John Smith' },
-    { id: 2, name: 'Sarah Johnson' },
-    { id: 3, name: 'Mike Wilson' }
+    { id: 1, username: 'johndoe', firstName: 'John', lastName: 'Doe' },
+    { id: 2, username: 'janedoe', firstName: 'Jane', lastName: 'Doe' },
+    { id: 3, username: 'rider42', firstName: 'Mike', lastName: 'Johnson' },
+    { id: 4, username: 'mxfan99', firstName: 'Sarah', lastName: 'Williams' },
+    { id: 5, username: 'race_lover', firstName: 'Tom', lastName: 'Taylor' }
   ];
 
-  friends.forEach(friend => {
-    const option = document.createElement('option');
-    option.value = friend.id;
-    option.textContent = friend.name;
-    friendSelect.appendChild(option);
+  let selectedFriend = null;
+
+  friendSearch.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    friendSearchResults.innerHTML = '';
+    
+    if (searchTerm.length < 2) {
+      friendSearchResults.style.display = 'none';
+      return;
+    }
+
+    const matches = friends.filter(friend => 
+      friend.username.toLowerCase().includes(searchTerm) ||
+      friend.firstName.toLowerCase().includes(searchTerm) ||
+      friend.lastName.toLowerCase().includes(searchTerm)
+    );
+
+    if (matches.length > 0) {
+      matches.forEach(friend => {
+        const div = document.createElement('div');
+        div.className = 'friend-search-item';
+        div.innerHTML = `
+          <span class="friend-name">${friend.firstName} ${friend.lastName}</span>
+          <span class="friend-username">@${friend.username}</span>
+        `;
+        div.addEventListener('click', () => {
+          selectedFriend = friend;
+          friendSearch.value = `${friend.firstName} ${friend.lastName}`;
+          friendSearchResults.style.display = 'none';
+          friendSelect.value = friend.id;
+        });
+        friendSearchResults.appendChild(div);
+      });
+      friendSearchResults.style.display = 'block';
+    } else {
+      friendSearchResults.innerHTML = '<div class="no-results">No friends found</div>';
+      friendSearchResults.style.display = 'block';
+    }
   });
 
-  // Handle form submission
-  const form = document.getElementById('bet-form');
-  form.addEventListener('submit', function(e) {
+  // Hide results when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.friend-search-container')) {
+      friendSearchResults.style.display = 'none';
+    }
+  });
+
+  // Form submission handling
+  const betForm = document.getElementById('bet-form');
+  betForm.addEventListener('submit', function(e) {
     e.preventDefault();
-
-    const formData = new FormData(form);
-    const betData = {
-      betType: formData.get('betType'),
-      rider1: formData.get('rider1'),
-      rider2: formData.get('rider2'),
-      amount: formData.get('amount'),
-      friend: formData.get('friend')
-    };
-
-    console.log('Bet data:', betData);
-    // Add API call here to submit bet
+    if (!selectedFriend) {
+      alert('Please select a friend to challenge');
+      return;
+    }
+    // Handle form submission
+    console.log('Selected friend:', selectedFriend);
+    // Add your form submission logic here
   });
 });
