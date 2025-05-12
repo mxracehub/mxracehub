@@ -6,6 +6,54 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Elements
   const form = document.getElementById('friend-bet-form');
+  const friendSearch = document.getElementById('friend-search');
+  const friendResults = document.getElementById('friend-search-results');
+  let savedFriends = [];
+
+  // Load saved friends
+  async function loadSavedFriends() {
+    try {
+      const response = await fetch('/api/user/friends');
+      if (response.ok) {
+        savedFriends = await response.json();
+        updateFriendList();
+      }
+    } catch (error) {
+      console.error('Error loading friends:', error);
+    }
+  }
+
+  // Update friend list display
+  function updateFriendList() {
+    if (friendResults) {
+      friendResults.innerHTML = savedFriends.map(friend => `
+        <div class="friend-item" data-id="${friend.id}">
+          <span>${friend.username}</span>
+          <button class="add-friend-btn">Add to Bet</button>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Initialize friend search
+  if (friendSearch) {
+    friendSearch.addEventListener('input', async (e) => {
+      const searchTerm = e.target.value;
+      if (searchTerm.length >= 2) {
+        try {
+          const response = await fetch(`/api/users/search?q=${searchTerm}`);
+          const results = await response.json();
+          // Filter results to prioritize saved friends
+          const sortedResults = results.sort((a, b) => 
+            savedFriends.some(f => f.id === a.id) ? -1 : 1
+          );
+          updateSearchResults(sortedResults);
+        } catch (error) {
+          console.error('Search error:', error);
+        }
+      }
+    });
+  }
   const betTypeSelect = document.getElementById('bet-type');
   const raceWinnerPrediction = document.getElementById('race-winner-prediction');
   const headToHeadPrediction = document.getElementById('head-to-head-prediction');

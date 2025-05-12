@@ -3,7 +3,44 @@ import { Request, Response } from 'express';
 import { storage } from "../storage";
 import { validateUser } from '../utils/validation';
 
+interface FriendList {
+  userId: number;
+  friends: number[];
+  groups: number[];
+  lastUpdated: Date;
+}
+
 // Handle linking bets to user account pages
+export async function handleFriendList(req: Request, res: Response) {
+  if (!req.user) {
+    return res.status(401).json({ message: "Not authenticated" });
+  }
+
+  try {
+    const { action, friendId, groupId } = req.body;
+    let friendList = await storage.getUserFriendList(req.user.id);
+    
+    switch (action) {
+      case 'add_friend':
+        await storage.addFriend(req.user.id, friendId);
+        break;
+      case 'remove_friend':
+        await storage.removeFriend(req.user.id, friendId);
+        break;
+      case 'sync_group':
+        await storage.syncGroupWithFriends(req.user.id, groupId);
+        break;
+    }
+
+    res.json({ success: true });
+  } catch (error: any) {
+    res.status(400).json({
+      message: "Failed to update friend list",
+      error: error.message
+    });
+  }
+}
+
 export async function handleUserBets(req: Request, res: Response) {
   if (!req.user) {
     return res.status(401).json({ message: "Not authenticated" });
