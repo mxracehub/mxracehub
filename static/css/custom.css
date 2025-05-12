@@ -12,6 +12,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #ffffff;
+    --text-color-secondary: #a3a3a3;
     --background-color: #1a1a1a;
     --card-background: #1a1a1a;
     --card-text: #ffffff;
@@ -38,7 +39,7 @@ body {
 }
 
 .card-subtitle {
-  color: var(--subtitle-text);
+  color: var(--text-color-secondary);
 }
 
 .transfer-card {
