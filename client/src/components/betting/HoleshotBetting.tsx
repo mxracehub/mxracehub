@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
-export function HoleshotBetting({ race, riders }) {
+import { useRaceUpdater } from '@/hooks/use-race-updater';
+
+export function HoleshotBetting({ riders }) {
+  const { nextRace: race } = useRaceUpdater();
   const { formData, setFormData, isSaving } = useFormAutosave('/api/bets/holeshot');
   const { toast } = useToast();
 
