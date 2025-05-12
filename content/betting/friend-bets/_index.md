@@ -1,3 +1,4 @@
+
 ---
 title: "Friend Bets"
 description: "Challenge your friends to head-to-head wagers on Supercross and Motocross races"
@@ -6,38 +7,63 @@ layout: "single"
 
 # Friend Bets
 
-Challenge your friends directly with custom head-to-head wagers and race predictions. Create personalized bets on race outcomes, rider performance, or any other aspect of Supercross and Motocross racing.
+Challenge your friends directly with custom head-to-head wagers and race predictions.
 
 {{< rawhtml >}}
-<div id="race-bet-form">
-  <!-- Race bet form will be loaded here -->
+<div id="race-bet-form" class="betting-form-container">
+  <form id="bet-form" class="bet-form">
+    <div class="form-group">
+      <label for="bet-type">Bet Type</label>
+      <select id="bet-type" name="betType" required>
+        <option value="">Select bet type</option>
+        <option value="race_winner">Race Winner</option>
+        <option value="head_to_head">Head to Head</option>
+        <option value="podium">Podium Finish</option>
+        <option value="holeshot">Holeshot</option>
+        <option value="custom">Custom Prop</option>
+      </select>
+    </div>
+
+    <div class="form-group rider-selection">
+      <label>Select Rider</label>
+      <select class="rider-select" name="rider1" required>
+        <!-- Populated dynamically -->
+      </select>
+    </div>
+
+    <div id="head-to-head-section" class="form-group" style="display: none;">
+      <label>Second Rider</label>
+      <select class="rider-select" name="rider2">
+        <!-- Populated dynamically -->
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="bet-amount">Bet Amount ($)</label>
+      <input type="number" id="bet-amount" name="amount" min="5" step="5" value="10" required>
+    </div>
+
+    <div class="form-group">
+      <label for="friend-select">Challenge Friend</label>
+      <select id="friend-select" name="friend" required>
+        <!-- Populated from friends list -->
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Potential Winnings: <span id="potential-winnings">$0.00</span></label>
+    </div>
+
+    <button type="submit" class="submit-bet">Place Bet</button>
+  </form>
+
+  <div id="success-message" class="success-message" style="display: none;">
+    Bet placed successfully!
+  </div>
 </div>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  fetch('/betting/friend-bets/race-bet-form')
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById('race-bet-form').innerHTML = html;
-    });
-});
-</script>
+
+<script src="/js/race-bet-form.js"></script>
 {{< /rawhtml >}}
-
-## Bet Types Available
-
-- **Race Winner** - Pick the rider you think will win the race
-- **Head-to-Head** - Pick which rider will finish ahead of another
-- **Podium Finish** - Bet on whether a rider will make the podium
-- **Custom Props** - Create your own custom proposition bets
-- **Holeshot** - Predict who will get the holeshot
-
-## How Friend Bets Work
-
-1. Select your bet type and fill out the bet details
-2. Choose a friend to challenge
-3. Set your wager amount 
-4. Wait for your friend to accept
-5. Track the results after the race
 
 ## Betting Rules
 
