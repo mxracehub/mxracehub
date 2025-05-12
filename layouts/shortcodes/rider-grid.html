@@ -1,11 +1,16 @@
-{{ $division := .Get "division" | default "450" }}
+
+{{ $division := .Get "division" | default "all" }}
 {{ $columns := .Get "columns" | default 3 }}
 
 <div class="rider-grid grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-{{ $columns }}" data-division="{{ $division }}">
   {{ if .Inner }}
     {{ .Inner }}
   {{ else }}
-    {{ range where (where site.RegularPages "Section" "riders") "Params.class" $division }}
+    {{ $pages := where site.RegularPages "Section" "riders" }}
+    {{ if ne $division "all" }}
+      {{ $pages = where $pages "Params.class" $division }}
+    {{ end }}
+    {{ range $pages }}
       {{ $championshipData := dict }}
       {{ if and .Params.championship_standings }}
         {{ range $key, $value := .Params.championship_standings }}
