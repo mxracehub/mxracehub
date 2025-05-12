@@ -1,3 +1,4 @@
+
 ---
 title: "All Riders"
 description: "Complete list of 250 and 450 class riders"
@@ -17,7 +18,7 @@ description: "Complete list of 250 and 450 class riders"
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="riders-grid">
-    {{< rider-grid >}}
+    {{< rider-grid >}}{{< /rider-grid >}}
   </div>
 </div>
 
