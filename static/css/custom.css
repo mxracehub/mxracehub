@@ -2,7 +2,7 @@
 
 /* Base styles for consistent body colors */
 :root {
-  --text-color: #1a1a1a;
+  --text-color: #1a1a1a; 
   --background-color: #ffffff;
 }
 
