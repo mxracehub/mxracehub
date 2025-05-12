@@ -180,6 +180,7 @@ async function populateRiderList() {
         const option = document.createElement('option');
         option.value = rider.id;
         option.textContent = `#${rider.number} - ${rider.firstName} ${rider.lastName}`;
+        option.setAttribute('data-profile-url', `/riders/250/${rider.firstName.toLowerCase()}-${rider.lastName.toLowerCase()}/`);
         group250.appendChild(option);
       });
 
@@ -187,7 +188,25 @@ async function populateRiderList() {
         const option = document.createElement('option');
         option.value = rider.id;
         option.textContent = `#${rider.number} - ${rider.firstName} ${rider.lastName}`;
+        option.setAttribute('data-profile-url', `/riders/450/${rider.firstName.toLowerCase()}-${rider.lastName.toLowerCase()}/`);
         group450.appendChild(option);
+      });
+
+      // Add change handler to enable profile links
+      select.addEventListener('change', (e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const profileUrl = selectedOption.getAttribute('data-profile-url');
+        const profileLink = select.parentElement.querySelector('.rider-profile-link');
+        
+        if (profileLink) {
+          profileLink.href = profileUrl;
+        } else {
+          const link = document.createElement('a');
+          link.href = profileUrl;
+          link.className = 'rider-profile-link text-primary hover:underline ml-2';
+          link.textContent = 'View Profile';
+          select.parentElement.appendChild(link);
+        }
       });
 
       select.appendChild(group450);
