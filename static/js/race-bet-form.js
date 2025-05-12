@@ -8,6 +8,7 @@
  * - Form submission and validation
  */
 
+// Race Bet Form Functionality
 document.addEventListener('DOMContentLoaded', function() {
   
   // DOM Elements
@@ -62,14 +63,85 @@ document.addEventListener('DOMContentLoaded', function() {
       // Load the next upcoming race
       loadUpcomingRace();
     }
+
+    const form = document.getElementById('bet-form');
+    const betAmount = document.getElementById('bet-amount');
+    const betType = document.getElementById('bet-type');
+    const friendSelect = document.getElementById('friend-select');
+    const potentialWinnings = document.getElementById('potential-winnings');
+  
+    // Auto-save functionality
+    let saveTimeout;
+    const autoSave = (formData) => {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        localStorage.setItem('race-bet-draft', JSON.stringify(formData));
+      }, 1000);
+    };
+  
+    // Load saved draft
+    const loadDraft = () => {
+      const saved = localStorage.getItem('race-bet-draft');
+      if (saved) {
+        const data = JSON.parse(saved);
+        Object.entries(data).forEach(([key, value]) => {
+          const element = form.elements[key];
+          if (element) element.value = value;
+        });
+      }
+    };
+  
+    // Calculate potential winnings
+    const calculateWinnings = () => {
+      const amount = parseFloat(betAmount.value) || 0;
+      const odds = parseFloat(form.querySelector('input[name="rider-selection"]:checked')?.dataset.odds || 0);
+      potentialWinnings.textContent = `$${(amount * odds).toFixed(2)}`;
+    };
+  
+    // Event listeners
+    form.addEventListener('change', (e) => {
+      const formData = Object.fromEntries(new FormData(form));
+      autoSave(formData);
+      calculateWinnings();
+    });
+  
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      formData.append('race', currentRace.url);
+      formData.append('rider', form.querySelector('input[name="rider-selection"]:checked')?.value);
+      formData.append('odds', form.querySelector('input[name="rider-selection"]:checked')?.dataset.odds);
+      formData.append('bet_type', betType.value);
+      formData.append('bet_amount', betAmount.value);
+
+      if (friendSelect.value) {
+          formData.append('friend', friendSelect.value);
+          formData.append('message', document.getElementById('friend-message').value);
+      }
+  
+      try {
+        const response = await fetch('/api/bets/race', {
+          method: 'POST',
+          body: formData
+        });
+  
+        if (!response.ok) throw new Error('Failed to place bet');
+  
+        // Clear draft after successful submission
+        localStorage.removeItem('race-bet-draft');
+  
+        // Show success message
+        document.getElementById('success-message').style.display = 'block';
+      } catch (error) {
+        console.error('Error placing bet:', error);
+        alert('Failed to place bet. Please try again.');
+      }
+    });
+  
+    // Initialize
+    loadDraft();
     
-    // Add event listeners
-    betAmount.addEventListener('input', calculateWinnings);
-    betType.addEventListener('change', calculateWinnings);
-    friendSelect.addEventListener('change', toggleFriendDetails);
-    betForm.addEventListener('submit', handleFormSubmit);
-    
-    // Modal event listeners
+    // Modal event listeners (these are replaced by the new form submission logic, but keeping them in case needed)
     closeBtn.addEventListener('click', closeModal);
     cancelBet.addEventListener('click', closeModal);
     confirmBet.addEventListener('click', submitBet);
@@ -177,55 +249,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  function calculateWinnings() {
-    if (!selectedOdds) return;
-    
-    const amount = parseFloat(betAmount.value) || 0;
-    let multiplier = selectedOdds;
-    
-    // Adjust odds based on bet type
-    // These are simplified adjustments - in a real system these would be calculated differently
-    switch (betType.value) {
-      case 'podium':
-        multiplier = selectedOdds * 0.5; // 50% of win odds for podium finish
-        break;
-      case 'top5':
-        multiplier = selectedOdds * 0.3; // 30% of win odds for top 5 finish
-        break;
-    }
-    
-    const winnings = amount * multiplier;
-    potentialWinnings.textContent = `$${winnings.toFixed(2)}`;
-    
-    // Calculate fee (1% for non-premium members)
-    const fee = amount * 0.01;
-    feeAmount.textContent = `$${fee.toFixed(2)}`;
-  }
-  
   function toggleFriendDetails() {
     if (friendSelect.value) {
       friendDetails.style.display = 'block';
     } else {
       friendDetails.style.display = 'none';
     }
-  }
-  
-  function handleFormSubmit(e) {
-    e.preventDefault();
-    
-    // Validate form
-    if (!selectedRider) {
-      alert('Please select a rider');
-      return;
-    }
-    
-    if (!betAmount.value || parseFloat(betAmount.value) <= 0) {
-      alert('Please enter a valid bet amount');
-      return;
-    }
-    
-    // Show confirmation modal
-    showConfirmationModal();
   }
   
   function showConfirmationModal() {
