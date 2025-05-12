@@ -156,17 +156,42 @@ document.addEventListener('DOMContentLoaded', function() {
 // Populate rider select lists
 async function populateRiderList() {
   try {
-    const response = await fetch('/api/riders');
-    const riders = await response.json();
+    // Fetch both 250 and 450 class riders
+    const [response250, response450] = await Promise.all([
+      fetch('/api/riders/250'),
+      fetch('/api/riders/450')
+    ]);
+    
+    const riders250 = await response250.json();
+    const riders450 = await response450.json();
+    const allRiders = [...riders250, ...riders450];
+    
     const riderSelects = document.querySelectorAll('.rider-select');
 
     riderSelects.forEach(select => {
-      riders.forEach(rider => {
+      // Add class groupings
+      const group250 = document.createElement('optgroup');
+      group250.label = '250 Class';
+      const group450 = document.createElement('optgroup');
+      group450.label = '450 Class';
+
+      // Sort riders by number within each class
+      riders250.sort((a, b) => a.number - b.number).forEach(rider => {
         const option = document.createElement('option');
         option.value = rider.id;
-        option.textContent = `${rider.number} - ${rider.firstName} ${rider.lastName}`;
-        select.appendChild(option);
+        option.textContent = `#${rider.number} - ${rider.firstName} ${rider.lastName}`;
+        group250.appendChild(option);
       });
+
+      riders450.sort((a, b) => a.number - b.number).forEach(rider => {
+        const option = document.createElement('option');
+        option.value = rider.id;
+        option.textContent = `#${rider.number} - ${rider.firstName} ${rider.lastName}`;
+        group450.appendChild(option);
+      });
+
+      select.appendChild(group450);
+      select.appendChild(group250);
     });
   } catch (error) {
     console.error('Error loading riders:', error);
