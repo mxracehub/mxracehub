@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
   // Get elements
   const betTypeSelect = document.getElementById('bet-type');
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const friendSearch = document.getElementById('friend-search');
   const friendSearchResults = document.getElementById('friend-search-results');
-  
+
   // Sample friends data - in real app, fetch from API
   const friends = [
     { id: 1, username: 'johndoe', firstName: 'John', lastName: 'Doe' },
@@ -61,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
   friendSearch.addEventListener('input', function() {
     const searchTerm = this.value.toLowerCase();
     friendSearchResults.innerHTML = '';
-    
+
     if (searchTerm.length < 2) {
       friendSearchResults.style.display = 'none';
       return;
@@ -104,15 +103,36 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Form submission handling
-  const betForm = document.getElementById('bet-form');
-  betForm.addEventListener('submit', function(e) {
+  const form = document.getElementById('bet-form');
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    if (!selectedFriend) {
-      alert('Please select a friend to challenge');
-      return;
+
+    const formData = new FormData(form);
+    const betData = {
+      betType: formData.get('betType'),
+      rider1: formData.get('rider1'),
+      rider2: formData.get('rider2'),
+      amount: formData.get('amount'),
+      friend: formData.get('friend')
+    };
+
+    try {
+      const response = await fetch('/api/bets', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(betData)
+      });
+
+      if (response.ok) {
+        // Redirect to account bets page after successful bet
+        window.location.href = '/account/bets/';
+      } else {
+        console.error('Failed to place bet');
+      }
+    } catch (error) {
+      console.error('Error placing bet:', error);
     }
-    // Handle form submission
-    console.log('Selected friend:', selectedFriend);
-    // Add your form submission logic here
   });
 });
