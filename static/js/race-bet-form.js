@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Form submission handling
+  // Handle form submission
   const form = document.getElementById('bet-form');
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -113,11 +113,13 @@ document.addEventListener('DOMContentLoaded', function() {
       rider1: formData.get('rider1'),
       rider2: formData.get('rider2'),
       amount: formData.get('amount'),
-      friend: formData.get('friend')
+      friend: formData.get('friend'),
+      paymentMethod: formData.get('paymentMethod')
     };
 
     try {
-      const response = await fetch('/api/bets', {
+      // Submit bet and get payment info
+      const response = await fetch('/api/bets/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -125,14 +127,17 @@ document.addEventListener('DOMContentLoaded', function() {
         body: JSON.stringify(betData)
       });
 
-      if (response.ok) {
-        // Redirect to account bets page after successful bet
-        window.location.href = '/account/bets/';
-      } else {
-        console.error('Failed to place bet');
+      if (!response.ok) {
+        throw new Error('Failed to create bet');
       }
+
+      const result = await response.json();
+
+      // Redirect to payment page with bet ID
+      window.location.href = `/betting/payment?betId=${result.betId}&amount=${betData.amount}&method=${betData.paymentMethod}`;
     } catch (error) {
-      console.error('Error placing bet:', error);
+      console.error('Error:', error);
+      alert('Failed to place bet. Please try again.');
     }
   });
 });
