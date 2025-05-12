@@ -2,21 +2,22 @@
 
 /* Base styles for consistent body colors */
 :root {
-  --text-color: #1a1a1a; 
+  --text-color: #000000; 
   --background-color: #ffffff;
   --card-background: #ffffff;
-  --card-text: #111827;
-  --subtitle-text: #4b5563;
+  --card-text: #000000;
+  --subtitle-text: #333333;
+  --text-color-secondary: #595959;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --text-color: #ffffff;
-    --text-color-secondary: #a3a3a3;
+    --text-color-secondary: #d4d4d4;
     --background-color: #1a1a1a;
     --card-background: #1a1a1a;
     --card-text: #ffffff;
-    --subtitle-text: #9ca3af;
+    --subtitle-text: #e0e0e0;
   }
 }
 
