@@ -76,20 +76,20 @@ body {
     background-color: #1a1a1a;
     color: #ffffff;
   }
-  
+
   .card-subtitle {
     color: #9ca3af;
   }
-  
+
   .team-stats {
     background-color: #2d2d2d;
     color: #ffffff;
   }
-  
+
   .stat-label {
     color: #d1d5db;
   }
-  
+
   .nav-buttons a {
     color: #ffffff;
   }
@@ -528,3 +528,5 @@ body {
   color: #555;
   margin-top: 0.25rem;
 }
+
+@media (prefers-color-scheme) {
