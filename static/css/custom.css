@@ -223,13 +223,50 @@
   display: flex;
   align-items: center;
   padding: 1rem;
-  background: #f8f9fa;
+  background: #ffffff;
   border-radius: 6px;
   transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .rider-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.rider-card h3, 
+.team-card h3,
+.track-card h3,
+.event-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.rider-card p,
+.team-card p,
+.track-card p,
+.event-card p {
+  font-size: 1rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.card-label, .card-stat {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.card-value {
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.card-subtitle {
+  color: #4b5563;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .team-stats {
