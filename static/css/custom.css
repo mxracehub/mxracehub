@@ -2,23 +2,42 @@
 
 /* Base styles for consistent body colors */
 :root {
-  --text-color: #000000; 
-  --background-color: #ffffff;
-  --card-background: #ffffff;
-  --card-text: #000000;
-  --subtitle-text: #333333;
-  --text-color-secondary: #595959;
+  --text-color: 0, 0, 0;
+  --background-color: 255, 255, 255;
+  --card-background: 255, 255, 255;
+  --card-text: 0, 0, 0;
+  --subtitle-text: 51, 51, 51;
+  --text-color-secondary: 89, 89, 89;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text-color: #ffffff;
-    --text-color-secondary: #d4d4d4;
-    --background-color: #1a1a1a;
-    --card-background: #1a1a1a;
-    --card-text: #ffffff;
-    --subtitle-text: #e0e0e0;
+    --text-color: 255, 255, 255;
+    --text-color-secondary: 212, 212, 212;
+    --background-color: 26, 26, 26;
+    --card-background: 26, 26, 26;
+    --card-text: 255, 255, 255;
+    --subtitle-text: 224, 224, 224;
   }
+}
+
+body {
+  background-color: rgb(var(--background-color));
+  color: rgb(var(--text-color));
+}
+
+.rider-card, .team-card, .track-card, .event-card {
+  background-color: rgb(var(--card-background));
+  color: rgb(var(--card-text));
+}
+
+.card-subtitle {
+  color: rgb(var(--text-color-secondary));
+}
+
+.transfer-card {
+  background-color: rgb(var(--card-background));
+  color: rgb(var(--card-text));
 }
 
 body {
