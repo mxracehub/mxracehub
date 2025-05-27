@@ -14,3 +14,4 @@ externalPort = 8080
 
 [deployment]
 deploymentTarget = "cloudrun"
+run = ["sh", "-c", "npx ts-node server/index.ts"]

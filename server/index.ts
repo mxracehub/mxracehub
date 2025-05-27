@@ -19,7 +19,7 @@ async function startServer() {
   // Start Hugo server in the background
   console.log('Starting Hugo server...');
   try {
-    const hugoProcess = exec('cd hugo-site && ./run-hugo.sh', (error, stdout, stderr) => {
+    const hugoProcess = exec('cd hugo-site && hugo server --bind 0.0.0.0 --port 3000 --buildDrafts --buildFuture', (error, stdout, stderr) => {
       if (error) {
         console.error(`Error starting Hugo server: ${error.message}`);
         return;
@@ -86,7 +86,7 @@ async function startServer() {
   httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`MXRaceHub server running on port ${PORT}`);
     console.log(`Hugo server running on port 3000`);
-    console.log(`Access the site at: http://localhost:${PORT}`);
+    console.log(`Access the site at: http://0.0.0.0:${PORT}`);
   });
 }
 
