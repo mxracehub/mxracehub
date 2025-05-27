@@ -1,7 +1,7 @@
 const { spawn } = require('child_process');
 
 // Start the server with ts-node and bypass strict type checking
-const server = spawn('npx', ['ts-node', '--transpile-only', 'server/index.ts'], {
+const server = spawn('npx', ['ts-node', '--transpile-only', '-r', 'tsconfig-paths/register', 'server/index.ts'], {
   stdio: 'inherit',
   env: { ...process.env, NODE_ENV: 'development' }
 });
