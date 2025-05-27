@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer } from "ws";
 import Stripe from "stripe";
@@ -12,7 +12,7 @@ import { users, friendBets, groups, groupBets, races, riders, tracks, transactio
 let stripe: Stripe | undefined;
 if (process.env.STRIPE_SECRET_KEY) {
   stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2023-10-16",
+    apiVersion: "2025-04-30.basil",
   });
 }
 
