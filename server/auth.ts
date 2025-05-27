@@ -5,11 +5,11 @@ import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
-import { User } from "@shared/schema";
+import { User as SelectUser } from "@shared/schema";
 
 declare global {
   namespace Express {
-    interface User extends User {}
+    interface User extends SelectUser {}
   }
 }
 
@@ -110,7 +110,7 @@ export function setupAuth(app: Express) {
         
         // Remove password from response
         const userResponse = { ...user };
-        delete userResponse.password;
+        delete (userResponse as any).password;
         
         return res.status(201).json(userResponse);
       });
@@ -120,7 +120,7 @@ export function setupAuth(app: Express) {
   });
 
   app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
+    passport.authenticate("local", (err: any, user: any, info: any) => {
       if (err) return next(err);
       if (!user) return res.status(401).json({ message: info.message || "Authentication failed" });
       
@@ -129,7 +129,7 @@ export function setupAuth(app: Express) {
         
         // Remove password from response
         const userResponse = { ...user };
-        delete userResponse.password;
+        delete (userResponse as any).password;
         
         return res.json(userResponse);
       });

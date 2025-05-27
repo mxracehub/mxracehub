@@ -12,6 +12,7 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
     "@types/connect-pg-simple": "^7.0.3",
+    "@types/cors": "^2.8.18",
     "@types/express": "^5.0.1",
     "@types/express-session": "^1.18.1",
     "@types/passport": "^1.0.17",

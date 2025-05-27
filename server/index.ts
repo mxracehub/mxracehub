@@ -82,7 +82,7 @@ async function startServer() {
   });
   
   // Start server
-  const PORT = process.env.PORT || 8080;
+  const PORT = Number(process.env.PORT) || 8080;
   httpServer.listen(PORT, '0.0.0.0', () => {
     console.log(`MXRaceHub server running on port ${PORT}`);
     console.log(`Hugo server running on port 3000`);
