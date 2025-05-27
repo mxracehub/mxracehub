@@ -19,7 +19,7 @@ async function startServer() {
   // Start Hugo server in the background
   console.log('Starting Hugo server...');
   try {
-    const hugoProcess = exec('cd hugo-site && hugo server --bind 0.0.0.0 --port 3000 --buildDrafts --buildFuture', (error, stdout, stderr) => {
+    const hugoProcess = exec('cd ../hugo-site && hugo server --bind 0.0.0.0 --port 3000 --buildDrafts --buildFuture', (error, stdout, stderr) => {
       if (error) {
         console.error(`Error starting Hugo server: ${error.message}`);
         return;
