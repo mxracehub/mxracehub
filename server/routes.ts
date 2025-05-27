@@ -749,6 +749,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           await storage.updateStripeCustomerId(user.id, customerId);
         }
         
+        // Ensure customerId is not null before proceeding
+        if (!customerId) {
+          return res.status(500).json({ message: "Failed to create or retrieve Stripe customer" });
+        }
+        
         if (!process.env.STRIPE_PRICE_ID) {
           return res.status(500).json({ message: "Stripe price ID not configured" });
         }
