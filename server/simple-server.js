@@ -88,7 +88,31 @@ app.get('/login', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, '0.0.0.0', () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`MXRaceHub Racing Platform running on port ${PORT}`);
   console.log(`Preview available at: http://0.0.0.0:${PORT}`);
+});
+
+// Keep server alive
+process.on('SIGINT', () => {
+  console.log('Gracefully shutting down...');
+  server.close(() => {
+    process.exit(0);
+  });
+});
+
+process.on('SIGTERM', () => {
+  console.log('Gracefully shutting down...');
+  server.close(() => {
+    process.exit(0);
+  });
+});
+
+// Prevent crashes
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
 });
