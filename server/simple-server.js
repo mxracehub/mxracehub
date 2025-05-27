@@ -2,11 +2,19 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 5000;
 
 // Basic middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '../hugo-site/public')));
+
+// Serve static files with proper error handling
+app.use(express.static(path.join(__dirname, '../hugo-site/public'), {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
 
 // Simple homepage route
 app.get('/', (req, res) => {
@@ -91,6 +99,7 @@ app.get('/login', (req, res) => {
 const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`MXRaceHub Racing Platform running on port ${PORT}`);
   console.log(`Preview available at: http://0.0.0.0:${PORT}`);
+  console.log(`Access via Replit preview or webview`);
 });
 
 // Keep server alive
