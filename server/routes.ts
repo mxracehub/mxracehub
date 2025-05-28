@@ -26,6 +26,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date() });
   });
+
+  // Enhanced user profile endpoint with complete membership sync
+  app.get("/api/user/profile", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      
+      // Get complete membership details - same as login
+      const userWithMembership = await storage.getUserWithMembershipDetails(userId);
+      
+      // Remove password from response
+      const userResponse = { ...userWithMembership };
+      delete (userResponse as any).password;
+      
+      res.json(userResponse);
+    } catch (error) {
+      console.error('Error fetching user profile:', error);
+      res.status(500).json({ message: "Failed to fetch user profile" });
+    }
+  });
   
   // Rider endpoints
   app.get("/api/riders", async (req, res) => {
