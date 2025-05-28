@@ -1,15 +1,26 @@
 
 // Teams page functionality
 document.addEventListener('DOMContentLoaded', function() {
-  // Handle image loading errors
-  const images = document.querySelectorAll('.gallery-img, .rider-image, .partner-logo');
+  // Handle image loading errors with proper fallback
+  const images = document.querySelectorAll('.gallery-img, .rider-image, .partner-logo, .team-logo');
   images.forEach(img => {
     img.addEventListener('error', function() {
-      this.style.backgroundColor = '#f5f5f5';
-      this.style.display = 'flex';
-      this.style.alignItems = 'center';
-      this.style.justifyContent = 'center';
-      this.innerHTML = '<span style="color: #999; font-size: 14px;">Image not available</span>';
+      // Create fallback container
+      const fallback = document.createElement('div');
+      fallback.style.cssText = `
+        background-color: #f5f5f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: ${this.offsetWidth || 100}px;
+        height: ${this.offsetHeight || 100}px;
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+      `;
+      fallback.innerHTML = '<span style="color: #999; font-size: 14px; text-align: center;">Team Logo</span>';
+      
+      // Replace image with fallback
+      this.parentNode.replaceChild(fallback, this);
     });
   });
 

@@ -229,17 +229,41 @@
 {{- /* Load JavaScript fallbacks */ -}}
 <script src="/js/fix-mediumzoom.js"></script>
 <script>
-// jQuery fallback
+// jQuery fallback - comprehensive replacement
 if (typeof $ === 'undefined') {
-  window.$ = function() {
+  window.$ = function(selector) {
+    const elements = typeof selector === 'string' ? document.querySelectorAll(selector) : [selector];
     return {
-      ready: function(fn) { if (document.readyState !== 'loading') fn(); else document.addEventListener('DOMContentLoaded', fn); },
-      click: function() { return this; },
-      addClass: function() { return this; },
-      removeClass: function() { return this; },
-      toggle: function() { return this; }
+      ready: function(fn) { 
+        if (document.readyState !== 'loading') fn(); 
+        else document.addEventListener('DOMContentLoaded', fn); 
+        return this;
+      },
+      click: function(fn) { 
+        elements.forEach(el => el && el.addEventListener && el.addEventListener('click', fn)); 
+        return this; 
+      },
+      addClass: function(className) { 
+        elements.forEach(el => el && el.classList && el.classList.add(className)); 
+        return this; 
+      },
+      removeClass: function(className) { 
+        elements.forEach(el => el && el.classList && el.classList.remove(className)); 
+        return this; 
+      },
+      toggle: function() { 
+        elements.forEach(el => el && el.style && (el.style.display = el.style.display === 'none' ? '' : 'none')); 
+        return this; 
+      },
+      each: function(fn) {
+        elements.forEach((el, i) => fn.call(el, i, el));
+        return this;
+      },
+      length: elements.length
     };
   };
+  // Add document ready shorthand
+  window.$.ready = window.$.fn = window.$;
 }
 </script>
 
