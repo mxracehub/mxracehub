@@ -40,7 +40,7 @@ Discover the top competitors in both 450 and 250 classes with professional team-
 </div>
 
 <!-- Desktop Grid (hidden on mobile) -->
-<div class="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 my-8">
+<div class="hidden">
   <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
     <div class="relative overflow-hidden">
       <img src="/img/riders/jett-lawrence.svg" alt="Jett Lawrence" class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-110">
