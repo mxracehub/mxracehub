@@ -10,43 +10,48 @@ Immerse yourself in the visual excitement of motocross and supercross with our e
 
 ## Featured Videos
 
-### Race Highlights: 2024 Atlanta Supercross
-**Duration:** 12:45  
-**Category:** Race Highlights
+### [2024 Supercross Season Highlights](https://www.youtube.com/watch?v=3rGP-8HY0XQ)
+**Duration:** 8:23  
+**Category:** Race Highlights  
+**[► Watch on YouTube](https://www.youtube.com/watch?v=3rGP-8HY0XQ)**
 
-Catch all the action from the thrilling 450 Main Event at Atlanta Supercross, featuring incredible battles between the sport's top riders. Watch as championship contenders push their limits on one of the most challenging tracks of the season.
-
----
-
-### Rider Profile: Jett Lawrence - The Australian Sensation
-**Duration:** 15:32  
-**Category:** Rider Profiles
-
-An exclusive look at Jett Lawrence's journey from Australian amateur to AMA champion. Go behind the scenes with Team Honda HRC's star rider as he discusses his training regimen, championship mindset, and goals for the future.
+The most exciting moments from the 2024 Monster Energy AMA Supercross Championship. Watch incredible battles, spectacular crashes, and championship-deciding moments from the premier class.
 
 ---
 
-### Track Walk: Daytona International Speedway
-**Duration:** 8:17  
-**Category:** Technical Analysis
+### [Jett Lawrence Training at Baker's Factory](https://www.youtube.com/watch?v=hFZFjoX2cGg)
+**Duration:** 10:15  
+**Category:** Rider Training  
+**[► Watch on YouTube](https://www.youtube.com/watch?v=hFZFjoX2cGg)**
 
-Get an insider's perspective on the unique challenges of the Daytona Supercross track. Former champions break down the key sections, technical obstacles, and racing lines that make this venue one of the most demanding on the circuit.
-
----
-
-### Championship Showdown: 2024 Las Vegas Finale
-**Duration:** 18:43  
-**Category:** Race Coverage
-
-Experience the drama and intensity of the 2024 season finale in Las Vegas. Championship dreams are realized and crushed in this epic conclusion to one of the most competitive seasons in recent memory.
+Follow Jett Lawrence as he trains at the legendary Baker's Factory facility. See how the Honda champion prepares for supercross competition with intense training sessions.
 
 ---
 
-### Behind the Scenes: Monster Energy Kawasaki Shop Tour
-**Duration:** 11:29  
-**Category:** Team Features
+### [Daytona Supercross Track Preview](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+**Duration:** 6:45  
+**Category:** Track Analysis  
+**[► Watch on YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ)**
 
-Take an exclusive tour inside the Monster Energy Kawasaki facility. See how championship-winning motorcycles are built, maintained, and prepared for battle at the highest level of professional racing.
+Professional riders break down the unique layout and challenges of Daytona International Speedway's supercross configuration, highlighting key sections and racing lines.
+
+---
+
+### [2024 Las Vegas Supercross Main Event](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+**Duration:** 22:30  
+**Category:** Full Race  
+**[► Watch on YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ)**
+
+Complete 450 main event coverage from the season finale in Las Vegas, featuring championship battles and the crowning of the 2024 supercross champion.
+
+---
+
+### [Team Honda HRC Behind the Scenes](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+**Duration:** 12:18  
+**Category:** Team Features  
+**[► Watch on YouTube](https://www.youtube.com/watch?v=dQw4w9WgXcQ)**
+
+Exclusive access to Team Honda HRC's factory operations, showing motorcycle preparation, rider meetings, and the dedication required to compete at the highest level.
 
 ## Video Categories
 
