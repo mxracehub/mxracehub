@@ -5,7 +5,6 @@ description: "American Honda's factory Supercross/Motocross team with a rich his
 layout: "single"
 ---
 
-{{< rawhtml >}}
 <div class="team-profile">
   <div class="team-header" style="background-color: #e2001a;">
     <img src="/img/teams/honda-logo.svg" alt="Team Honda HRC" class="team-logo">

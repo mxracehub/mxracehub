@@ -18,7 +18,7 @@ disableTextInHeader = false
 
 # Disable problematic JS features that cause errors
 disableImageZoom = true
-disableJavaScript = false
+disableJavaScript = true
 enableImageZoom = false
 
 # Using custom SVG images that show rider numbers and manufacturer logos
