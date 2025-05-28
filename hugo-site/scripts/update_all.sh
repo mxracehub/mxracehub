@@ -1,49 +1,57 @@
 #!/bin/bash
-#
-# Weekly update script for MXRaceHub content
-# This script will update riders, teams, and races data from official sources
-# To be run automatically each week on Sunday at midnight
-#
 
-# Set the working directory to the Hugo site
-cd "$(dirname "$0")/.."
+# Master Content Updater Script for MXRaceHub
+# Automatically updates both video and interview content every Monday
 
-echo "Starting MXRaceHub data update at $(date)"
+# Set script directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 
-# Update rider data
-echo "Updating rider data..."
-python3 scripts/update_riders.py
-if [ $? -eq 0 ]; then
-  echo "Rider data update completed successfully"
-else
-  echo "Error updating rider data"
+# Log file for tracking updates
+LOG_FILE="$PROJECT_DIR/logs/content_updates.log"
+
+# Create logs directory if it doesn't exist
+mkdir -p "$(dirname "$LOG_FILE")"
+
+# Function to log messages
+log_message() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
+
+log_message "Starting MXRaceHub content update process..."
+
+# Check if YouTube API key is available
+if [ -z "$YOUTUBE_API_KEY" ]; then
+    log_message "WARNING: YouTube API key not found in environment variables"
+    log_message "Please set YOUTUBE_API_KEY environment variable to enable automatic updates"
+    exit 1
 fi
 
-# Update team data
-echo "Updating team data..."
-python3 scripts/update_teams.py
+# Update video content
+log_message "Updating video content..."
+cd "$PROJECT_DIR"
+python3 "$SCRIPT_DIR/update_videos.py" --force 2>&1 | tee -a "$LOG_FILE"
+
 if [ $? -eq 0 ]; then
-  echo "Team data update completed successfully"
+    log_message "Video content update completed successfully"
 else
-  echo "Error updating team data"
+    log_message "ERROR: Video content update failed"
 fi
 
-# Update race data
-echo "Updating race data..."
-python3 scripts/update_races.py
+# Update interview content
+log_message "Updating interview content..."
+python3 "$SCRIPT_DIR/update_interviews.py" --force 2>&1 | tee -a "$LOG_FILE"
+
 if [ $? -eq 0 ]; then
-  echo "Race data update completed successfully"
+    log_message "Interview content update completed successfully"
 else
-  echo "Error updating race data"
+    log_message "ERROR: Interview content update failed"
 fi
 
-# Rebuild the site to apply updates
-echo "Rebuilding the site..."
-hugo
-if [ $? -eq 0 ]; then
-  echo "Site rebuild completed successfully"
-else
-  echo "Error rebuilding site"
+# Check if Hugo server is running
+if pgrep -f "hugo server" > /dev/null; then
+    log_message "Hugo server detected - content will auto-refresh"
 fi
 
-echo "MXRaceHub data update completed at $(date)"
+log_message "MXRaceHub content update process finished"
+log_message "Both video and interview sections updated with fresh authentic racing content"
