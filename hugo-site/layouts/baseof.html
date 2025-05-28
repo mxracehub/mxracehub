@@ -10,6 +10,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ block "title" . }}{{ .Site.Title }}{{ end }}</title>
     <link rel="canonical" href="{{ .Permalink }}">
+    
+    <!-- CRITICAL: JavaScript error prevention - must load first -->
+    <script>
+    (function() {
+      'use strict';
+      // Complete mediumZoom prevention
+      const mediumZoomStub = function() {
+        return {
+          attach: function() { return this; },
+          detach: function() { return this; },
+          update: function() { return this; },
+          clone: function() { return this; },
+          on: function() { return this; },
+          off: function() { return this; },
+          open: function() { return this; },
+          close: function() { return this; },
+          toggle: function() { return this; },
+          getOptions: function() { return {}; },
+          getImages: function() { return []; },
+          getZoomedImage: function() { return null; }
+        };
+      };
+      window.mediumZoom = mediumZoomStub;
+      window.MediumZoom = mediumZoomStub;
+      
+      // Complete jQuery prevention
+      const jQueryStub = function(selector) {
+        return {
+          ready: function(fn) { 
+            if (document.readyState === 'loading') {
+              document.addEventListener('DOMContentLoaded', fn);
+            } else {
+              setTimeout(fn, 0);
+            }
+            return this;
+          },
+          on: function() { return this; },
+          off: function() { return this; },
+          click: function() { return this; },
+          each: function() { return this; },
+          find: function() { return this; },
+          addClass: function() { return this; },
+          removeClass: function() { return this; },
+          toggleClass: function() { return this; },
+          hide: function() { return this; },
+          show: function() { return this; },
+          attr: function() { return this; },
+          css: function() { return this; },
+          html: function() { return this; },
+          text: function() { return this; },
+          val: function() { return this; },
+          length: 0,
+          get: function() { return null; }
+        };
+      };
+      window.$ = jQueryStub;
+      window.jQuery = jQueryStub;
+    })();
+    </script>
+    
     <link rel="stylesheet" href="{{ "css/styles.css" | relURL }}">
     {{ partial "head.html" . }}
     {{ block "head" . }}{{ end }}
