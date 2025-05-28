@@ -1,87 +1,128 @@
-# MXRaceHub Automatic Update Scripts
+# Automatic Video Content Updates
 
-This directory contains scripts for automatically updating MXRaceHub content with the latest data from SupercrossLive.com.
+This system automatically fetches the latest videos from official @AmericanMotocross and @SupercrossLive YouTube channels and updates your video content page every Monday.
 
-## Scripts Overview
+## Setup Instructions
 
-- `update_all.sh` - Master script that runs all individual update scripts
-- `update_riders.sh` - Updates rider profiles, stats, and images
-- `update_teams.sh` - Updates team information, rosters, and images
-- `update_riders.py` - Python implementation of rider data scraping
-- `update_teams.py` - Python implementation of team data scraping
+### 1. Get YouTube API Key
 
-## Requirements
+You'll need a YouTube Data API v3 key to fetch authentic video content:
 
-- Python 3.6 or higher
-- Required Python packages:
-  - requests
-  - beautifulsoup4
-  - html5lib
-- Bash shell environment
-- Cron (for scheduling)
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing one
+3. Enable the YouTube Data API v3
+4. Create credentials (API Key)
+5. Copy your API key
 
-## Installation
+### 2. Set Environment Variable
 
-1. Make sure all scripts are executable:
-   ```
-   chmod +x *.sh
-   ```
+Add your YouTube API key to your environment:
 
-2. Install required Python packages:
-   ```
-   pip install requests beautifulsoup4 html5lib
-   ```
-
-3. Set up scheduled updates using cron:
-   ```
-   # Edit path in crontab.txt to match your environment
-   nano crontab.txt
-   
-   # Install the crontab
-   crontab crontab.txt
-   
-   # Verify installation
-   crontab -l
-   ```
-
-## Manual Execution
-
-You can also run the update scripts manually:
-
-```
-# Update everything
-./update_all.sh
-
-# Update only riders
-./update_riders.sh
-
-# Update only teams
-./update_teams.sh
+```bash
+export YOUTUBE_API_KEY="your_api_key_here"
 ```
 
-## Logs
+Or add it to your `.env` file:
+```
+YOUTUBE_API_KEY=your_api_key_here
+```
 
-Logs are stored in the `logs` directory with timestamps. Check these logs to troubleshoot any issues with the update process.
+### 3. Install Automatic Updates
 
-## Customization
+To set up automatic Monday updates, install the cron job:
 
-If you need to customize the update behavior:
+```bash
+# Edit the cron job file to include your correct project path
+nano hugo-site/scripts/crontab.txt
 
-1. Edit the Python scripts to modify scraping logic
-2. Edit the shell scripts to modify execution flow
-3. Edit crontab.txt to modify scheduling
+# Install the cron job
+crontab hugo-site/scripts/crontab.txt
+```
+
+### 4. Manual Testing
+
+Test the video update system manually:
+
+```bash
+# Run the update script
+./hugo-site/scripts/update_videos.sh
+
+# Or run the Python script directly
+cd hugo-site && python3 scripts/update_videos.py --force
+```
+
+## How It Works
+
+### Official Channel Sources
+- **@AmericanMotocross**: Professional motocross race coverage
+- **@SupercrossLive**: Official AMA Supercross content
+
+### Content Categories
+The system automatically categorizes videos into:
+- Race Highlights
+- Interviews
+- Practice & Qualifying
+- Track Analysis
+- Behind the Scenes
+
+### Update Schedule
+- **Primary**: Every Monday at 6:00 AM
+- **Backup**: Every Monday at 6:00 PM (in case morning update fails)
+- **Manual**: Run anytime with `--force` flag
+
+### Generated Content
+The system creates authentic content including:
+- Video titles and descriptions from official channels
+- Accurate video durations
+- Direct YouTube links for immediate viewing
+- Automatic categorization based on content
+
+## File Structure
+
+```
+hugo-site/scripts/
+├── update_videos.py     # Main Python script for fetching videos
+├── update_videos.sh     # Shell script wrapper with logging
+├── crontab.txt         # Cron job configuration
+└── README.md           # This documentation
+
+hugo-site/logs/
+└── video_updates.log   # Update logs and error tracking
+
+hugo-site/content/news/video/
+└── _index.md          # Video content page (auto-updated)
+```
 
 ## Troubleshooting
 
-If updates are failing:
+### Common Issues
 
-1. Check the logs in the `logs` directory
-2. Verify network connectivity to SupercrossLive.com
-3. Run the scripts manually with verbose output
-4. Check for changes to the SupercrossLive.com HTML structure that might break scraping
+1. **No API Key**: Ensure YOUTUBE_API_KEY environment variable is set
+2. **Python Dependencies**: Install requests library: `pip3 install requests`
+3. **Permissions**: Make sure script is executable: `chmod +x update_videos.sh`
+4. **Cron Path**: Update crontab.txt with your actual project path
 
-## Additional Notes
+### Log Files
 
-- Updates are scheduled to run at midnight every Sunday by default
-- All times are interpreted in the server's local timezone
-- The scripts include retry logic for network resilience
+Check update logs for troubleshooting:
+```bash
+tail -f hugo-site/logs/video_updates.log
+```
+
+### Manual Update
+
+Force an immediate update regardless of day:
+```bash
+cd hugo-site
+python3 scripts/update_videos.py --force
+```
+
+## Benefits
+
+✅ **Authentic Content**: Direct from official racing channels
+✅ **Fresh Updates**: New videos every Monday automatically  
+✅ **Real Links**: Actual YouTube videos fans can watch
+✅ **Smart Categories**: Automatic content organization
+✅ **Error Logging**: Track updates and troubleshoot issues
+
+Your video section will always showcase the latest authentic motocross and supercross content!
