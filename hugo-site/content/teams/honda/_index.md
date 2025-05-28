@@ -8,7 +8,7 @@ layout: "single"
   <div class="team-header" style="background-color: #e2001a;">
     <img src="/img/teams/honda-logo.svg" alt="Team Honda HRC" class="team-logo">
   </div>
-  
+
   <div class="team-overview">
     <div class="team-intro">
       <h1 class="team-name">Team Honda HRC</h1>
@@ -41,17 +41,17 @@ layout: "single"
         </span>
       </div>
     </div>
-    
+
     <div class="team-description">
       <p>Team Honda HRC is the factory motocross racing team of American Honda Motor Co., Inc. With a rich racing history spanning five decades, Honda has earned its reputation as one of the most successful teams in the AMA Supercross and Motocross competition.</p>
-      
+
       <p>In recent years, the team has reached new heights with the signing of the Lawrence brothers, with Jett Lawrence capturing multiple championships and becoming one of the sport's brightest stars. Honda's commitment to excellence extends from their racing program to their production motorcycles, with technology and innovations often transferring from the race team to consumer products.</p>
     </div>
   </div>
-  
+
   <div class="team-section">
     <h2 class="section-title">Current Riders</h2>
-    
+
     <div class="riders-grid">
       <div class="rider-card">
         <div class="rider-image" style="background-image: url('/img/riders/jett-lawrence.jpg')">
@@ -77,7 +77,7 @@ layout: "single"
           </div>
         </div>
       </div>
-      
+
       <div class="rider-card">
         <div class="rider-image" style="background-image: url('/img/riders/hunter-lawrence.jpg')">
           <div class="rider-number">96</div>
@@ -102,7 +102,7 @@ layout: "single"
           </div>
         </div>
       </div>
-      
+
       <div class="rider-card">
         <div class="rider-image" style="background-image: url('/img/riders/chance-hymas.jpg')">
           <div class="rider-number">357</div>
@@ -129,10 +129,10 @@ layout: "single"
       </div>
     </div>
   </div>
-  
+
   <div class="team-section">
     <h2 class="section-title">Team History</h2>
-    
+
     <div class="history-timeline">
       <div class="timeline-item">
         <div class="timeline-year">1973</div>
@@ -141,7 +141,7 @@ layout: "single"
           <p>American Honda forms its first official factory racing team with Gary Jones, who would go on to win the AMA 250cc National Motocross Championship that same year.</p>
         </div>
       </div>
-      
+
       <div class="timeline-item">
         <div class="timeline-year">1980s</div>
         <div class="timeline-content">
@@ -149,7 +149,7 @@ layout: "single"
           <p>Honda dominated the 1980s with riders like David Bailey, Rick Johnson, and Jeff Stanton winning multiple championships across Supercross and Motocross.</p>
         </div>
       </div>
-      
+
       <div class="timeline-item">
         <div class="timeline-year">1990s</div>
         <div class="timeline-content">
@@ -157,7 +157,7 @@ layout: "single"
           <p>Jeremy McGrath led Honda to multiple Supercross championships, cementing his status as the "King of Supercross" during his time with the team.</p>
         </div>
       </div>
-      
+
       <div class="timeline-item">
         <div class="timeline-year">2000s</div>
         <div class="timeline-content">
@@ -165,7 +165,7 @@ layout: "single"
           <p>Ricky Carmichael joined Honda in 2002 and continued his championship winning ways, adding to the team's impressive trophy collection.</p>
         </div>
       </div>
-      
+
       <div class="timeline-item">
         <div class="timeline-year">2010s</div>
         <div class="timeline-content">
@@ -173,7 +173,7 @@ layout: "single"
           <p>Honda worked through a rebuilding phase with riders like Trey Canard, Cole Seely, and Ken Roczen showing flashes of brilliance despite challenges.</p>
         </div>
       </div>
-      
+
       <div class="timeline-item">
         <div class="timeline-year">2020s</div>
         <div class="timeline-content">
@@ -183,10 +183,10 @@ layout: "single"
       </div>
     </div>
   </div>
-  
+
   <div class="team-section">
     <h2 class="section-title">Championship History</h2>
-    
+
     <div class="championship-table">
       <table>
         <thead>
@@ -246,10 +246,10 @@ layout: "single"
       </table>
     </div>
   </div>
-  
+
   <div class="team-section">
     <h2 class="section-title">Team Gallery</h2>
-    
+
     <div class="team-gallery">
       <div class="gallery-item">
         <img src="/img/teams/honda/team-2023.jpg" alt="Team Honda HRC 2023" class="gallery-img">
@@ -265,10 +265,10 @@ layout: "single"
       </div>
     </div>
   </div>
-  
+
   <div class="team-section">
     <h2 class="section-title">Technical Partners</h2>
-    
+
     <div class="partners-grid">
       <div class="partner-item">
         <img src="/img/sponsors/showa.png" alt="Showa" class="partner-logo">
@@ -309,7 +309,7 @@ layout: "single"
     max-width: 1200px;
     margin: 0 auto;
   }
-  
+
   .team-header {
     background-color: #e2001a;
     padding: 3rem;
@@ -319,55 +319,55 @@ layout: "single"
     margin-bottom: 2rem;
     border-radius: 0.5rem;
   }
-  
+
   .team-logo {
     max-width: 300px;
     max-height: 150px;
     filter: brightness(0) invert(1);
   }
-  
+
   .team-overview {
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
     margin-bottom: 3rem;
   }
-  
+
   .team-name {
     font-size: 2.5rem;
     margin-bottom: 1rem;
     font-weight: 700;
   }
-  
+
   .team-meta {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     margin-bottom: 1.5rem;
   }
-  
+
   .meta-item {
     display: flex;
     align-items: center;
     color: #666;
   }
-  
+
   .meta-icon {
     margin-right: 0.5rem;
     display: flex;
     align-items: center;
   }
-  
+
   .team-description p {
     margin-bottom: 1rem;
     font-size: 1.1rem;
     line-height: 1.6;
   }
-  
+
   .team-section {
     margin-bottom: 4rem;
   }
-  
+
   .section-title {
     font-size: 1.75rem;
     font-weight: 700;
@@ -375,32 +375,32 @@ layout: "single"
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #e2001a;
   }
-  
+
   .riders-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
   }
-  
+
   .rider-card {
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  
+
   .rider-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 24px rgba(0,0,0,0.15);
   }
-  
+
   .rider-image {
     height: 240px;
     background-size: cover;
     background-position: center;
     position: relative;
   }
-  
+
   .rider-number {
     position: absolute;
     top: 0.75rem;
@@ -413,7 +413,7 @@ layout: "single"
     border-radius: 0.25rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
-  
+
   .rider-class {
     position: absolute;
     bottom: 0.75rem;
@@ -425,35 +425,35 @@ layout: "single"
     padding: 0.25rem 0.75rem;
     border-radius: 0.25rem;
   }
-  
+
   .rider-info {
     padding: 1.5rem;
     background-color: white;
   }
-  
+
   .rider-info h3 {
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
     font-weight: 600;
   }
-  
+
   .rider-info h3 a {
     color: #333;
     text-decoration: none;
     transition: color 0.2s ease;
   }
-  
+
   .rider-info h3 a:hover {
     color: #e2001a;
   }
-  
+
   .rider-description {
     color: #666;
     margin-bottom: 1.25rem;
     font-size: 0.95rem;
     line-height: 1.5;
   }
-  
+
   .rider-stats {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -462,27 +462,27 @@ layout: "single"
     padding: 1rem;
     border-radius: 0.25rem;
   }
-  
+
   .stat {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
+
   .stat-value {
     font-weight: 700;
     font-size: 1.1rem;
     color: #e2001a;
     margin-bottom: 0.25rem;
   }
-  
+
   .stat-label {
     font-size: 0.8rem;
     color: #666;
     line-height: 1.3;
   }
-  
+
   .history-timeline {
     display: flex;
     flex-direction: column;
@@ -490,7 +490,7 @@ layout: "single"
     position: relative;
     padding-left: 3rem;
   }
-  
+
   .history-timeline::before {
     content: "";
     position: absolute;
@@ -500,11 +500,11 @@ layout: "single"
     width: 2px;
     background-color: #ddd;
   }
-  
+
   .timeline-item {
     position: relative;
   }
-  
+
   .timeline-item::before {
     content: "";
     position: absolute;
@@ -516,89 +516,89 @@ layout: "single"
     border-radius: 50%;
     z-index: 1;
   }
-  
+
   .timeline-year {
     font-weight: 700;
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: #e2001a;
   }
-  
+
   .timeline-content h3 {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
   }
-  
+
   .timeline-content p {
     color: #666;
     line-height: 1.5;
   }
-  
+
   .championship-table {
     overflow-x: auto;
   }
-  
+
   .championship-table table {
     width: 100%;
     border-collapse: collapse;
   }
-  
+
   .championship-table th {
     text-align: left;
     background-color: #f2f2f2;
     padding: 1rem;
     border-bottom: 2px solid #ddd;
   }
-  
+
   .championship-table td {
     padding: 1rem;
     border-bottom: 1px solid #ddd;
   }
-  
+
   .team-gallery {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
   }
-  
+
   .gallery-item {
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
-  
+
   .gallery-img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
   }
-  
+
   .gallery-item:hover .gallery-img {
     transform: scale(1.05);
   }
-  
+
   .gallery-caption {
     padding: 1rem;
     background-color: white;
     font-size: 0.9rem;
     color: #666;
   }
-  
+
   .partners-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 2rem;
   }
-  
+
   .partner-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
+
   .partner-logo {
     max-width: 100px;
     max-height: 80px;
@@ -606,54 +606,54 @@ layout: "single"
     filter: grayscale(1);
     transition: filter 0.3s ease;
   }
-  
+
   .partner-item:hover .partner-logo {
     filter: grayscale(0);
   }
-  
+
   .partner-name {
     font-weight: 600;
     font-size: 1rem;
     margin-bottom: 0.25rem;
   }
-  
+
   .partner-role {
     font-size: 0.85rem;
     color: #666;
   }
-  
+
   @media (min-width: 768px) {
     .team-overview {
       grid-template-columns: 1fr 1fr;
     }
-    
+
     .riders-grid {
       grid-template-columns: repeat(3, 1fr);
     }
   }
-  
+
   @media (max-width: 767px) {
     .team-meta {
       flex-direction: column;
       gap: 0.75rem;
     }
-    
+
     .team-name {
       font-size: 2rem;
     }
-    
+
     .section-title {
       font-size: 1.5rem;
     }
-    
+
     .history-timeline {
       padding-left: 2rem;
     }
-    
+
     .timeline-item::before {
       left: -2rem;
     }
-    
+
     .history-timeline::before {
       left: 0.6rem;
     }

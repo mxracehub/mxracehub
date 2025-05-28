@@ -4,9 +4,13 @@ description: "Official Supercross and Motocross factory teams and their riders"
 layout: "list"
 ---
 
-# MX/SX Factory Teams
+# Professional Motocross & Supercross Teams
 
-Explore the top factory teams in professional Supercross and Motocross racing. These teams represent the elite level of the sport, with the best riders, equipment, and technical support.
+Discover the premier racing teams that compete at the highest levels of AMA Supercross and Pro Motocross. These factory and satellite teams represent the pinnacle of motorcycle racing with world-class riders, cutting-edge technology, and championship-winning machinery.
+
+## 2024 Season Team Overview
+
+The current season features intense competition among the major manufacturers, each fielding their best riders and most advanced motorcycles. From factory Honda's championship-winning Lawrence brothers to KTM's star-studded lineup, every team brings unique strengths to the championship battle.
 
 <div class="teams-grid">
   <!-- Honda Team -->
@@ -221,7 +225,7 @@ Explore the top factory teams in professional Supercross and Motocross racing. T
 <style>
   .teams-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 2rem;
     margin: 2rem 0;
   }
@@ -229,31 +233,39 @@ Explore the top factory teams in professional Supercross and Motocross racing. T
   .team-card {
     display: flex;
     flex-direction: column;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     background-color: #fff;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
   }
   
   .team-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
+    border-color: #d1d5db;
   }
   
   .team-header {
-    padding: 2rem;
+    padding: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 120px;
+    min-height: 140px;
     position: relative;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
   }
   
   .team-logo {
-    max-width: 180px;
-    max-height: 80px;
+    max-width: 200px;
+    max-height: 90px;
     filter: brightness(0) invert(1);
+    transition: transform 0.3s ease;
+  }
+  
+  .team-card:hover .team-logo {
+    transform: scale(1.05);
   }
   
   .secondary-logo {
@@ -272,23 +284,25 @@ Explore the top factory teams in professional Supercross and Motocross racing. T
   }
   
   .team-content {
-    padding: 1.5rem;
+    padding: 2rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
   }
   
   .team-name {
-    font-size: 1.5rem;
-    margin: 0 0 0.5rem 0;
-    font-weight: 700;
+    font-size: 1.75rem;
+    margin: 0 0 0.75rem 0;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.2;
   }
   
   .team-description {
-    margin-bottom: 1.5rem;
-    color: #666;
-    font-size: 0.95rem;
-    line-height: 1.5;
+    margin-bottom: 2rem;
+    color: #6b7280;
+    font-size: 1rem;
+    line-height: 1.6;
   }
   
   .team-content h3 {
@@ -300,65 +314,106 @@ Explore the top factory teams in professional Supercross and Motocross racing. T
   .team-riders {
     list-style: none;
     padding: 0;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 2rem 0;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    padding: 1rem;
   }
   
   .team-riders li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0.5rem;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: background-color 0.2s ease;
+  }
+  
+  .team-riders li:hover {
+    background-color: #f8fafc;
+  }
+  
+  .team-riders li:last-child {
+    margin-bottom: 0;
+  }
+  
+  .team-riders a {
+    font-weight: 600;
+    color: #374151;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .team-riders a:hover {
+    color: #1f2937;
   }
   
   .rider-class {
-    font-size: 0.8rem;
-    color: #666;
-    background-color: #f3f4f6;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #059669;
+    background-color: #d1fae5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    border: 1px solid #a7f3d0;
   }
   
   .team-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid #eee;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #f3f4f6;
   }
   
   .team-detail {
     display: flex;
     flex-direction: column;
+    background-color: #f8fafc;
+    padding: 1rem;
+    border-radius: 6px;
   }
   
   .detail-label {
-    font-size: 0.8rem;
-    color: #666;
-    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
   }
   
   .detail-value {
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
   }
   
   .team-link {
     margin-top: auto;
-    padding: 0.75rem 1.5rem;
-    background-color: #f3f4f6;
-    color: #333;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
     text-align: center;
-    border-radius: 4px;
+    border-radius: 8px;
     text-decoration: none;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
-    border: 1px solid #e5e7eb;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
   }
   
   .team-link:hover {
-    background-color: #e5e7eb;
+    background: linear-gradient(135deg, #4338ca, #6d28d9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.4);
     text-decoration: none;
+    color: #fff;
   }
   
   .team-categories {
