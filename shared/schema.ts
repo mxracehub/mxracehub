@@ -14,6 +14,10 @@ export const users = pgTable("users", {
   balance: numeric("balance").default("100.00").notNull(),
   membershipType: varchar("membership_type", { length: 20 }).default("free").notNull(),
   membershipExpiresAt: timestamp("membership_expires_at"),
+  friendGroupsCount: integer("friend_groups_count").default(0),
+  hasActiveFriendBets: boolean("has_active_friend_bets").default(false),
+  lastFriendBetAt: timestamp("last_friend_bet_at"),
+  freeMembershipEligible: boolean("free_membership_eligible").default(true),
   avatarUrl: text("avatar_url"),
   walletAddress: varchar("wallet_address", { length: 100 }),
   stripeCustomerId: varchar("stripe_customer_id", { length: 100 }),
@@ -171,6 +175,43 @@ export const groupBetParticipations = pgTable("group_bet_participations", {
 }, (table) => {
   return {
     betUserIdx: uniqueIndex("bet_user_idx").on(table.betId, table.userId),
+  };
+});
+
+// Friend connections table for automatic group creation
+export const friendConnections = pgTable("friend_connections", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  friendId: integer("friend_id").notNull().references(() => users.id),
+  status: varchar("status", { length: 20 }).default("pending").notNull(), // pending, accepted, blocked
+  autoGroupId: integer("auto_group_id").references(() => groups.id),
+  lastBetTogether: timestamp("last_bet_together"),
+  totalBetsTogether: integer("total_bets_together").default(0),
+  freeMembershipActive: boolean("free_membership_active").default(false),
+  freeMembershipStartedAt: timestamp("free_membership_started_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => {
+  return {
+    userFriendIdx: uniqueIndex("user_friend_idx").on(table.userId, table.friendId),
+  };
+});
+
+// Friend membership eligibility tracking
+export const friendMembershipTracking = pgTable("friend_membership_tracking", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  friendId: integer("friend_id").notNull().references(() => users.id),
+  groupId: integer("group_id").notNull().references(() => groups.id),
+  activeBetsCount: integer("active_bets_count").default(0),
+  membershipActive: boolean("membership_active").default(false),
+  lastBetAt: timestamp("last_bet_at"),
+  membershipStartedAt: timestamp("membership_started_at"),
+  membershipExpiresAt: timestamp("membership_expires_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => {
+  return {
+    userFriendGroupIdx: uniqueIndex("user_friend_group_idx").on(table.userId, table.friendId, table.groupId),
   };
 });
 
