@@ -1,9 +1,11 @@
+
 ---
 title: "Team Honda HRC"
 description: "American Honda's factory Supercross/Motocross team with a rich history dating back to 1973"
 layout: "single"
 ---
 
+{{< rawhtml >}}
 <div class="team-profile">
   <div class="team-header" style="background-color: #e2001a;">
     <img src="/img/teams/honda-logo.svg" alt="Team Honda HRC" class="team-logo">
@@ -303,6 +305,7 @@ layout: "single"
     </div>
   </div>
 </div>
+{{< /rawhtml >}}
 
 <script src="/js/teams-page.js"></script>
 
@@ -407,6 +410,7 @@ layout: "single"
     background-size: cover;
     background-position: center;
     position: relative;
+    background-color: #f5f5f5;
   }
 
   .rider-number {
@@ -589,11 +593,6 @@ layout: "single"
     transform: scale(1.05);
   }
 
-  .gallery-img[src=""] {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3Ctext x='50' y='50' font-family='Arial' font-size='14' fill='%23999' text-anchor='middle' dy='0.3em'%3ELoading...%3C/text%3E%3C/svg%3E");
-    background-size: cover;
-  }
-
   .gallery-caption {
     padding: 1rem;
     background-color: white;
@@ -620,6 +619,7 @@ layout: "single"
     margin-bottom: 0.75rem;
     filter: grayscale(1);
     transition: filter 0.3s ease;
+    background-color: #f5f5f5;
   }
 
   .partner-item:hover .partner-logo {
