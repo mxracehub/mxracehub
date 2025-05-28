@@ -374,6 +374,7 @@ export const savedBetFormsRelations = relations(savedBetForms, ({ one }) => ({
 // Create schemas using drizzle-zod
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
 export const insertRiderSchema = createInsertSchema(riders).omit({ id: true, createdAt: true });
+export const insertTeamSchema = createInsertSchema(teams).omit({ id: true, createdAt: true });
 export const insertTrackSchema = createInsertSchema(tracks).omit({ id: true, createdAt: true });
 export const insertRaceSchema = createInsertSchema(races).omit({ id: true, createdAt: true });
 export const insertFriendBetSchema = createInsertSchema(friendBets).omit({ id: true, createdAt: true, completedAt: true });
@@ -393,6 +394,9 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 
 export type Rider = typeof riders.$inferSelect;
 export type InsertRider = z.infer<typeof insertRiderSchema>;
+
+export type Team = typeof teams.$inferSelect;
+export type InsertTeam = z.infer<typeof insertTeamSchema>;
 
 export type Track = typeof tracks.$inferSelect;
 export type InsertTrack = z.infer<typeof insertTrackSchema>;

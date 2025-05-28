@@ -1,5 +1,5 @@
 import { users, type User, type InsertUser, riders, type Rider, type InsertRider, 
-  tracks, type Track, type InsertTrack, races, type Race, type InsertRace,
+  teams, type Team, type InsertTeam, tracks, type Track, type InsertTrack, races, type Race, type InsertRace,
   friendBets, type FriendBet, type InsertFriendBet, groups, type Group, type InsertGroup,
   groupMembers, type GroupMember, type InsertGroupMember, groupBets, type GroupBet, type InsertGroupBet,
   groupBetOptions, type GroupBetOption, type InsertGroupBetOption, 
@@ -23,11 +23,21 @@ export interface IStorage {
   updateStripeCustomerId(userId: number, stripeCustomerId: string): Promise<User>;
   updateUserStripeInfo(userId: number, info: { stripeCustomerId: string, stripeSubscriptionId: string }): Promise<User>;
   
+  // Team operations
+  getTeam(id: number): Promise<Team | undefined>;
+  getTeams(): Promise<Team[]>;
+  getTeamByName(name: string): Promise<Team | undefined>;
+  createTeam(insertTeam: InsertTeam): Promise<Team>;
+  updateTeam(id: number, updates: Partial<InsertTeam>): Promise<Team>;
+  
   // Rider operations
   getRider(id: number): Promise<Rider | undefined>;
   getRiderByNumber(number: number, division: string): Promise<Rider | undefined>;
   getRidersByDivision(division: string): Promise<Rider[]>;
+  getRidersByTeam(teamId: number): Promise<Rider[]>;
+  getActiveRiders(): Promise<Rider[]>;
   createRider(insertRider: InsertRider): Promise<Rider>;
+  updateRider(id: number, updates: Partial<InsertRider>): Promise<Rider>;
   
   // Track operations
   getTrack(id: number): Promise<Track | undefined>;
@@ -139,6 +149,31 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
+  // Team operations
+  async getTeam(id: number): Promise<Team | undefined> {
+    const [team] = await db.select().from(teams).where(eq(teams.id, id));
+    return team;
+  }
+
+  async getTeams(): Promise<Team[]> {
+    return await db.select().from(teams).orderBy(teams.name);
+  }
+
+  async getTeamByName(name: string): Promise<Team | undefined> {
+    const [team] = await db.select().from(teams).where(eq(teams.name, name));
+    return team;
+  }
+
+  async createTeam(insertTeam: InsertTeam): Promise<Team> {
+    const [team] = await db.insert(teams).values(insertTeam).returning();
+    return team;
+  }
+
+  async updateTeam(id: number, updates: Partial<InsertTeam>): Promise<Team> {
+    const [team] = await db.update(teams).set(updates).where(eq(teams.id, id)).returning();
+    return team;
+  }
+
   // Rider operations
   async getRider(id: number): Promise<Rider | undefined> {
     const [rider] = await db.select().from(riders).where(eq(riders.id, id));
@@ -157,8 +192,21 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(riders).where(eq(riders.division, division));
   }
 
+  async getRidersByTeam(teamId: number): Promise<Rider[]> {
+    return await db.select().from(riders).where(eq(riders.teamId, teamId));
+  }
+
+  async getActiveRiders(): Promise<Rider[]> {
+    return await db.select().from(riders).where(eq(riders.isActive, true));
+  }
+
   async createRider(insertRider: InsertRider): Promise<Rider> {
     const [rider] = await db.insert(riders).values(insertRider).returning();
+    return rider;
+  }
+
+  async updateRider(id: number, updates: Partial<InsertRider>): Promise<Rider> {
+    const [rider] = await db.update(riders).set(updates).where(eq(riders.id, id)).returning();
     return rider;
   }
 

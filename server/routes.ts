@@ -6,7 +6,7 @@ import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
-import { users, friendBets, groups, groupBets, races, riders, tracks, transactions, memberships, savedBetForms } from "@shared/schema";
+import { users, friendBets, groups, groupBets, races, riders, teams, tracks, transactions, memberships, savedBetForms, insertTeamSchema, insertRiderSchema } from "@shared/schema";
 
 // Initialize Stripe if the API key is available
 let stripe: Stripe | undefined;
@@ -57,6 +57,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching rider:", error);
       res.status(500).json({ message: "Failed to fetch rider" });
+    }
+  });
+  
+  // Team endpoints
+  app.get("/api/teams", async (req, res) => {
+    try {
+      const teamList = await storage.getTeams();
+      res.json(teamList);
+    } catch (error) {
+      console.error("Error fetching teams:", error);
+      res.status(500).json({ message: "Failed to fetch teams" });
+    }
+  });
+  
+  app.get("/api/teams/:id", async (req, res) => {
+    try {
+      const teamId = parseInt(req.params.id);
+      const team = await storage.getTeam(teamId);
+      
+      if (!team) {
+        return res.status(404).json({ message: "Team not found" });
+      }
+      
+      res.json(team);
+    } catch (error) {
+      console.error("Error fetching team:", error);
+      res.status(500).json({ message: "Failed to fetch team" });
+    }
+  });
+  
+  app.get("/api/teams/:id/riders", async (req, res) => {
+    try {
+      const teamId = parseInt(req.params.id);
+      const riders = await storage.getRidersByTeam(teamId);
+      res.json(riders);
+    } catch (error) {
+      console.error("Error fetching team riders:", error);
+      res.status(500).json({ message: "Failed to fetch team riders" });
+    }
+  });
+  
+  app.post("/api/teams", async (req, res) => {
+    try {
+      const teamData = insertTeamSchema.parse(req.body);
+      const newTeam = await storage.createTeam(teamData);
+      res.status(201).json(newTeam);
+    } catch (error) {
+      console.error("Error creating team:", error);
+      res.status(500).json({ message: "Failed to create team" });
+    }
+  });
+  
+  // Enhanced rider endpoints for dynamic loading
+  app.get("/api/riders/active", async (req, res) => {
+    try {
+      const activeRiders = await storage.getActiveRiders();
+      res.json(activeRiders);
+    } catch (error) {
+      console.error("Error fetching active riders:", error);
+      res.status(500).json({ message: "Failed to fetch active riders" });
+    }
+  });
+  
+  app.post("/api/riders", async (req, res) => {
+    try {
+      const riderData = insertRiderSchema.parse(req.body);
+      const newRider = await storage.createRider(riderData);
+      res.status(201).json(newRider);
+    } catch (error) {
+      console.error("Error creating rider:", error);
+      res.status(500).json({ message: "Failed to create rider" });
     }
   });
   
