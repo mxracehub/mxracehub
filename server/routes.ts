@@ -221,6 +221,234 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Integrated Betting System with Wallet
+  
+  // Place a bet - automatically deducts from user wallet
+  app.post("/api/bets", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const { raceId, groupId, betType, amount, betDetails } = req.body;
+
+      // Validate bet amount
+      if (!amount || amount <= 0) {
+        return res.status(400).json({ message: "Invalid bet amount" });
+      }
+
+      // Check user balance
+      const userBalance = await houseBankService.getUserBalance(userId);
+      if (userBalance < amount) {
+        return res.status(400).json({ 
+          message: `Insufficient funds. Balance: $${userBalance.toFixed(2)}, Required: $${amount.toFixed(2)}` 
+        });
+      }
+
+      // Create the bet record
+      const [bet] = await db.insert(groupBets).values({
+        groupId,
+        creatorId: userId,
+        raceId,
+        betType,
+        betDetails: betDetails,
+        amount: amount.toString(),
+        status: 'active'
+      }).returning();
+
+      // Deduct bet amount from user balance through house bank
+      await houseBankService.deductBettingLoss(userId, amount, bet.id);
+
+      res.json({ 
+        success: true, 
+        bet,
+        newBalance: await houseBankService.getUserBalance(userId)
+      });
+    } catch (error) {
+      console.error('Error placing bet:', error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Settle a bet - automatically adds winnings to user wallet
+  app.post("/api/bets/:betId/settle", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const betId = parseInt(req.params.betId);
+      const { winningUserId, winningAmount } = req.body;
+
+      // Validate inputs
+      if (!winningUserId || !winningAmount || winningAmount <= 0) {
+        return res.status(400).json({ message: "Invalid settlement parameters" });
+      }
+
+      // Update bet status
+      await storage.settleGroupBet(betId, winningUserId);
+
+      // Add winnings to winner's account through house bank
+      await houseBankService.addBettingWinnings(winningUserId, winningAmount, betId);
+
+      res.json({ 
+        success: true,
+        message: "Bet settled successfully",
+        winnerBalance: await houseBankService.getUserBalance(winningUserId)
+      });
+    } catch (error) {
+      console.error('Error settling bet:', error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Get user's active bets with balance info
+  app.get("/api/bets/user", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      
+      // Get user's bets and current balance
+      const [userBets, currentBalance] = await Promise.all([
+        storage.getUserGroupBetParticipations(userId),
+        houseBankService.getUserBalance(userId)
+      ]);
+
+      res.json({
+        bets: userBets,
+        currentBalance,
+        canPlaceBets: currentBalance > 0
+      });
+    } catch (error) {
+      console.error('Error fetching user bets:', error);
+      res.status(500).json({ message: "Failed to fetch user bets" });
+    }
+  });
+
+  // Friend betting with wallet integration
+  app.post("/api/bets/friend", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const creatorId = (req.user as any).id;
+      const { targetId, amount, betType, betDetails } = req.body;
+
+      // Check creator balance
+      const creatorBalance = await houseBankService.getUserBalance(creatorId);
+      if (creatorBalance < amount) {
+        return res.status(400).json({ 
+          message: `Insufficient funds. Balance: $${creatorBalance.toFixed(2)}` 
+        });
+      }
+
+      // Create friend bet
+      const [friendBet] = await db.insert(friendBets).values({
+        creatorId,
+        targetId,
+        amount: amount.toString(),
+        betType,
+        betDetails,
+        status: 'pending'
+      }).returning();
+
+      // Hold creator's funds (deduct from balance)
+      await houseBankService.deductBettingLoss(creatorId, amount, friendBet.id);
+
+      res.json({ 
+        success: true, 
+        friendBet,
+        newBalance: await houseBankService.getUserBalance(creatorId)
+      });
+    } catch (error) {
+      console.error('Error creating friend bet:', error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Accept friend bet - deducts from target user's balance
+  app.post("/api/bets/friend/:betId/accept", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const betId = parseInt(req.params.betId);
+
+      // Get bet details
+      const bet = await storage.getFriendBet(betId);
+      if (!bet || bet.targetId !== userId) {
+        return res.status(404).json({ message: "Bet not found or not authorized" });
+      }
+
+      const betAmount = parseFloat(bet.amount);
+
+      // Check user balance
+      const userBalance = await houseBankService.getUserBalance(userId);
+      if (userBalance < betAmount) {
+        return res.status(400).json({ 
+          message: `Insufficient funds. Balance: $${userBalance.toFixed(2)}` 
+        });
+      }
+
+      // Deduct from target user's balance
+      await houseBankService.deductBettingLoss(userId, betAmount, betId);
+
+      // Update bet status
+      await storage.updateFriendBetStatus(betId, 'active');
+
+      res.json({ 
+        success: true,
+        newBalance: await houseBankService.getUserBalance(userId)
+      });
+    } catch (error) {
+      console.error('Error accepting friend bet:', error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Settle friend bet - adds winnings to winner
+  app.post("/api/bets/friend/:betId/settle", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const betId = parseInt(req.params.betId);
+      const { winningUserId } = req.body;
+
+      // Get bet details
+      const bet = await storage.getFriendBet(betId);
+      if (!bet) {
+        return res.status(404).json({ message: "Bet not found" });
+      }
+
+      const betAmount = parseFloat(bet.amount);
+      const totalPayout = betAmount * 2; // Winner gets both amounts
+
+      // Add winnings to winner
+      await houseBankService.addBettingWinnings(winningUserId, totalPayout, betId);
+
+      // Update bet status
+      await storage.settleFriendBet(betId, winningUserId);
+
+      res.json({ 
+        success: true,
+        payout: totalPayout,
+        winnerBalance: await houseBankService.getUserBalance(winningUserId)
+      });
+    } catch (error) {
+      console.error('Error settling friend bet:', error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
   // Rider endpoints
   app.get("/api/riders", async (req, res) => {
     try {
