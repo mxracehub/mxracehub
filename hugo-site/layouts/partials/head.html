@@ -228,7 +228,7 @@
 
 {{- /* Load JavaScript fallbacks inline to prevent errors */ -}}
 <script>
-// Fix mediumZoom errors immediately
+// Fix JavaScript errors immediately
 window.mediumZoom = window.mediumZoom || function() {
   return {
     attach: function() { return this; },
@@ -245,6 +245,36 @@ window.mediumZoom = window.mediumZoom || function() {
     getZoomedImage: function() { return null; }
   };
 };
+
+// Fix jQuery errors
+window.$ = window.$ || function() {
+  return {
+    ready: function(fn) { 
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fn);
+      } else {
+        fn();
+      }
+      return this;
+    },
+    on: function() { return this; },
+    off: function() { return this; },
+    click: function() { return this; },
+    each: function() { return this; },
+    find: function() { return this; },
+    addClass: function() { return this; },
+    removeClass: function() { return this; },
+    toggleClass: function() { return this; },
+    hide: function() { return this; },
+    show: function() { return this; },
+    attr: function() { return this; },
+    css: function() { return this; },
+    html: function() { return this; },
+    text: function() { return this; },
+    val: function() { return this; }
+  };
+};
+window.jQuery = window.$;
 </script>
 <script>
 // jQuery fallback - comprehensive replacement
