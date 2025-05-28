@@ -31,12 +31,13 @@ layout: "home"
 <!-- Hero Banner Overlay -->
 <div class="hero-overlay">
   <div class="hero-content">
-    <h1 class="hero-title">MONSTER ENERGY SUPERCROSS</h1>
-    <div class="hero-tagline">THE MOST COMPETITIVE STADIUM RACING ON THE PLANET</div>
+    <h1 class="hero-title">MXRACEHUB</h1>
+    <div class="hero-tagline">THE ULTIMATE MOTOCROSS & SUPERCROSS BETTING PLATFORM</div>
+    <div class="hero-subtitle">Professional rider graphics • Official ticket sources • Automated payouts • Real-time standings</div>
     <div class="hero-cta-container">
-      <a href="/races/" class="hero-cta-primary">VIEW SCHEDULE</a>
-      <a href="/tickets/" class="hero-cta-secondary">BUY TICKETS</a>
-      <a href="/live-stream/" class="hero-cta-accent">WATCH LIVE</a>
+      <a href="/races/schedule/" class="hero-cta-primary">RACE SCHEDULE</a>
+      <a href="/betting/" class="hero-cta-secondary">PLACE BETS</a>
+      <a href="/riders/" class="hero-cta-accent">VIEW RIDERS</a>
     </div>
   </div>
 </div>
@@ -56,8 +57,9 @@ layout: "home"
   <div class="countdown-container">
     <div class="next-race-info">
       <div class="next-race-label">NEXT RACE</div>
-      <h2 class="next-race-title">DENVER SUPERCROSS</h2>
-      <div class="next-race-date">APRIL 27, 2025</div>
+      <h2 class="next-race-title">THUNDER VALLEY MOTOCROSS</h2>
+      <div class="next-race-date">MAY 31, 2025</div>
+      <div class="next-race-location">Lakewood, Colorado</div>
     </div>
     <div class="countdown-timer">
       <div class="countdown-item">
@@ -78,8 +80,9 @@ layout: "home"
       </div>
     </div>
     <div class="countdown-cta">
-      <a href="/races/denver-2025/" class="countdown-button">EVENT DETAILS</a>
-      <a href="/tickets/denver-2025/" class="countdown-button">BUY TICKETS</a>
+      <a href="/races/schedule/" class="countdown-button">FULL SCHEDULE</a>
+      <a href="https://www.promotocross.com/schedule" class="countdown-button">OFFICIAL TICKETS</a>
+      <a href="/betting/" class="countdown-button">PLACE BETS</a>
     </div>
   </div>
 </div>
