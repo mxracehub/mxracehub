@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Test</title>
+    <style>
+        .hidden { display: none; }
+        .rider-card { border: 1px solid #ccc; margin: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Testing Rider Search Functionality</h1>
+    
+    <input type="text" id="rider-search-450" placeholder="Search 450 class riders...">
+    <div id="rider-count-450">6</div>
+    
+    <div class="rider-card">
+        <h3>Jett Lawrence</h3>
+        <p>Team Honda HRC</p>
+    </div>
+    
+    <div class="rider-card">
+        <h3>Cooper Webb</h3>
+        <p>Monster Energy Yamaha Star Racing</p>
+    </div>
+    
+    <div class="rider-card">
+        <h3>Chase Sexton</h3>
+        <p>Red Bull KTM Factory Racing</p>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('rider-search-450');
+      const riderCount = document.getElementById('rider-count-450');
+      const riderCards = document.querySelectorAll('.rider-card');
+      
+      function updateRiderCount() {
+        const visibleRiders = document.querySelectorAll('.rider-card:not(.hidden)');
+        riderCount.textContent = visibleRiders.length;
+      }
+      
+      function filterRiders(searchTerm) {
+        riderCards.forEach(card => {
+          const riderName = card.querySelector('h3').textContent.toLowerCase();
+          const teamName = card.querySelector('p').textContent.toLowerCase();
+          
+          if (riderName.includes(searchTerm.toLowerCase()) || teamName.includes(searchTerm.toLowerCase())) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+        updateRiderCount();
+      }
+      
+      searchInput.addEventListener('input', function() {
+        filterRiders(this.value);
+      });
+      
+      // Initialize count
+      updateRiderCount();
+    });
+    </script>
+</body>
+</html>
