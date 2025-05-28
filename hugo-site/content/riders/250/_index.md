@@ -2,11 +2,27 @@
 title: "250 Class Riders"
 description: "Profiles of the top professional riders competing in the 250 class of AMA Supercross and Pro Motocross"
 layout: "list"
+markup: "html"
 ---
 
 # 250 Class Riders
 
 The 250 class represents the development division of professional Supercross and Motocross, where emerging talent showcases their skills. This class features two separate regional championships in Supercross (East and West), and combines into a single championship for outdoor Motocross.
+
+<div class="bg-white dark:bg-neutral-800 shadow rounded-lg p-4 mb-6">
+  <div class="relative">
+    <input type="text" id="rider-search-250" placeholder="Search 250 class riders..." 
+      class="block w-full px-4 py-2 pl-10 border border-neutral-300 dark:border-neutral-600 rounded-md shadow-sm placeholder-neutral-400 focus:outline-none focus:ring-primary focus:border-primary dark:bg-neutral-700">
+    <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+  </div>
+  <div class="mt-2 text-sm text-neutral-500">
+    <span id="rider-count-250">6</span> riders found
+  </div>
+</div>
 
 ## 250 East Class Contenders
 

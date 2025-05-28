@@ -2,11 +2,27 @@
 title: "450 Class Riders"
 description: "Profiles of the top professional riders competing in the premier 450 class of AMA Supercross and Pro Motocross"
 layout: "list"
+markup: "html"
 ---
 
 # 450 Class Riders
 
 The 450 class represents the pinnacle of professional Supercross and Motocross racing. These elite riders compete on powerful 450cc motorcycles, showcasing the highest level of skill, speed, and strategy in the sport.
+
+<div class="bg-white dark:bg-neutral-800 shadow rounded-lg p-4 mb-6">
+  <div class="relative">
+    <input type="text" id="rider-search-450" placeholder="Search 450 class riders..." 
+      class="block w-full px-4 py-2 pl-10 border border-neutral-300 dark:border-neutral-600 rounded-md shadow-sm placeholder-neutral-400 focus:outline-none focus:ring-primary focus:border-primary dark:bg-neutral-700">
+    <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+  </div>
+  <div class="mt-2 text-sm text-neutral-500">
+    <span id="rider-count-450">6</span> riders found
+  </div>
+</div>
 
 ## Current 450 Class Contenders
 
@@ -424,3 +440,37 @@ The 450 class represents the pinnacle of professional Supercross and Motocross r
 <div class="text-center my-8">
   <a href="/betting/predictions/450/" class="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-700 font-medium">View 450 Class Betting Predictions</a>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('rider-search-450');
+  const riderCount = document.getElementById('rider-count-450');
+  const riderCards = document.querySelectorAll('.rider-card');
+  
+  function updateRiderCount() {
+    const visibleRiders = document.querySelectorAll('.rider-card:not(.hidden)');
+    riderCount.textContent = visibleRiders.length;
+  }
+  
+  function filterRiders(searchTerm) {
+    riderCards.forEach(card => {
+      const riderName = card.querySelector('h3').textContent.toLowerCase();
+      const teamName = card.querySelector('p').textContent.toLowerCase();
+      
+      if (riderName.includes(searchTerm.toLowerCase()) || teamName.includes(searchTerm.toLowerCase())) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    updateRiderCount();
+  }
+  
+  searchInput.addEventListener('input', function() {
+    filterRiders(this.value);
+  });
+  
+  // Initialize count
+  updateRiderCount();
+});
+</script>
