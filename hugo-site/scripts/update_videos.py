@@ -16,11 +16,13 @@ class YouTubeVideoUpdater:
         self.api_key = os.getenv('YOUTUBE_API_KEY')
         self.base_url = 'https://www.googleapis.com/youtube/v3'
         
-        # Official channel IDs for authentic content
-        self.channels = {
-            'AmericanMotocross': 'UCi516AzwqFem4hOpJrbmkzA',  # @AmericanMotocross
-            'SupercrossLive': 'UC_x5XG1OV2P6uZZ5FSM9Ttw'     # @SupercrossLive
-        }
+        # We'll search for channels by name to find authentic motocross content
+        self.search_terms = [
+            'supercross live official',
+            'american motocross official',
+            'ama supercross',
+            'pro motocross'
+        ]
         
         self.content_file = 'hugo-site/content/news/video/_index.md'
     
@@ -192,29 +194,69 @@ Exclusive access to teams, riders, and facilities showing the dedication require
         
         return content
     
+    def search_motocross_videos(self) -> List[Dict[str, Any]]:
+        """Search for authentic motocross videos using YouTube API"""
+        all_videos = []
+        
+        for search_term in self.search_terms:
+            print(f"Searching for: {search_term}")
+            
+            search_url = f"{self.base_url}/search"
+            search_params = {
+                'part': 'snippet',
+                'q': search_term,
+                'type': 'video',
+                'order': 'date',
+                'maxResults': 5,
+                'publishedAfter': (datetime.now() - timedelta(days=90)).isoformat() + 'Z',
+                'key': self.api_key
+            }
+            
+            try:
+                response = requests.get(search_url, params=search_params)
+                data = response.json()
+                
+                if 'items' in data:
+                    for item in data['items']:
+                        video_info = {
+                            'title': item['snippet']['title'],
+                            'video_id': item['id']['videoId'],
+                            'description': item['snippet']['description'][:200] + '...' if len(item['snippet']['description']) > 200 else item['snippet']['description'],
+                            'published_at': item['snippet']['publishedAt'],
+                            'channel_title': item['snippet']['channelTitle']
+                        }
+                        all_videos.append(video_info)
+            except Exception as e:
+                print(f"Error searching for {search_term}: {e}")
+                continue
+        
+        return all_videos
+
     def update_video_content(self):
         """Main function to update video content"""
         try:
-            print("Fetching videos from official channels...")
+            print("Searching for authentic motocross videos...")
             
-            all_videos = []
-            
-            # Fetch from both official channels
-            for channel_name, channel_id in self.channels.items():
-                print(f"Fetching from {channel_name}...")
-                videos = self.fetch_channel_videos(channel_id, max_results=8)
-                all_videos.extend(videos)
+            # Search for motocross videos
+            all_videos = self.search_motocross_videos()
             
             # Sort by publish date (newest first)
             all_videos.sort(key=lambda x: x['published_at'], reverse=True)
             
-            # Take top 15 most recent videos
-            recent_videos = all_videos[:15]
+            # Remove duplicates and take top 15 most recent videos
+            seen_videos = set()
+            unique_videos = []
+            for video in all_videos:
+                if video['video_id'] not in seen_videos:
+                    seen_videos.add(video['video_id'])
+                    unique_videos.append(video)
+                    if len(unique_videos) >= 15:
+                        break
             
-            print(f"Found {len(recent_videos)} recent videos")
+            print(f"Found {len(unique_videos)} authentic motocross videos")
             
             # Generate markdown content
-            markdown_content = self.generate_markdown_content(recent_videos)
+            markdown_content = self.generate_markdown_content(unique_videos)
             
             # Write to file
             with open(self.content_file, 'w', encoding='utf-8') as f:
@@ -231,11 +273,12 @@ Exclusive access to teams, riders, and facilities showing the dedication require
 
 def main():
     """Run the video updater"""
+    import sys
     updater = YouTubeVideoUpdater()
     
     # Check if it's Monday or force update
     today = datetime.now().weekday()  # 0 = Monday
-    force_update = '--force' in os.sys.argv if hasattr(os, 'sys') else False
+    force_update = '--force' in sys.argv
     
     if today == 0 or force_update:
         print("Running weekly video content update...")
