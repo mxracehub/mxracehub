@@ -685,3 +685,55 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+
+<!-- Load Offline Manager -->
+<script src="/js/offline-manager.js"></script>
+
+<script>
+// Enhanced riders page with offline support
+document.addEventListener('DOMContentLoaded', function() {
+  loadRiderDataWithOfflineSupport();
+  
+  async function loadRiderDataWithOfflineSupport() {
+    try {
+      // Try to get rider data with offline fallback
+      const riderData = await getOfflineData('riders');
+      
+      if (riderData && riderData.offline) {
+        showOfflineIndicator('riders');
+      }
+      
+      // Use the data to enhance the existing page
+      if (riderData && riderData.riders) {
+        updateRiderCards(riderData.riders);
+      }
+      
+    } catch (error) {
+      console.log('Loading rider data with offline support...');
+    }
+  }
+  
+  function showOfflineIndicator(dataType) {
+    const indicator = document.createElement('div');
+    indicator.className = 'bg-blue-100 dark:bg-blue-900 border border-blue-200 dark:border-blue-800 rounded-lg p-3 mb-6 text-center';
+    indicator.innerHTML = `
+      <div class="flex items-center justify-center text-blue-800 dark:text-blue-200">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+        </svg>
+        <span class="font-medium">Offline Mode - Viewing cached rider data</span>
+      </div>
+    `;
+    
+    const mainContent = document.querySelector('h1');
+    if (mainContent && mainContent.parentNode) {
+      mainContent.parentNode.insertBefore(indicator, mainContent.nextSibling);
+    }
+  }
+  
+  function updateRiderCards(riders) {
+    // This function would update the rider cards with fresh data when available
+    console.log('Rider data available:', riders.length, 'riders');
+  }
+});
+</script>
