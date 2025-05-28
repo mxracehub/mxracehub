@@ -7,285 +7,371 @@ title: Riders
 ---
 
 
-# Rider Profiles
+# Professional Rider Profiles
 
-Get to know the top competitors in both the 450 and 250 classes of AMA Supercross and Pro Motocross. Explore rider profiles, career statistics, recent results, and championship standings.
+Discover the top competitors in both 450 and 250 classes with professional team-colored graphics, authentic career statistics, and real-time championship standings.
 
-<div class="bg-primary/10 border border-primary/20 rounded-lg p-4 my-4">
-  <div class="flex items-center justify-between">
-    <div>
-      <h2 class="text-lg font-bold">Looking for a specific rider?</h2>
-      <p class="text-neutral-600 dark:text-neutral-400">Use our searchable rider database to find and filter all MX/SX professionals.</p>
+<div class="bg-gradient-to-r from-red-50 to-blue-50 dark:from-red-900/20 dark:to-blue-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 my-8 shadow-lg">
+  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+    <div class="flex-1">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">🔍 Advanced Rider Search</h2>
+      <p class="text-gray-600 dark:text-gray-300">Find any professional rider with our comprehensive searchable database featuring team colors, real statistics, and betting integration.</p>
     </div>
-    <a href="/riders/all/" class="px-4 py-2 bg-primary text-white rounded hover:bg-primary-700">Search All Riders</a>
-  </div>
-</div>
-
-## 450 Class Stars
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
-    <div class="relative">
-      <img src="/img/sample/default-rider.svg" alt="Jett Lawrence" class="w-full h-56 object-cover">
-      <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-2 py-1 m-2 rounded">POINTS LEADER</div>
-      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">18</div>
-    </div>
-    <div class="p-5">
-      <h3 class="text-xl font-bold mb-2">Jett Lawrence</h3>
-      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Team Honda HRC</p>
-      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Age</span>
-          <span class="font-bold">21</span>
-        </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Wins</span>
-          <span class="font-bold">32</span>
-        </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Titles</span>
-          <span class="font-bold">3</span>
-        </div>
-      </div>
-      <div class="flex justify-between items-center">
-        <a href="/riders/450/jett-lawrence/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
-        <div class="flex space-x-2">
-          <a href="/betting/rider/jett-lawrence/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Jett</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
-    <div class="relative">
-      <img src="/img/sample/default-rider.svg" alt="Cooper Webb" class="w-full h-56 object-cover">
-      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">2</div>
-    </div>
-    <div class="p-5">
-      <h3 class="text-xl font-bold mb-2">Cooper Webb</h3>
-      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Monster Energy Yamaha Star Racing</p>
-      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Age</span>
-          <span class="font-bold">28</span>
-        </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Wins</span>
-          <span class="font-bold">22</span>
-        </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Titles</span>
-          <span class="font-bold">2</span>
-        </div>
-      </div>
-      <div class="flex justify-between items-center">
-        <a href="/riders/450/cooper-webb/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
-        <div class="flex space-x-2">
-          <a href="/betting/rider/cooper-webb/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Cooper</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
-    <div class="relative">
-      <img src="/img/sample/default-rider.svg" alt="Chase Sexton" class="w-full h-56 object-cover">
-      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">1</div>
-    </div>
-    <div class="p-5">
-      <h3 class="text-xl font-bold mb-2">Chase Sexton</h3>
-      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Red Bull KTM Factory Racing</p>
-      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Age</span>
-          <span class="font-bold">25</span>
-        </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Wins</span>
-          <span class="font-bold">9</span>
-        </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Titles</span>
-          <span class="font-bold">1</span>
-        </div>
-      </div>
-      <div class="flex justify-between items-center">
-        <a href="/riders/450/chase-sexton/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
-        <div class="flex space-x-2">
-          <a href="/betting/rider/chase-sexton/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Chase</a>
-        </div>
-      </div>
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a href="/riders/all/" class="px-6 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg text-center">
+        Search All Riders
+      </a>
     </div>
   </div>
 </div>
 
-<div class="text-center my-6">
-  <a href="/riders/450/" class="inline-block px-6 py-2 bg-primary text-white rounded hover:bg-primary-700">View All 450 Class Riders</a>
-</div>
+## 450 Class Championship Leaders
 
-## 250 Class Contenders
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-8">
-  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
-    <div class="relative">
-      <img src="/img/sample/default-rider.svg" alt="Haiden Deegan" class="w-full h-56 object-cover">
-      <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-2 py-1 m-2 rounded">EAST LEADER</div>
-      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">23</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 my-8">
+  <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+    <div class="relative overflow-hidden">
+      <img src="/img/riders/jett-lawrence.svg" alt="Jett Lawrence" class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+      <div class="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+        🏆 POINTS LEADER
+      </div>
+      <div class="absolute top-3 left-3 bg-red-600 text-white font-bold text-lg sm:text-xl w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-lg border-2 border-white">
+        18
+      </div>
+      <div class="absolute bottom-3 left-3 right-3">
+        <h3 class="text-white text-xl sm:text-2xl font-bold mb-1">Jett Lawrence</h3>
+        <p class="text-red-200 text-sm font-medium">Team Honda HRC</p>
+      </div>
     </div>
-    <div class="p-5">
-      <h3 class="text-xl font-bold mb-2">Haiden Deegan</h3>
-      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Monster Energy Yamaha Star Racing</p>
-      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Age</span>
-          <span class="font-bold">18</span>
+    <div class="p-4 sm:p-5">
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-xs sm:text-sm">
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Age</span>
+          <span class="font-bold text-gray-900 dark:text-white">21</span>
         </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Wins</span>
-          <span class="font-bold">5</span>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Wins</span>
+          <span class="font-bold text-gray-900 dark:text-white">32</span>
         </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Titles</span>
-          <span class="font-bold">0</span>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Titles</span>
+          <span class="font-bold text-gray-900 dark:text-white">3</span>
         </div>
       </div>
-      <div class="flex justify-between items-center">
-        <a href="/riders/250/haiden-deegan/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
-        <div class="flex space-x-2">
-          <a href="/betting/rider/haiden-deegan/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Haiden</a>
-        </div>
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <a href="/riders/450/jett-lawrence/" class="flex-1 text-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium transition-all duration-200">
+          View Profile
+        </a>
+        <a href="/betting/rider/jett-lawrence/" class="flex-1 text-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 font-medium transition-all duration-200 shadow-md">
+          Place Bet
+        </a>
       </div>
     </div>
   </div>
 
-  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
-    <div class="relative">
-      <img src="/img/sample/default-rider.svg" alt="Levi Kitchen" class="w-full h-56 object-cover">
-      <div class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-2 py-1 m-2 rounded">WEST LEADER</div>
-      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">47</div>
+  <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+    <div class="relative overflow-hidden">
+      <img src="/img/riders/cooper-webb.svg" alt="Cooper Webb" class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+      <div class="absolute top-3 left-3 bg-blue-600 text-white font-bold text-lg sm:text-xl w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-lg border-2 border-white">
+        2
+      </div>
+      <div class="absolute bottom-3 left-3 right-3">
+        <h3 class="text-white text-xl sm:text-2xl font-bold mb-1">Cooper Webb</h3>
+        <p class="text-blue-200 text-sm font-medium">Monster Energy Yamaha</p>
+      </div>
     </div>
-    <div class="p-5">
-      <h3 class="text-xl font-bold mb-2">Levi Kitchen</h3>
-      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Monster Energy Pro Circuit Kawasaki</p>
-      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Age</span>
-          <span class="font-bold">23</span>
+    <div class="p-4 sm:p-5">
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-xs sm:text-sm">
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Age</span>
+          <span class="font-bold text-gray-900 dark:text-white">28</span>
         </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Wins</span>
-          <span class="font-bold">3</span>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Wins</span>
+          <span class="font-bold text-gray-900 dark:text-white">22</span>
         </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Titles</span>
-          <span class="font-bold">0</span>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Titles</span>
+          <span class="font-bold text-gray-900 dark:text-white">2</span>
         </div>
       </div>
-      <div class="flex justify-between items-center">
-        <a href="/riders/250/levi-kitchen/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
-        <div class="flex space-x-2">
-          <a href="/betting/rider/levi-kitchen/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Levi</a>
-        </div>
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <a href="/riders/450/cooper-webb/" class="flex-1 text-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium transition-all duration-200">
+          View Profile
+        </a>
+        <a href="/betting/rider/cooper-webb/" class="flex-1 text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-all duration-200 shadow-md">
+          Place Bet
+        </a>
       </div>
     </div>
   </div>
 
-  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
-    <div class="relative">
-      <img src="/img/sample/default-rider.svg" alt="Tom Vialle" class="w-full h-56 object-cover">
-      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">1</div>
+  <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+    <div class="relative overflow-hidden">
+      <img src="/img/riders/chase-sexton.svg" alt="Chase Sexton" class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+      <div class="absolute top-3 left-3 bg-orange-600 text-white font-bold text-lg sm:text-xl w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-lg border-2 border-white">
+        1
+      </div>
+      <div class="absolute bottom-3 left-3 right-3">
+        <h3 class="text-white text-xl sm:text-2xl font-bold mb-1">Chase Sexton</h3>
+        <p class="text-orange-200 text-sm font-medium">Red Bull KTM Factory Racing</p>
+      </div>
     </div>
-    <div class="p-5">
-      <h3 class="text-xl font-bold mb-2">Tom Vialle</h3>
-      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Red Bull KTM Factory Racing</p>
-      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Age</span>
-          <span class="font-bold">23</span>
+    <div class="p-4 sm:p-5">
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-xs sm:text-sm">
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Age</span>
+          <span class="font-bold text-gray-900 dark:text-white">25</span>
         </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Wins</span>
-          <span class="font-bold">4</span>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Wins</span>
+          <span class="font-bold text-gray-900 dark:text-white">9</span>
         </div>
-        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
-          <span class="block text-xs uppercase">Titles</span>
-          <span class="font-bold">2*</span>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Titles</span>
+          <span class="font-bold text-gray-900 dark:text-white">1</span>
         </div>
       </div>
-      <div class="flex justify-between items-center">
-        <a href="/riders/250/tom-vialle/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
-        <div class="flex space-x-2">
-          <a href="/betting/rider/tom-vialle/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Tom</a>
-        </div>
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <a href="/riders/450/chase-sexton/" class="flex-1 text-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium transition-all duration-200">
+          View Profile
+        </a>
+        <a href="/betting/rider/chase-sexton/" class="flex-1 text-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-medium transition-all duration-200 shadow-md">
+          Place Bet
+        </a>
       </div>
     </div>
   </div>
 </div>
 
-<div class="text-center my-6">
-  <a href="/riders/250/" class="inline-block px-6 py-2 bg-primary text-white rounded hover:bg-primary-700">View All 250 Class Riders</a>
+<div class="text-center my-8">
+  <a href="/riders/450/" class="inline-block px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:from-red-700 hover:to-red-800 font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+    View All 450 Class Riders
+  </a>
 </div>
 
-## Rider Statistics
+## 250 Class Rising Stars
 
-<div class="my-8 bg-neutral-100 dark:bg-neutral-800 rounded-lg p-6">
-  <h3 class="text-xl font-bold mb-4">Career Achievements</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6 my-8">
+  <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+    <div class="relative overflow-hidden">
+      <img src="/img/riders/haiden-deegan.svg" alt="Haiden Deegan" class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+      <div class="absolute top-3 right-3 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+        🌟 ROOKIE STAR
+      </div>
+      <div class="absolute top-3 left-3 bg-blue-600 text-white font-bold text-lg sm:text-xl w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-lg border-2 border-white">
+        23
+      </div>
+      <div class="absolute bottom-3 left-3 right-3">
+        <h3 class="text-white text-xl sm:text-2xl font-bold mb-1">Haiden Deegan</h3>
+        <p class="text-blue-200 text-sm font-medium">Monster Energy Yamaha</p>
+      </div>
+    </div>
+    <div class="p-4 sm:p-5">
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-xs sm:text-sm">
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Age</span>
+          <span class="font-bold text-gray-900 dark:text-white">18</span>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Wins</span>
+          <span class="font-bold text-gray-900 dark:text-white">5</span>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Titles</span>
+          <span class="font-bold text-gray-900 dark:text-white">0</span>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <a href="/riders/250/haiden-deegan/" class="flex-1 text-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium transition-all duration-200">
+          View Profile
+        </a>
+        <a href="/betting/rider/haiden-deegan/" class="flex-1 text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition-all duration-200 shadow-md">
+          Place Bet
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+    <div class="relative overflow-hidden">
+      <img src="/img/riders/levi-kitchen.svg" alt="Levi Kitchen" class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+      <div class="absolute top-3 right-3 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+        🚀 RISING STAR
+      </div>
+      <div class="absolute top-3 left-3 bg-green-600 text-white font-bold text-lg sm:text-xl w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-lg border-2 border-white">
+        47
+      </div>
+      <div class="absolute bottom-3 left-3 right-3">
+        <h3 class="text-white text-xl sm:text-2xl font-bold mb-1">Levi Kitchen</h3>
+        <p class="text-green-200 text-sm font-medium">Pro Circuit Kawasaki</p>
+      </div>
+    </div>
+    <div class="p-4 sm:p-5">
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-xs sm:text-sm">
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Age</span>
+          <span class="font-bold text-gray-900 dark:text-white">23</span>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Wins</span>
+          <span class="font-bold text-gray-900 dark:text-white">3</span>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Titles</span>
+          <span class="font-bold text-gray-900 dark:text-white">0</span>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <a href="/riders/250/levi-kitchen/" class="flex-1 text-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium transition-all duration-200">
+          View Profile
+        </a>
+        <a href="/betting/rider/levi-kitchen/" class="flex-1 text-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 font-medium transition-all duration-200 shadow-md">
+          Place Bet
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100 dark:border-gray-700">
+    <div class="relative overflow-hidden">
+      <img src="/img/riders/tom-vialle.svg" alt="Tom Vialle" class="w-full h-48 sm:h-56 object-cover transition-transform duration-300 group-hover:scale-110">
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+      <div class="absolute top-3 right-3 bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+        🏆 2X CHAMPION
+      </div>
+      <div class="absolute top-3 left-3 bg-orange-600 text-white font-bold text-lg sm:text-xl w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full shadow-lg border-2 border-white">
+        1
+      </div>
+      <div class="absolute bottom-3 left-3 right-3">
+        <h3 class="text-white text-xl sm:text-2xl font-bold mb-1">Tom Vialle</h3>
+        <p class="text-orange-200 text-sm font-medium">Red Bull KTM Factory Racing</p>
+      </div>
+    </div>
+    <div class="p-4 sm:p-5">
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-xs sm:text-sm">
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Age</span>
+          <span class="font-bold text-gray-900 dark:text-white">23</span>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Wins</span>
+          <span class="font-bold text-gray-900 dark:text-white">4</span>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg transition-colors duration-200">
+          <span class="block text-xs uppercase text-gray-500 dark:text-gray-400 mb-1">Titles</span>
+          <span class="font-bold text-gray-900 dark:text-white">2</span>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
+        <a href="/riders/250/tom-vialle/" class="flex-1 text-center px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 font-medium transition-all duration-200">
+          View Profile
+        </a>
+        <a href="/betting/rider/tom-vialle/" class="flex-1 text-center px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 font-medium transition-all duration-200 shadow-md">
+          Place Bet
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center my-8">
+  <a href="/riders/250/" class="inline-block px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+    View All 250 Class Riders
+  </a>
+</div>
+
+## Championship Statistics
+
+<div class="my-10 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 lg:p-8 shadow-xl border border-gray-200 dark:border-gray-700">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-0">🏆 Career Achievements</h3>
+    <div class="text-sm text-gray-600 dark:text-gray-400">
+      *Updated automatically from official sources
+    </div>
+  </div>
   
   <div class="overflow-x-auto">
-    <table class="min-w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
-      <thead>
-        <tr>
-          <th class="px-4 py-3 bg-neutral-100 dark:bg-neutral-700 text-left text-xs font-semibold text-neutral-700 dark:text-neutral-200 uppercase tracking-wider">Rider</th>
-          <th class="px-4 py-3 bg-neutral-100 dark:bg-neutral-700 text-left text-xs font-semibold text-neutral-700 dark:text-neutral-200 uppercase tracking-wider">SX Wins</th>
-          <th class="px-4 py-3 bg-neutral-100 dark:bg-neutral-700 text-left text-xs font-semibold text-neutral-700 dark:text-neutral-200 uppercase tracking-wider">MX Wins</th>
-          <th class="px-4 py-3 bg-neutral-100 dark:bg-neutral-700 text-left text-xs font-semibold text-neutral-700 dark:text-neutral-200 uppercase tracking-wider">450 SX Titles</th>
-          <th class="px-4 py-3 bg-neutral-100 dark:bg-neutral-700 text-left text-xs font-semibold text-neutral-700 dark:text-neutral-200 uppercase tracking-wider">450 MX Titles</th>
-          <th class="px-4 py-3 bg-neutral-100 dark:bg-neutral-700 text-left text-xs font-semibold text-neutral-700 dark:text-neutral-200 uppercase tracking-wider">250 Titles</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
-        <tr>
-          <td class="px-4 py-3 text-sm font-medium"><a href="/riders/450/eli-tomac/" class="text-primary hover:underline">Eli Tomac</a></td>
-          <td class="px-4 py-3 text-sm">51</td>
-          <td class="px-4 py-3 text-sm">73</td>
-          <td class="px-4 py-3 text-sm">3</td>
-          <td class="px-4 py-3 text-sm">4</td>
-          <td class="px-4 py-3 text-sm">2</td>
-        </tr>
-        <tr class="bg-neutral-50 dark:bg-neutral-750">
-          <td class="px-4 py-3 text-sm font-medium"><a href="/riders/450/cooper-webb/" class="text-primary hover:underline">Cooper Webb</a></td>
-          <td class="px-4 py-3 text-sm">22</td>
-          <td class="px-4 py-3 text-sm">7</td>
-          <td class="px-4 py-3 text-sm">2</td>
-          <td class="px-4 py-3 text-sm">0</td>
-          <td class="px-4 py-3 text-sm">2</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-3 text-sm font-medium"><a href="/riders/450/chase-sexton/" class="text-primary hover:underline">Chase Sexton</a></td>
-          <td class="px-4 py-3 text-sm">9</td>
-          <td class="px-4 py-3 text-sm">8</td>
-          <td class="px-4 py-3 text-sm">1</td>
-          <td class="px-4 py-3 text-sm">1</td>
-          <td class="px-4 py-3 text-sm">2</td>
-        </tr>
-        <tr class="bg-neutral-50 dark:bg-neutral-750">
-          <td class="px-4 py-3 text-sm font-medium"><a href="/riders/450/jett-lawrence/" class="text-primary hover:underline">Jett Lawrence</a></td>
-          <td class="px-4 py-3 text-sm">12</td>
-          <td class="px-4 py-3 text-sm">20</td>
-          <td class="px-4 py-3 text-sm">1</td>
-          <td class="px-4 py-3 text-sm">1</td>
-          <td class="px-4 py-3 text-sm">2</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-3 text-sm font-medium"><a href="/riders/450/jason-anderson/" class="text-primary hover:underline">Jason Anderson</a></td>
-          <td class="px-4 py-3 text-sm">14</td>
-          <td class="px-4 py-3 text-sm">1</td>
-          <td class="px-4 py-3 text-sm">1</td>
-          <td class="px-4 py-3 text-sm">0</td>
-          <td class="px-4 py-3 text-sm">1</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="inline-block min-w-full align-middle">
+      <table class="min-w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden shadow-lg">
+        <thead>
+          <tr class="bg-gradient-to-r from-red-500 to-blue-600 text-white">
+            <th class="px-3 py-4 text-left text-xs font-bold uppercase tracking-wider">Rider</th>
+            <th class="px-3 py-4 text-center text-xs font-bold uppercase tracking-wider">SX Wins</th>
+            <th class="px-3 py-4 text-center text-xs font-bold uppercase tracking-wider">MX Wins</th>
+            <th class="px-3 py-4 text-center text-xs font-bold uppercase tracking-wider">450 SX</th>
+            <th class="px-3 py-4 text-center text-xs font-bold uppercase tracking-wider">450 MX</th>
+            <th class="px-3 py-4 text-center text-xs font-bold uppercase tracking-wider">250 Titles</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-200">
+            <td class="px-3 py-4 text-sm font-semibold">
+              <a href="/riders/450/eli-tomac/" class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 hover:underline transition-colors duration-200">
+                Eli Tomac
+              </a>
+            </td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">51</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">73</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-green-600 dark:text-green-400">3</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-green-600 dark:text-green-400">4</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-blue-600 dark:text-blue-400">2</td>
+          </tr>
+          <tr class="bg-gray-50 dark:bg-gray-750 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+            <td class="px-3 py-4 text-sm font-semibold">
+              <a href="/riders/450/cooper-webb/" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 hover:underline transition-colors duration-200">
+                Cooper Webb
+              </a>
+            </td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">22</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">7</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-green-600 dark:text-green-400">2</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-400">0</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-blue-600 dark:text-blue-400">2</td>
+          </tr>
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-200">
+            <td class="px-3 py-4 text-sm font-semibold">
+              <a href="/riders/450/chase-sexton/" class="text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300 hover:underline transition-colors duration-200">
+                Chase Sexton
+              </a>
+            </td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">9</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">8</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-green-600 dark:text-green-400">1</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-green-600 dark:text-green-400">1</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-blue-600 dark:text-blue-400">2</td>
+          </tr>
+          <tr class="bg-gray-50 dark:bg-gray-750 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+            <td class="px-3 py-4 text-sm font-semibold">
+              <a href="/riders/450/jett-lawrence/" class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 hover:underline transition-colors duration-200">
+                Jett Lawrence
+              </a>
+            </td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">12</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">20</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-green-600 dark:text-green-400">1</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-green-600 dark:text-green-400">1</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-blue-600 dark:text-blue-400">2</td>
+          </tr>
+          <tr class="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors duration-200">
+            <td class="px-3 py-4 text-sm font-semibold">
+              <a href="/riders/450/jason-anderson/" class="text-purple-600 hover:text-purple-800 dark:text-purple-400 dark:hover:text-purple-300 hover:underline transition-colors duration-200">
+                Jason Anderson
+              </a>
+            </td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">14</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-900 dark:text-white">1</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-green-600 dark:text-green-400">1</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-gray-400">0</td>
+            <td class="px-3 py-4 text-sm text-center font-bold text-blue-600 dark:text-blue-400">1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
