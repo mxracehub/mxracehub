@@ -477,6 +477,112 @@ export const insertUserAchievementSchema = createInsertSchema(userAchievements).
 export const insertUserStatsSchema = createInsertSchema(userStats).omit({ id: true, createdAt: true, updatedAt: true });
 export const insertActivityLogSchema = createInsertSchema(activityLog).omit({ id: true, createdAt: true });
 
+// Leaderboard and prediction schemas
+export const insertWeeklyLeaderboardSchema = createInsertSchema(weeklyLeaderboards).omit({ id: true, createdAt: true });
+export const insertSeasonalPredictionSchema = createInsertSchema(seasonalPredictions).omit({ id: true, createdAt: true, settledAt: true });
+export const insertLeaderboardAchievementSchema = createInsertSchema(leaderboardAchievements).omit({ id: true, createdAt: true });
+
+// Weekly Leaderboards table
+export const weeklyLeaderboards = pgTable("weekly_leaderboards", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  weekStart: timestamp("week_start").notNull(),
+  weekEnd: timestamp("week_end").notNull(),
+  totalBets: integer("total_bets").default(0).notNull(),
+  totalWagered: numeric("total_wagered").default("0.00").notNull(),
+  totalWon: numeric("total_won").default("0.00").notNull(),
+  winRate: numeric("win_rate", { precision: 5, scale: 2 }).default("0.00").notNull(),
+  profitLoss: numeric("profit_loss").default("0.00").notNull(),
+  rank: integer("rank"),
+  points: integer("points").default(0).notNull(),
+  longestWinStreak: integer("longest_win_streak").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => {
+  return {
+    userWeekIdx: uniqueIndex("user_week_idx").on(table.userId, table.weekStart),
+  };
+});
+
+// Seasonal Championship Predictions table
+export const seasonalPredictions = pgTable("seasonal_predictions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  season: varchar("season", { length: 20 }).notNull(), // e.g., "2025-SX", "2025-MX"
+  division: varchar("division", { length: 10 }).notNull(), // 250 or 450
+  championPrediction: integer("champion_prediction").references(() => riders.id).notNull(),
+  topThreePredictions: json("top_three_predictions").notNull(), // Array of rider IDs
+  rookieOfYearPrediction: integer("rookie_of_year_prediction").references(() => riders.id),
+  wagerAmount: numeric("wager_amount").notNull(),
+  odds: numeric("odds", { precision: 8, scale: 2 }).notNull(),
+  potentialPayout: numeric("potential_payout").notNull(),
+  status: varchar("status", { length: 20 }).default("active").notNull(), // active, won, lost
+  isSettled: boolean("is_settled").default(false).notNull(),
+  settledAt: timestamp("settled_at"),
+  actualChampion: integer("actual_champion").references(() => riders.id),
+  actualTopThree: json("actual_top_three"),
+  actualRookieOfYear: integer("actual_rookie_of_year").references(() => riders.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => {
+  return {
+    userSeasonDivisionIdx: uniqueIndex("user_season_division_idx").on(table.userId, table.season, table.division),
+  };
+});
+
+// Leaderboard Achievements table
+export const leaderboardAchievements = pgTable("leaderboard_achievements", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  achievementType: varchar("achievement_type", { length: 50 }).notNull(), // weekly_champion, monthly_champion, season_prophet
+  title: varchar("title", { length: 100 }).notNull(),
+  description: text("description").notNull(),
+  badgeUrl: text("badge_url"),
+  weekStart: timestamp("week_start"),
+  weekEnd: timestamp("week_end"),
+  season: varchar("season", { length: 20 }),
+  metadata: json("metadata"), // Additional achievement data
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Weekly Leaderboard relations
+export const weeklyLeaderboardsRelations = relations(weeklyLeaderboards, ({ one }) => ({
+  user: one(users, {
+    fields: [weeklyLeaderboards.userId],
+    references: [users.id],
+  }),
+}));
+
+// Seasonal predictions relations
+export const seasonalPredictionsRelations = relations(seasonalPredictions, ({ one }) => ({
+  user: one(users, {
+    fields: [seasonalPredictions.userId],
+    references: [users.id],
+  }),
+  championRider: one(riders, {
+    fields: [seasonalPredictions.championPrediction],
+    references: [riders.id],
+  }),
+  rookieRider: one(riders, {
+    fields: [seasonalPredictions.rookieOfYearPrediction],
+    references: [riders.id],
+  }),
+  actualChampionRider: one(riders, {
+    fields: [seasonalPredictions.actualChampion],
+    references: [riders.id],
+  }),
+  actualRookieRider: one(riders, {
+    fields: [seasonalPredictions.actualRookieOfYear],
+    references: [riders.id],
+  }),
+}));
+
+// Leaderboard achievements relations
+export const leaderboardAchievementsRelations = relations(leaderboardAchievements, ({ one }) => ({
+  user: one(users, {
+    fields: [leaderboardAchievements.userId],
+    references: [users.id],
+  }),
+}));
+
 // Export types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -535,3 +641,13 @@ export type InsertUserStats = z.infer<typeof insertUserStatsSchema>;
 
 export type ActivityLog = typeof activityLog.$inferSelect;
 export type InsertActivityLog = z.infer<typeof insertActivityLogSchema>;
+
+// Leaderboard and prediction types
+export type WeeklyLeaderboard = typeof weeklyLeaderboards.$inferSelect;
+export type InsertWeeklyLeaderboard = z.infer<typeof insertWeeklyLeaderboardSchema>;
+
+export type SeasonalPrediction = typeof seasonalPredictions.$inferSelect;
+export type InsertSeasonalPrediction = z.infer<typeof insertSeasonalPredictionSchema>;
+
+export type LeaderboardAchievement = typeof leaderboardAchievements.$inferSelect;
+export type InsertLeaderboardAchievement = z.infer<typeof insertLeaderboardAchievementSchema>;
