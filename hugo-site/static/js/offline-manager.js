@@ -93,6 +93,10 @@ class OfflineManager {
         standings: await this.fetchChampionshipStandings(),
         tracks: await this.fetchTrackData(),
         teams: await this.fetchTeamData(),
+        userBets: await this.fetchUserBettingData(),
+        accountInfo: await this.fetchAccountInfo(),
+        leaderboards: await this.fetchLeaderboardData(),
+        achievements: await this.fetchUserAchievements(),
         timestamp: Date.now(),
         version: this.version
       };
@@ -159,6 +163,55 @@ class OfflineManager {
     }
   }
   
+  async fetchUserBettingData() {
+    try {
+      const response = await fetch('/api/user/bets');
+      if (response.status === 401) {
+        return { bets: [], authenticated: false };
+      }
+      return await response.json();
+    } catch (error) {
+      console.log('Using fallback betting data');
+      return this.getFallbackBettingData();
+    }
+  }
+  
+  async fetchAccountInfo() {
+    try {
+      const response = await fetch('/api/auth/user');
+      if (response.status === 401) {
+        return { user: null, authenticated: false };
+      }
+      return await response.json();
+    } catch (error) {
+      console.log('Using fallback account data');
+      return this.getFallbackAccountData();
+    }
+  }
+  
+  async fetchLeaderboardData() {
+    try {
+      const response = await fetch('/api/leaderboards/weekly');
+      return await response.json();
+    } catch (error) {
+      console.log('Using fallback leaderboard data');
+      return this.getFallbackLeaderboardData();
+    }
+  }
+  
+  async fetchUserAchievements() {
+    try {
+      const response = await fetch('/api/user/achievements');
+      if (response.status === 401) {
+        return { achievements: [], authenticated: false };
+      }
+      return await response.json();
+    } catch (error) {
+      console.log('Using fallback achievement data');
+      return this.getFallbackAchievementData();
+    }
+  }
+  
   // Get cached data for offline viewing
   getCachedData(dataType = null) {
     try {
@@ -199,6 +252,14 @@ class OfflineManager {
             return await this.fetchTrackData();
           case 'teams':
             return await this.fetchTeamData();
+          case 'userBets':
+            return await this.fetchUserBettingData();
+          case 'accountInfo':
+            return await this.fetchAccountInfo();
+          case 'leaderboards':
+            return await this.fetchLeaderboardData();
+          case 'achievements':
+            return await this.fetchUserAchievements();
           default:
             throw new Error('Unknown data type');
         }
@@ -253,6 +314,14 @@ class OfflineManager {
         return this.getFallbackTrackData();
       case 'teams':
         return this.getFallbackTeamData();
+      case 'userBets':
+        return this.getFallbackBettingData();
+      case 'accountInfo':
+        return this.getFallbackAccountData();
+      case 'leaderboards':
+        return this.getFallbackLeaderboardData();
+      case 'achievements':
+        return this.getFallbackAchievementData();
       default:
         return null;
     }
@@ -397,6 +466,43 @@ class OfflineManager {
         primaryColor: "#0066FF"
       }
     ];
+  }
+  
+  getFallbackBettingData() {
+    return {
+      bets: [],
+      authenticated: false,
+      message: "Please log in to view your betting history",
+      offline: true
+    };
+  }
+  
+  getFallbackAccountData() {
+    return {
+      user: null,
+      authenticated: false,
+      message: "Please log in to view account information",
+      offline: true
+    };
+  }
+  
+  getFallbackLeaderboardData() {
+    return {
+      leaderboard: [],
+      userRank: null,
+      userPoints: null,
+      message: "Leaderboard data not available offline",
+      offline: true
+    };
+  }
+  
+  getFallbackAchievementData() {
+    return {
+      achievements: [],
+      authenticated: false,
+      message: "Please log in to view your achievements",
+      offline: true
+    };
   }
   
   // Manual cache refresh
