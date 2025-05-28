@@ -233,6 +233,59 @@ export const bankAccounts = pgTable("bank_accounts", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// Achievement system tables
+export const achievements = pgTable("achievements", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  icon: varchar("icon", { length: 100 }).notNull(), // Icon name for display
+  category: varchar("category", { length: 50 }).notNull(), // betting, community, predictions, milestones
+  type: varchar("type", { length: 50 }).notNull(), // single, progressive, streak
+  requirement: json("requirement").notNull(), // Conditions to unlock
+  points: integer("points").notNull().default(0), // Points awarded
+  rarity: varchar("rarity", { length: 20 }).notNull().default("common"), // common, rare, epic, legendary
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const userAchievements = pgTable("user_achievements", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  achievementId: integer("achievement_id").notNull().references(() => achievements.id),
+  unlockedAt: timestamp("unlocked_at").defaultNow(),
+  progress: json("progress"), // Current progress toward achievement
+  isCompleted: boolean("is_completed").notNull().default(false),
+  notificationSent: boolean("notification_sent").notNull().default(false),
+});
+
+export const userStats = pgTable("user_stats", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id).unique(),
+  totalPoints: integer("total_points").notNull().default(0),
+  level: integer("level").notNull().default(1),
+  totalBets: integer("total_bets").notNull().default(0),
+  wonBets: integer("won_bets").notNull().default(0),
+  currentStreak: integer("current_streak").notNull().default(0),
+  longestStreak: integer("longest_streak").notNull().default(0),
+  totalEarnings: decimal("total_earnings", { precision: 10, scale: 2 }).notNull().default("0.00"),
+  racesAttended: integer("races_attended").notNull().default(0),
+  predictionsCorrect: integer("predictions_correct").notNull().default(0),
+  totalPredictions: integer("total_predictions").notNull().default(0),
+  communityContributions: integer("community_contributions").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const activityLog = pgTable("activity_log", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  activityType: varchar("activity_type", { length: 50 }).notNull(), // bet_placed, prediction_made, race_attended, etc.
+  description: text("description").notNull(),
+  metadata: json("metadata"), // Additional data about the activity
+  pointsEarned: integer("points_earned").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Relation definitions
 export const usersRelations = relations(users, ({ many }) => ({
   createdBets: many(friendBets, { relationName: "creatorBets" }),
@@ -367,6 +420,36 @@ export const bankAccountsRelations = relations(bankAccounts, ({ one }) => ({
 export const savedBetFormsRelations = relations(savedBetForms, ({ one }) => ({
   user: one(users, {
     fields: [savedBetForms.userId],
+    references: [users.id],
+  }),
+}));
+
+// Achievement system relations
+export const achievementsRelations = relations(achievements, ({ many }) => ({
+  userAchievements: many(userAchievements),
+}));
+
+export const userAchievementsRelations = relations(userAchievements, ({ one }) => ({
+  user: one(users, {
+    fields: [userAchievements.userId],
+    references: [users.id],
+  }),
+  achievement: one(achievements, {
+    fields: [userAchievements.achievementId],
+    references: [achievements.id],
+  }),
+}));
+
+export const userStatsRelations = relations(userStats, ({ one }) => ({
+  user: one(users, {
+    fields: [userStats.userId],
+    references: [users.id],
+  }),
+}));
+
+export const activityLogRelations = relations(activityLog, ({ one }) => ({
+  user: one(users, {
+    fields: [activityLog.userId],
     references: [users.id],
   }),
 }));
