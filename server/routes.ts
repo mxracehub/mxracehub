@@ -142,8 +142,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // House Bank System Integration - Secure Fund Management
+  // Professional Payment Gateway Service Integration
   const { houseBankService } = await import("./services/houseBankService");
+  const { paymentGatewayService } = await import("./services/gatewayService");
 
   // Add betting winnings to user account (automatically adds to house bank)
   app.post("/api/betting/add-winnings", async (req, res) => {
@@ -291,6 +292,130 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error updating bank configuration:', error);
       res.status(500).json({ message: "Failed to update bank configuration" });
+    }
+  });
+
+  // Professional Payment Gateway Service Endpoints
+  
+  // Process deposit through gateway
+  app.post("/api/gateway/deposit", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const { amount, method, paymentDetails } = req.body;
+      
+      // Validate inputs
+      if (!amount || amount <= 0) {
+        return res.status(400).json({ message: "Invalid amount" });
+      }
+      
+      if (!method) {
+        return res.status(400).json({ message: "Payment method required" });
+      }
+
+      // Process deposit through professional gateway
+      const result = await paymentGatewayService.processDeposit(userId, amount, method, paymentDetails);
+      
+      res.json({
+        success: true,
+        message: "Deposit processed successfully",
+        ...result
+      });
+    } catch (error) {
+      console.error('Error processing deposit:', error);
+      res.status(400).json({ message: error.message });
+    }
+  });
+
+  // Process withdrawal through gateway
+  app.post("/api/gateway/withdrawal", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const { amount, method, destinationDetails } = req.body;
+      
+      // Validate inputs
+      if (!amount || amount <= 0) {
+        return res.status(400).json({ message: "Invalid amount" });
+      }
+      
+      if (!method) {
+        return res.status(400).json({ message: "Withdrawal method required" });
+      }
+
+      if (!destinationDetails) {
+        return res.status(400).json({ message: "Destination details required" });
+      }
+
+      // Process withdrawal through professional gateway
+      const result = await paymentGatewayService.processWithdrawal(userId, amount, method, destinationDetails);
+      
+      res.json({
+        success: true,
+        message: "Withdrawal processed successfully",
+        ...result
+      });
+    } catch (error) {
+      console.error('Error processing withdrawal:', error);
+      res.status(400).json({ message: error.message });
+    }
+  });
+
+  // Get gateway status and statistics (admin only)
+  app.get("/api/admin/gateway-status", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      // In production, add admin role check here
+      const userId = (req.user as any).id;
+      
+      const gatewayStatus = await paymentGatewayService.getGatewayStatus();
+      
+      res.json(gatewayStatus);
+    } catch (error) {
+      console.error('Error getting gateway status:', error);
+      res.status(500).json({ message: "Failed to get gateway status" });
+    }
+  });
+
+  // Update gateway configuration (admin only)
+  app.put("/api/admin/gateway-config", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      // In production, add admin role check here
+      const userId = (req.user as any).id;
+      
+      const { gatewayName, accountId, fees } = req.body;
+      
+      // Update gateway configuration
+      paymentGatewayService.updateGatewayConfig({
+        gatewayName,
+        accountId,
+        fees
+      });
+      
+      // Get updated status
+      const updatedStatus = await paymentGatewayService.getGatewayStatus();
+      
+      res.json({ 
+        success: true, 
+        message: "Gateway configuration updated successfully",
+        gateway: updatedStatus
+      });
+    } catch (error) {
+      console.error('Error updating gateway configuration:', error);
+      res.status(500).json({ message: "Failed to update gateway configuration" });
     }
   });
   
