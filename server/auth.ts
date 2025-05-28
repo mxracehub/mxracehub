@@ -75,8 +75,9 @@ export function setupAuth(app: Express) {
 
   passport.deserializeUser(async (id: number, done) => {
     try {
-      const user = await storage.getUser(id);
-      done(null, user);
+      // Load user with complete membership details including friend groups
+      const userWithMembership = await storage.getUserWithMembershipDetails(id);
+      done(null, userWithMembership);
     } catch (error) {
       done(error);
     }
@@ -120,18 +121,29 @@ export function setupAuth(app: Express) {
   });
 
   app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", (err: any, user: any, info: any) => {
+    passport.authenticate("local", async (err: any, user: any, info: any) => {
       if (err) return next(err);
       if (!user) return res.status(401).json({ message: info.message || "Authentication failed" });
       
-      req.login(user, (loginErr) => {
+      req.login(user, async (loginErr) => {
         if (loginErr) return next(loginErr);
         
-        // Remove password from response
-        const userResponse = { ...user };
-        delete (userResponse as any).password;
-        
-        return res.json(userResponse);
+        try {
+          // Load complete membership details for the logged-in user
+          const userWithMembership = await storage.getUserWithMembershipDetails(user.id);
+          
+          // Remove password from response
+          const userResponse = { ...userWithMembership };
+          delete (userResponse as any).password;
+          
+          return res.json(userResponse);
+        } catch (error) {
+          console.error('Error loading membership details on login:', error);
+          // Fallback to basic user data without password
+          const userResponse = { ...user };
+          delete (userResponse as any).password;
+          return res.json(userResponse);
+        }
       });
     })(req, res, next);
   });

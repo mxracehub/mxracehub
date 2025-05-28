@@ -23,6 +23,7 @@ export interface IStorage {
   // User operations
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
+  getUserWithMembershipDetails(id: number): Promise<any>;
   createUser(insertUser: InsertUser): Promise<User>;
   updateStripeCustomerId(userId: number, stripeCustomerId: string): Promise<User>;
   updateUserStripeInfo(userId: number, info: { stripeCustomerId: string, stripeSubscriptionId: string }): Promise<User>;
@@ -147,6 +148,46 @@ export class DatabaseStorage implements IStorage {
   async getUserByUsername(username: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.username, username));
     return user;
+  }
+
+  async getUserWithMembershipDetails(id: number): Promise<any> {
+    const { friendMembershipService } = await import("./services/friendMembershipService");
+    
+    try {
+      // Get user with complete membership dashboard
+      const membershipDashboard = await friendMembershipService.getMembershipDashboard(id);
+      
+      return {
+        ...membershipDashboard.user,
+        membershipDetails: {
+          type: membershipDashboard.membershipStatus.type,
+          isActive: membershipDashboard.membershipStatus.isActive,
+          isFree: membershipDashboard.membershipStatus.isFree,
+          expiresAt: membershipDashboard.membershipStatus.expiresAt,
+          eligibility: membershipDashboard.eligibility,
+        },
+        friendGroups: membershipDashboard.friendGroups,
+        friendGroupsCount: membershipDashboard.user.friendGroupsCount || 0,
+        hasActiveFriendBets: membershipDashboard.user.hasActiveFriendBets || false,
+      };
+    } catch (error) {
+      console.error('Error loading membership details:', error);
+      // Fallback to basic user data
+      const user = await this.getUser(id);
+      return {
+        ...user,
+        membershipDetails: {
+          type: user?.membershipType || 'free',
+          isActive: false,
+          isFree: user?.membershipType === 'premium_free',
+          expiresAt: user?.membershipExpiresAt,
+          eligibility: { eligible: false, reason: 'Error loading details' },
+        },
+        friendGroups: [],
+        friendGroupsCount: 0,
+        hasActiveFriendBets: false,
+      };
+    }
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
