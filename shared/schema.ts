@@ -260,6 +260,7 @@ export const savedBetForms = pgTable("saved_bet_forms", {
   };
 });
 
+// Enhanced wallet and payment methods
 export const bankAccounts = pgTable("bank_accounts", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id),
@@ -271,6 +272,50 @@ export const bankAccounts = pgTable("bank_accounts", {
   isVerified: boolean("is_verified").default(false).notNull(),
   isDefault: boolean("is_default").default(false).notNull(),
   lastUsed: timestamp("last_used"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const cryptoWallets = pgTable("crypto_wallets", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  walletName: varchar("wallet_name", { length: 100 }).notNull(),
+  walletAddress: varchar("wallet_address", { length: 255 }).notNull(),
+  cryptocurrency: varchar("cryptocurrency", { length: 20 }).notNull(), // BTC, ETH, USDC, etc.
+  network: varchar("network", { length: 50 }), // mainnet, polygon, etc.
+  isVerified: boolean("is_verified").default(false).notNull(),
+  isDefault: boolean("is_default").default(false).notNull(),
+  lastUsed: timestamp("last_used"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const walletTransactions = pgTable("wallet_transactions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  transactionType: varchar("transaction_type", { length: 20 }).notNull(), // deposit, withdrawal, transfer
+  method: varchar("method", { length: 20 }).notNull(), // bank, crypto, stripe, paypal
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  currency: varchar("currency", { length: 10 }).default("USD").notNull(),
+  status: varchar("status", { length: 20 }).default("pending").notNull(), // pending, completed, failed, cancelled
+  externalTransactionId: varchar("external_transaction_id", { length: 255 }),
+  destinationDetails: json("destination_details"), // Bank account or crypto wallet details
+  fees: decimal("fees", { precision: 10, scale: 2 }).default("0.00"),
+  notes: text("notes"),
+  processedAt: timestamp("processed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const paymentMethods = pgTable("payment_methods", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  type: varchar("type", { length: 20 }).notNull(), // card, bank, crypto, paypal
+  provider: varchar("provider", { length: 50 }).notNull(), // stripe, coinbase, etc.
+  externalId: varchar("external_id", { length: 255 }), // Stripe payment method ID, etc.
+  displayName: varchar("display_name", { length: 100 }).notNull(),
+  lastFour: varchar("last_four", { length: 4 }), // Last 4 digits for cards/accounts
+  isDefault: boolean("is_default").default(false).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
+  metadata: json("metadata"), // Additional provider-specific data
+  expiresAt: timestamp("expires_at"), // For cards
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

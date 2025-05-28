@@ -49,6 +49,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to fetch user profile" });
     }
   });
+
+  // Comprehensive Wallet API Endpoints
+  const { walletService } = await import("./services/walletService");
+
+  // Get complete wallet data (auto-syncs with account)
+  app.get("/api/wallet", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const walletData = await walletService.getWalletData(userId);
+      
+      res.json(walletData);
+    } catch (error) {
+      console.error('Error fetching wallet data:', error);
+      res.status(500).json({ message: "Failed to fetch wallet data" });
+    }
+  });
+
+  // Add funds to account
+  app.post("/api/wallet/add-funds", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const { method, amount, paymentDetails } = req.body;
+      
+      const result = await walletService.addFunds(userId, method, amount, paymentDetails);
+      
+      res.json(result);
+    } catch (error) {
+      console.error('Error adding funds:', error);
+      res.status(400).json({ message: error.message });
+    }
+  });
+
+  // Withdraw funds to bank or crypto
+  app.post("/api/wallet/withdraw", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const { method, amount, destinationDetails } = req.body;
+      
+      const result = await walletService.withdrawFunds(userId, method, amount, destinationDetails);
+      
+      res.json(result);
+    } catch (error) {
+      console.error('Error withdrawing funds:', error);
+      res.status(400).json({ message: error.message });
+    }
+  });
+
+  // Add bank account for withdrawals
+  app.post("/api/wallet/bank-accounts", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const bankAccount = await walletService.addBankAccount(userId, req.body);
+      
+      res.json(bankAccount);
+    } catch (error) {
+      console.error('Error adding bank account:', error);
+      res.status(400).json({ message: error.message });
+    }
+  });
+
+  // Add crypto wallet for withdrawals
+  app.post("/api/wallet/crypto-wallets", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const cryptoWallet = await walletService.addCryptoWallet(userId, req.body);
+      
+      res.json(cryptoWallet);
+    } catch (error) {
+      console.error('Error adding crypto wallet:', error);
+      res.status(400).json({ message: error.message });
+    }
+  });
   
   // Rider endpoints
   app.get("/api/riders", async (req, res) => {
