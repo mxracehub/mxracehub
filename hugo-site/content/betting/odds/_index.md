@@ -2,6 +2,7 @@
 title: "Betting Odds"
 description: "Current odds for upcoming Supercross and Motocross races"
 layout: "list"
+showTableOfContents: false
 ---
 
 # Current Betting Odds
