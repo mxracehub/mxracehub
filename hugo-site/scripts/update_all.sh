@@ -78,6 +78,16 @@ else
     log_message "ERROR: Rider standings update failed"
 fi
 
+# Monitor for new ticket releases each season
+log_message "Monitoring for new season ticket releases..."
+python3 "$SCRIPT_DIR/monitor_ticket_releases.py" 2>&1 | tee -a "$LOG_FILE"
+
+if [ $? -eq 0 ]; then
+    log_message "Ticket monitoring completed successfully"
+else
+    log_message "ERROR: Ticket monitoring failed"
+fi
+
 # Update race schedule with authentic SupercrossLive.com ticket links
 log_message "Updating race schedule with official SupercrossLive.com tickets..."
 python3 "$SCRIPT_DIR/update_supercross_tickets.py" 2>&1 | tee -a "$LOG_FILE"
@@ -86,6 +96,16 @@ if [ $? -eq 0 ]; then
     log_message "Official ticket links updated successfully"
 else
     log_message "ERROR: Official ticket update failed"
+fi
+
+# Update professional race schedule layout
+log_message "Refreshing professional race schedule layout..."
+python3 "$SCRIPT_DIR/create_promotocross_schedule.py" 2>&1 | tee -a "$LOG_FILE"
+
+if [ $? -eq 0 ]; then
+    log_message "Professional schedule layout updated successfully"
+else
+    log_message "ERROR: Schedule layout update failed"
 fi
 
 # Check if Hugo server is running
