@@ -18,8 +18,18 @@ disableTextInHeader = false
 
 # Disable problematic JS features that cause errors
 disableImageZoom = true
-disableJavaScript = true
+disableJavaScript = false
 enableImageZoom = false
+
+# Disable zoom functionality completely
+[params.article]
+showZoomOnHover = false
+
+[params.gallery]
+showZoomOnHover = false
+
+[params.homepage]
+showZoomOnHover = false
 
 # Using custom SVG images that show rider numbers and manufacturer logos
 defaultBackgroundImage = "/img/hero/motocross-action.svg"

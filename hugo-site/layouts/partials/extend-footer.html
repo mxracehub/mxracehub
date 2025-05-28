@@ -1,0 +1,28 @@
+<!-- Complete JavaScript error override for team pages -->
+<script>
+// Override problematic functions before any theme scripts load
+window.mediumZoom = function() {
+  return {
+    attach: function() { return this; },
+    detach: function() { return this; },
+    update: function() { return this; },
+    clone: function() { return this; },
+    on: function() { return this; },
+    off: function() { return this; },
+    open: function() { return this; },
+    close: function() { return this; },
+    toggle: function() { return this; },
+    getOptions: function() { return {}; },
+    getImages: function() { return []; },
+    getZoomedImage: function() { return null; }
+  };
+};
+
+// Block any attempts to call zoom functions
+window.addEventListener('error', function(e) {
+  if (e.message && e.message.includes('mediumZoom')) {
+    e.preventDefault();
+    return false;
+  }
+});
+</script>
