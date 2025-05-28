@@ -68,6 +68,16 @@ else
     log_message "ERROR: Betting page update failed"
 fi
 
+# Update rider standings from official sources
+log_message "Updating 450 and 250 class rider point standings..."
+python3 "$SCRIPT_DIR/update_rider_standings.py" 2>&1 | tee -a "$LOG_FILE"
+
+if [ $? -eq 0 ]; then
+    log_message "Rider standings updated successfully"
+else
+    log_message "ERROR: Rider standings update failed"
+fi
+
 # Update race schedule with authentic SupercrossLive.com ticket links
 log_message "Updating race schedule with official SupercrossLive.com tickets..."
 python3 "$SCRIPT_DIR/update_supercross_tickets.py" 2>&1 | tee -a "$LOG_FILE"

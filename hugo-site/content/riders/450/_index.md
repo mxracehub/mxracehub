@@ -558,7 +558,88 @@ The 450 class represents the pinnacle of professional Supercross and Motocross r
   
   <div class="text-center">
     <a href="/races/standings/" class="inline-block px-6 py-2 bg-primary text-white rounded hover:bg-primary-700">View Complete Standings</a>
+  
+<div class="my-8">
+  <h3 class="text-xl font-bold mb-4 border-b border-primary pb-2">450 Class</h3>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg">
+      <thead class="bg-neutral-100 dark:bg-neutral-700">
+        <tr>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Pos</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Rider</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Number</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Points</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
+
+        <tr class="bg-yellow-100 dark:bg-yellow-900">
+          <td class="px-4 py-3 text-sm font-bold">1</td>
+          <td class="px-4 py-3 text-sm font-medium">Jett Lawrence</td>
+          <td class="px-4 py-3 text-sm">18</td>
+          <td class="px-4 py-3 text-sm font-bold">485</td>
+        </tr>
+        <tr class="bg-neutral-50 dark:bg-neutral-700">
+          <td class="px-4 py-3 text-sm font-bold">2</td>
+          <td class="px-4 py-3 text-sm font-medium">Cooper Webb</td>
+          <td class="px-4 py-3 text-sm">2</td>
+          <td class="px-4 py-3 text-sm font-bold">462</td>
+        </tr>
+        <tr class="bg-neutral-50 dark:bg-neutral-700">
+          <td class="px-4 py-3 text-sm font-bold">3</td>
+          <td class="px-4 py-3 text-sm font-medium">Chase Sexton</td>
+          <td class="px-4 py-3 text-sm">1</td>
+          <td class="px-4 py-3 text-sm font-bold">445</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">4</td>
+          <td class="px-4 py-3 text-sm font-medium">Eli Tomac</td>
+          <td class="px-4 py-3 text-sm">3</td>
+          <td class="px-4 py-3 text-sm font-bold">398</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">5</td>
+          <td class="px-4 py-3 text-sm font-medium">Jason Anderson</td>
+          <td class="px-4 py-3 text-sm">21</td>
+          <td class="px-4 py-3 text-sm font-bold">375</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">6</td>
+          <td class="px-4 py-3 text-sm font-medium">Ken Roczen</td>
+          <td class="px-4 py-3 text-sm">94</td>
+          <td class="px-4 py-3 text-sm font-bold">342</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">7</td>
+          <td class="px-4 py-3 text-sm font-medium">Malcolm Stewart</td>
+          <td class="px-4 py-3 text-sm">27</td>
+          <td class="px-4 py-3 text-sm font-bold">318</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">8</td>
+          <td class="px-4 py-3 text-sm font-medium">Dylan Ferrandis</td>
+          <td class="px-4 py-3 text-sm">14</td>
+          <td class="px-4 py-3 text-sm font-bold">295</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">9</td>
+          <td class="px-4 py-3 text-sm font-medium">Shane McElrath</td>
+          <td class="px-4 py-3 text-sm">12</td>
+          <td class="px-4 py-3 text-sm font-bold">272</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">10</td>
+          <td class="px-4 py-3 text-sm font-medium">Justin Barcia</td>
+          <td class="px-4 py-3 text-sm">51</td>
+          <td class="px-4 py-3 text-sm font-bold">245</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+  <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
+    Last updated: May 28, 2025 at 06:52 PM EST
+  </div>
+</div></div>
 </div>
 
 <div class="text-center my-8">

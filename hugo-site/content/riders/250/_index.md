@@ -313,6 +313,114 @@ The 250 class represents the development division of professional Supercross and
   </div>
 </div>
 
+
+## Current Championship Standings
+
+
+<div class="my-8">
+  <h3 class="text-xl font-bold mb-4 border-b border-primary pb-2">250 East Championship</h3>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg">
+      <thead class="bg-neutral-100 dark:bg-neutral-700">
+        <tr>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Pos</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Rider</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Number</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Points</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
+
+        <tr class="bg-yellow-100 dark:bg-yellow-900">
+          <td class="px-4 py-3 text-sm font-bold">1</td>
+          <td class="px-4 py-3 text-sm font-medium">Haiden Deegan</td>
+          <td class="px-4 py-3 text-sm">38</td>
+          <td class="px-4 py-3 text-sm font-bold">215</td>
+        </tr>
+        <tr class="bg-neutral-50 dark:bg-neutral-700">
+          <td class="px-4 py-3 text-sm font-bold">2</td>
+          <td class="px-4 py-3 text-sm font-medium">Tom Vialle</td>
+          <td class="px-4 py-3 text-sm">28</td>
+          <td class="px-4 py-3 text-sm font-bold">198</td>
+        </tr>
+        <tr class="bg-neutral-50 dark:bg-neutral-700">
+          <td class="px-4 py-3 text-sm font-bold">3</td>
+          <td class="px-4 py-3 text-sm font-medium">RJ Hampshire</td>
+          <td class="px-4 py-3 text-sm">24</td>
+          <td class="px-4 py-3 text-sm font-bold">185</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">4</td>
+          <td class="px-4 py-3 text-sm font-medium">Pierce Brown</td>
+          <td class="px-4 py-3 text-sm">45</td>
+          <td class="px-4 py-3 text-sm font-bold">172</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">5</td>
+          <td class="px-4 py-3 text-sm font-medium">Jordon Smith</td>
+          <td class="px-4 py-3 text-sm">31</td>
+          <td class="px-4 py-3 text-sm font-bold">158</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
+    Last updated: May 28, 2025 at 06:52 PM EST
+  </div>
+</div>
+
+<div class="my-8">
+  <h3 class="text-xl font-bold mb-4 border-b border-primary pb-2">250 West Championship</h3>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg">
+      <thead class="bg-neutral-100 dark:bg-neutral-700">
+        <tr>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Pos</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Rider</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Number</th>
+          <th class="px-4 py-3 text-left text-xs font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Points</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
+
+        <tr class="bg-yellow-100 dark:bg-yellow-900">
+          <td class="px-4 py-3 text-sm font-bold">1</td>
+          <td class="px-4 py-3 text-sm font-medium">Levi Kitchen</td>
+          <td class="px-4 py-3 text-sm">80</td>
+          <td class="px-4 py-3 text-sm font-bold">202</td>
+        </tr>
+        <tr class="bg-neutral-50 dark:bg-neutral-700">
+          <td class="px-4 py-3 text-sm font-bold">2</td>
+          <td class="px-4 py-3 text-sm font-medium">Chance Hymas</td>
+          <td class="px-4 py-3 text-sm">30</td>
+          <td class="px-4 py-3 text-sm font-bold">189</td>
+        </tr>
+        <tr class="bg-neutral-50 dark:bg-neutral-700">
+          <td class="px-4 py-3 text-sm font-bold">3</td>
+          <td class="px-4 py-3 text-sm font-medium">Jo Shimoda</td>
+          <td class="px-4 py-3 text-sm">91</td>
+          <td class="px-4 py-3 text-sm font-bold">175</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">4</td>
+          <td class="px-4 py-3 text-sm font-medium">Garrett Marchbanks</td>
+          <td class="px-4 py-3 text-sm">61</td>
+          <td class="px-4 py-3 text-sm font-bold">162</td>
+        </tr>
+        <tr class="">
+          <td class="px-4 py-3 text-sm font-bold">5</td>
+          <td class="px-4 py-3 text-sm font-medium">Mitchell Oldenburg</td>
+          <td class="px-4 py-3 text-sm">72</td>
+          <td class="px-4 py-3 text-sm font-bold">148</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-sm text-neutral-500 dark:text-neutral-400 mt-2">
+    Last updated: May 28, 2025 at 06:52 PM EST
+  </div>
+</div>
+
 ## Team Rosters
 
 <div class="my-8">
