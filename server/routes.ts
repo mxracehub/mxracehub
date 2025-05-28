@@ -7,6 +7,8 @@ import { setupAuth } from "./auth";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
 import { users, friendBets, groups, groupBets, races, riders, teams, tracks, transactions, memberships, savedBetForms, insertTeamSchema, insertRiderSchema } from "@shared/schema";
+import { RaceCompletionService } from "./services/raceCompletionService";
+import { PayoutService } from "./services/payoutService";
 
 // Initialize Stripe if the API key is available
 let stripe: Stripe | undefined;
@@ -853,6 +855,99 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     });
   }
+  
+  // Initialize automatic payout services
+  const raceCompletionService = new RaceCompletionService();
+  const payoutService = new PayoutService();
+  
+  // Race completion and automatic payout endpoints
+  app.post("/api/races/:id/complete", async (req, res) => {
+    try {
+      const raceId = parseInt(req.params.id);
+      const { results } = req.body;
+      
+      if (!results) {
+        return res.status(400).json({ message: "Race results are required" });
+      }
+      
+      const result = await raceCompletionService.handleRaceCompletion(raceId, results);
+      
+      res.json({
+        success: result.success,
+        message: result.message,
+        raceId: raceId
+      });
+      
+    } catch (error: any) {
+      console.error("Error completing race:", error);
+      res.status(500).json({ 
+        success: false,
+        message: `Failed to complete race: ${error.message}` 
+      });
+    }
+  });
+  
+  // Manual payout trigger endpoint
+  app.post("/api/races/:id/trigger-payouts", async (req, res) => {
+    try {
+      const raceId = parseInt(req.params.id);
+      
+      const result = await raceCompletionService.triggerPayouts(raceId);
+      
+      res.json({
+        success: result.success,
+        message: result.message,
+        raceId: raceId
+      });
+      
+    } catch (error: any) {
+      console.error("Error triggering payouts:", error);
+      res.status(500).json({ 
+        success: false,
+        message: `Failed to trigger payouts: ${error.message}` 
+      });
+    }
+  });
+  
+  // Get payout status for a race
+  app.get("/api/races/:id/payout-status", async (req, res) => {
+    try {
+      const raceId = parseInt(req.params.id);
+      
+      const status = await raceCompletionService.getPayoutStatus(raceId);
+      
+      res.json(status);
+      
+    } catch (error: any) {
+      console.error("Error getting payout status:", error);
+      res.status(500).json({ 
+        error: `Failed to get payout status: ${error.message}` 
+      });
+    }
+  });
+  
+  // Get user balance
+  app.get("/api/users/balance", async (req, res) => {
+    try {
+      if (!req.user?.id) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+      
+      const balance = await payoutService.getUserBalance(req.user.id);
+      
+      res.json({
+        userId: req.user.id,
+        balance: balance,
+        formattedBalance: `$${balance.toFixed(2)}`
+      });
+      
+    } catch (error: any) {
+      console.error("Error getting user balance:", error);
+      res.status(500).json({ 
+        message: `Failed to get balance: ${error.message}` 
+      });
+    }
+  });
   
   return httpServer;
 }
