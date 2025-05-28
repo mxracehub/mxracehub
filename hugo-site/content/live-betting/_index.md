@@ -686,3 +686,106 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+<!-- Load Social Sharing for Big Wins -->
+<script src="/js/social-sharing.js"></script>
+
+<script>
+// Enhanced live betting with win sharing
+document.addEventListener('DOMContentLoaded', function() {
+  // Add a demo button to test the sharing feature
+  const demoSection = document.createElement('div');
+  demoSection.className = 'bg-yellow-100 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 my-6 text-center';
+  demoSection.innerHTML = `
+    <h4 class="font-bold text-yellow-800 dark:text-yellow-200 mb-2">🎉 Demo Feature</h4>
+    <p class="text-yellow-700 dark:text-yellow-300 mb-3">Try out the social sharing feature for big wins!</p>
+    <button id="demo-big-win" class="px-6 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 font-medium transition-colors">
+      Simulate Big Win & Share
+    </button>
+  `;
+  
+  // Insert after the live race banner
+  const banner = document.getElementById('live-race-banner');
+  if (banner && banner.nextSibling) {
+    banner.parentNode.insertBefore(demoSection, banner.nextSibling);
+  }
+  
+  // Add demo functionality
+  document.getElementById('demo-big-win')?.addEventListener('click', function() {
+    // Create a realistic big win scenario
+    const bigWinData = {
+      id: Date.now(),
+      payout: 1250.00,
+      amount: 75.00,
+      raceName: 'Thunder Valley National - 450 Main Event',
+      betType: 'Live Race Winner',
+      odds: '+1567',
+      status: 'won'
+    };
+    
+    // Show celebration notification first
+    showBigWinCelebration(bigWinData);
+    
+    // Then show sharing modal after celebration
+    setTimeout(() => {
+      if (window.winSharingManager) {
+        window.winSharingManager.showWinSharingModal(bigWinData);
+      }
+    }, 3000);
+  });
+  
+  function showBigWinCelebration(winData) {
+    const celebration = document.createElement('div');
+    celebration.className = 'fixed inset-0 z-50 flex items-center justify-center pointer-events-none';
+    celebration.innerHTML = `
+      <div class="text-center animate-bounce">
+        <div class="text-8xl mb-4">🎉🏆💰</div>
+        <div class="text-4xl font-bold text-yellow-400 mb-2">BIG WIN!</div>
+        <div class="text-3xl font-bold text-white">$${winData.payout.toFixed(2)}</div>
+        <div class="text-xl text-gray-300 mt-2">${winData.raceName}</div>
+      </div>
+    `;
+    
+    document.body.appendChild(celebration);
+    
+    // Remove after animation
+    setTimeout(() => {
+      if (celebration.parentNode) {
+        celebration.parentNode.removeChild(celebration);
+      }
+    }, 3000);
+  }
+  
+  // Integrate with existing bet confirmation
+  const originalConfirmLiveBet = window.confirmLiveBet;
+  if (originalConfirmLiveBet) {
+    window.confirmLiveBet = function() {
+      originalConfirmLiveBet();
+      
+      // Simulate a win scenario for demo (in real app, this would come from your API)
+      setTimeout(() => {
+        const randomWin = Math.random() > 0.7; // 30% chance of big win
+        if (randomWin) {
+          const winAmount = Math.random() * 500 + 100; // $100-$600 win
+          const betAmount = 25;
+          
+          const winData = {
+            id: Date.now(),
+            payout: winAmount,
+            amount: betAmount,
+            raceName: 'Live Race Bet',
+            betType: 'Position Change',
+            odds: '+' + Math.floor((winAmount / betAmount - 1) * 100),
+            status: 'won'
+          };
+          
+          // Trigger the sharing modal for big wins
+          if (winAmount >= 50) {
+            document.dispatchEvent(new CustomEvent('betSettled', { detail: winData }));
+          }
+        }
+      }, 2000);
+    };
+  }
+});
+</script>

@@ -142,8 +142,9 @@ Your complete betting experience with offline access to betting history and acco
   </div>
 </div>
 
-<!-- Load Offline Manager -->
+<!-- Load Offline Manager and Social Sharing -->
 <script src="/js/offline-manager.js"></script>
+<script src="/js/social-sharing.js"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
