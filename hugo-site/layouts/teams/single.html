@@ -1,16 +1,17 @@
 {{ define "main" }}
 <div class="max-w-6xl mx-auto px-4 py-8">
   <!-- Team Header -->
-  <div class="team-header bg-gradient-to-r from-orange-600 to-red-600 text-white p-8 rounded-lg mb-8">
+  <div id="team-header" class="team-header bg-gradient-to-r from-orange-600 to-red-600 text-white p-8 rounded-lg mb-8">
     <div class="flex items-center">
       <div class="team-logo mr-6">
-        <div class="w-24 h-24 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
-          <span class="text-2xl font-bold">{{ substr .Title 0 2 | upper }}</span>
+        <div id="team-color" class="w-24 h-24 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+          <span class="text-2xl font-bold" id="team-initials">{{ substr .Title 0 2 | upper }}</span>
         </div>
       </div>
       <div>
-        <h1 class="text-4xl font-bold mb-2">{{ .Title }}</h1>
-        <p class="text-xl opacity-90">{{ .Params.description | default "Professional Racing Team" }}</p>
+        <h1 class="text-4xl font-bold mb-2" id="team-name">{{ .Title }}</h1>
+        <p class="text-xl opacity-90" id="team-description">Loading team information...</p>
+        <p class="text-lg opacity-75" id="team-manufacturer"></p>
       </div>
     </div>
   </div>
@@ -29,24 +30,12 @@
       <!-- Riders Section -->
       <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
         <h2 class="text-2xl font-bold mb-6 text-orange-600">Team Riders</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {{ range .Params.riders }}
-          <div class="rider-card border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-shadow">
-            <div class="flex items-center mb-3">
-              <div class="w-12 h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
-                #{{ .number | default "0" }}
-              </div>
-              <div>
-                <h3 class="font-bold text-lg">{{ .name }}</h3>
-                <p class="text-gray-600 dark:text-gray-400">{{ .class }}</p>
-              </div>
-            </div>
-            <div class="text-sm space-y-1">
-              <p><span class="font-medium">Hometown:</span> {{ .hometown }}</p>
-              <p><span class="font-medium">Bike:</span> {{ .bike }}</p>
-            </div>
-          </div>
-          {{ end }}
+        <div id="riders-loading" class="text-center py-8 text-gray-500">
+          <div class="animate-spin w-8 h-8 border-4 border-orange-600 border-t-transparent rounded-full mx-auto mb-4"></div>
+          Loading team riders...
+        </div>
+        <div id="riders-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 hidden">
+          <!-- Dynamic riders will be loaded here -->
         </div>
       </div>
     </div>
@@ -56,18 +45,18 @@
       <!-- Team Stats -->
       <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
         <h3 class="text-xl font-bold mb-4 text-orange-600">Team Stats</h3>
-        <div class="space-y-3">
+        <div class="space-y-3" id="team-stats">
           <div class="flex justify-between">
             <span class="text-gray-600 dark:text-gray-400">Championships:</span>
-            <span class="font-bold">{{ .Params.championships | default "0" }}</span>
+            <span class="font-bold" id="championships">Loading...</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-600 dark:text-gray-400">Race Wins:</span>
-            <span class="font-bold">{{ .Params.race_wins | default "0" }}</span>
+            <span class="font-bold" id="race-wins">Loading...</span>
           </div>
           <div class="flex justify-between">
             <span class="text-gray-600 dark:text-gray-400">Founded:</span>
-            <span class="font-bold">{{ .Params.founded | default "2024" }}</span>
+            <span class="font-bold" id="founded">Loading...</span>
           </div>
         </div>
       </div>
@@ -93,20 +82,124 @@
   </div>
 </div>
 
-<!-- Clean JavaScript - no external dependencies -->
+<!-- Dynamic Team Loading Script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const riderCards = document.querySelectorAll('.rider-card');
-  riderCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.transform = 'translateY(-2px)';
-      this.style.transition = 'transform 0.2s ease';
+  const teamName = '{{ .Title }}';
+  const API_BASE = 'http://localhost:5000/api';
+  
+  // Load team data dynamically
+  async function loadTeamData() {
+    try {
+      // First get all teams to find the matching one
+      const teamsResponse = await fetch(`${API_BASE}/teams`);
+      if (!teamsResponse.ok) throw new Error('Failed to load teams');
+      
+      const teams = await teamsResponse.json();
+      const team = teams.find(t => t.name === teamName);
+      
+      if (team) {
+        // Update team header with real data
+        const teamColor = document.getElementById('team-color');
+        const teamDescription = document.getElementById('team-description');
+        const teamManufacturer = document.getElementById('team-manufacturer');
+        const teamHeader = document.getElementById('team-header');
+        
+        if (team.color && team.color !== '#333333') {
+          teamColor.style.backgroundColor = team.color;
+          teamColor.style.background = team.color;
+          teamHeader.style.background = `linear-gradient(45deg, ${team.color}, #f7931e)`;
+        }
+        
+        teamDescription.textContent = team.description || 'Professional Racing Team';
+        teamManufacturer.textContent = team.manufacturer ? `${team.manufacturer} Racing` : '';
+        
+        // Update team stats
+        document.getElementById('championships').textContent = team.championships || 0;
+        document.getElementById('race-wins').textContent = team.race_wins || 0;
+        document.getElementById('founded').textContent = team.founded || 'N/A';
+        
+        // Load team riders
+        loadTeamRiders(team.id);
+      } else {
+        console.log('Team not found in database, using static content');
+        hideLoadingStates();
+      }
+    } catch (error) {
+      console.log('Could not load dynamic team data, using static content');
+      hideLoadingStates();
+    }
+  }
+  
+  // Load riders for this team
+  async function loadTeamRiders(teamId) {
+    try {
+      const response = await fetch(`${API_BASE}/teams/${teamId}/riders`);
+      if (!response.ok) throw new Error('Failed to load riders');
+      
+      const riders = await response.json();
+      const ridersGrid = document.getElementById('riders-grid');
+      const ridersLoading = document.getElementById('riders-loading');
+      
+      if (riders.length > 0) {
+        ridersGrid.innerHTML = riders.map(rider => `
+          <div class="rider-card border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+            <div class="flex items-center mb-3">
+              <div class="w-12 h-12 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                #${rider.number}
+              </div>
+              <div>
+                <h3 class="font-bold text-lg">${rider.first_name} ${rider.last_name}</h3>
+                <p class="text-gray-600 dark:text-gray-400">${rider.division}cc Class</p>
+              </div>
+            </div>
+            <div class="text-sm space-y-1">
+              <p><span class="font-medium">Hometown:</span> ${rider.hometown || 'N/A'}</p>
+              <p><span class="font-medium">Bike:</span> ${rider.bike || rider.bike_brand || 'N/A'}</p>
+              <p><span class="font-medium">Country:</span> ${rider.nationality || 'N/A'}</p>
+            </div>
+          </div>
+        `).join('');
+        
+        ridersLoading.classList.add('hidden');
+        ridersGrid.classList.remove('hidden');
+        
+        // Add hover effects to dynamically loaded rider cards
+        addRiderCardEffects();
+      } else {
+        ridersLoading.innerHTML = '<p class="text-gray-500 text-center">No riders found for this team</p>';
+      }
+    } catch (error) {
+      ridersLoading.innerHTML = '<p class="text-gray-500 text-center">Could not load team riders</p>';
+    }
+  }
+  
+  function hideLoadingStates() {
+    // Hide loading states and show static content
+    document.getElementById('team-description').textContent = 'Professional Racing Team';
+    document.getElementById('championships').textContent = '0';
+    document.getElementById('race-wins').textContent = '0';
+    document.getElementById('founded').textContent = '2024';
+    document.getElementById('riders-loading').classList.add('hidden');
+    document.getElementById('riders-grid').classList.remove('hidden');
+  }
+  
+  function addRiderCardEffects() {
+    const riderCards = document.querySelectorAll('.rider-card');
+    riderCards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.transition = 'transform 0.2s ease';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
     });
-    
-    card.addEventListener('mouseleave', function() {
-      this.style.transform = 'translateY(0)';
-    });
-  });
+  }
+  
+  // Start loading team data
+  loadTeamData();
 });
 </script>
 {{ end }}
