@@ -226,8 +226,26 @@
 </style>
 {{- end }}
 
-{{- /* Load JavaScript fallbacks */ -}}
-<script src="/js/fix-mediumzoom.js"></script>
+{{- /* Load JavaScript fallbacks inline to prevent errors */ -}}
+<script>
+// Fix mediumZoom errors immediately
+window.mediumZoom = window.mediumZoom || function() {
+  return {
+    attach: function() { return this; },
+    detach: function() { return this; },
+    update: function() { return this; },
+    clone: function() { return this; },
+    on: function() { return this; },
+    off: function() { return this; },
+    open: function() { return this; },
+    close: function() { return this; },
+    toggle: function() { return this; },
+    getOptions: function() { return {}; },
+    getImages: function() { return []; },
+    getZoomedImage: function() { return null; }
+  };
+};
+</script>
 <script>
 // jQuery fallback - comprehensive replacement
 if (typeof $ === 'undefined') {

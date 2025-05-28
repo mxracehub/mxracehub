@@ -16,6 +16,10 @@ mainSections = ["races", "riders", "tracks", "betting", "news"]
 disableImageOptimization = false
 disableTextInHeader = false
 
+# Disable problematic JS features that cause errors
+disableImageZoom = true
+disableJavaScript = false
+
 # Using custom SVG images that show rider numbers and manufacturer logos
 defaultBackgroundImage = "/img/hero/motocross-action.svg"
 defaultFeaturedImage = "/img/hero/hero-background.svg"

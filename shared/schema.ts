@@ -32,17 +32,38 @@ export const riders = pgTable("riders", {
   firstName: varchar("first_name", { length: 50 }).notNull(),
   lastName: varchar("last_name", { length: 50 }).notNull(),
   number: integer("number").notNull(),
-  team: varchar("team", { length: 100 }),
+  teamId: integer("team_id").references(() => teams.id),
   manufacturer: varchar("manufacturer", { length: 50 }),
   division: varchar("division", { length: 10 }).notNull(), // 250 or 450
   country: varchar("country", { length: 50 }),
+  hometown: varchar("hometown", { length: 100 }),
+  height: varchar("height", { length: 20 }),
+  weight: varchar("weight", { length: 20 }),
+  bike: varchar("bike", { length: 50 }),
   imageUrl: text("image_url"),
   statistics: json("statistics"),
+  isActive: boolean("is_active").default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => {
   return {
     numberDivisionIdx: uniqueIndex("number_division_idx").on(table.number, table.division),
   };
+});
+
+// Teams table
+export const teams = pgTable("teams", {
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 100 }).notNull(),
+  manufacturer: varchar("manufacturer", { length: 50 }),
+  color: varchar("color", { length: 7 }).default("#333333"), // hex color
+  logoUrl: text("logo_url"),
+  description: text("description"),
+  founded: integer("founded"),
+  championships: integer("championships").default(0),
+  raceWins: integer("race_wins").default(0),
+  website: varchar("website", { length: 255 }),
+  statistics: json("statistics"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 // Tracks table
@@ -223,6 +244,19 @@ export const usersRelations = relations(users, ({ many }) => ({
   memberships: many(memberships),
   bankAccounts: many(bankAccounts),
   savedForms: many(savedBetForms),
+}));
+
+// Teams relations
+export const teamsRelations = relations(teams, ({ many }) => ({
+  riders: many(riders),
+}));
+
+// Riders relations  
+export const ridersRelations = relations(riders, ({ one }) => ({
+  team: one(teams, {
+    fields: [riders.teamId],
+    references: [teams.id],
+  }),
 }));
 
 export const tracksRelations = relations(tracks, ({ many }) => ({
