@@ -5,7 +5,11 @@ import { users, type User, type InsertUser, riders, type Rider, type InsertRider
   groupBetOptions, type GroupBetOption, type InsertGroupBetOption, 
   groupBetParticipations, type GroupBetParticipation, type InsertGroupBetParticipation,
   transactions, type Transaction, type InsertTransaction, 
-  memberships, type Membership, type InsertMembership } from "@shared/schema";
+  memberships, type Membership, type InsertMembership,
+  achievements, type Achievement, type InsertAchievement,
+  userAchievements, type UserAchievement, type InsertUserAchievement,
+  userStats, type UserStats, type InsertUserStats,
+  activityLog, type ActivityLog, type InsertActivityLog } from "@shared/schema";
 import { db } from "./db";
 import { eq, and } from "drizzle-orm";
 import session from "express-session";
@@ -99,6 +103,28 @@ export interface IStorage {
   
   // Session store
   sessionStore: session.Store;
+  
+  // Achievement operations
+  getAchievements(): Promise<Achievement[]>;
+  getAchievement(id: number): Promise<Achievement | undefined>;
+  createAchievement(insertAchievement: InsertAchievement): Promise<Achievement>;
+  
+  // User achievement operations
+  getUserAchievements(userId: number): Promise<UserAchievement[]>;
+  getUserAchievementsByCategory(userId: number, category: string): Promise<UserAchievement[]>;
+  getUserAchievement(userId: number, achievementId: number): Promise<UserAchievement | undefined>;
+  createUserAchievement(insertUserAchievement: InsertUserAchievement): Promise<UserAchievement>;
+  updateUserAchievementProgress(id: number, progress: any): Promise<UserAchievement>;
+  markAchievementCompleted(id: number): Promise<UserAchievement>;
+  
+  // User stats operations
+  getUserStats(userId: number): Promise<UserStats | undefined>;
+  createUserStats(insertUserStats: InsertUserStats): Promise<UserStats>;
+  updateUserStats(userId: number, updates: Partial<InsertUserStats>): Promise<UserStats>;
+  
+  // Activity log operations
+  createActivityLog(insertActivityLog: InsertActivityLog): Promise<ActivityLog>;
+  getUserActivityLog(userId: number, limit?: number): Promise<ActivityLog[]>;
 }
 
 // Database storage implementation
@@ -465,6 +491,100 @@ export class DatabaseStorage implements IStorage {
       .where(eq(memberships.id, membershipId))
       .returning();
     return membership;
+  }
+
+  // Achievement operations
+  async getAchievements(): Promise<Achievement[]> {
+    return await db.select().from(achievements).where(eq(achievements.isActive, true));
+  }
+
+  async getAchievement(id: number): Promise<Achievement | undefined> {
+    const [achievement] = await db.select().from(achievements).where(eq(achievements.id, id));
+    return achievement;
+  }
+
+  async createAchievement(insertAchievement: InsertAchievement): Promise<Achievement> {
+    const [achievement] = await db.insert(achievements).values(insertAchievement).returning();
+    return achievement;
+  }
+
+  // User achievement operations
+  async getUserAchievements(userId: number): Promise<UserAchievement[]> {
+    return await db.select().from(userAchievements).where(eq(userAchievements.userId, userId));
+  }
+
+  async getUserAchievementsByCategory(userId: number, category: string): Promise<UserAchievement[]> {
+    return await db
+      .select()
+      .from(userAchievements)
+      .innerJoin(achievements, eq(userAchievements.achievementId, achievements.id))
+      .where(and(eq(userAchievements.userId, userId), eq(achievements.category, category)));
+  }
+
+  async getUserAchievement(userId: number, achievementId: number): Promise<UserAchievement | undefined> {
+    const [userAchievement] = await db
+      .select()
+      .from(userAchievements)
+      .where(and(eq(userAchievements.userId, userId), eq(userAchievements.achievementId, achievementId)));
+    return userAchievement;
+  }
+
+  async createUserAchievement(insertUserAchievement: InsertUserAchievement): Promise<UserAchievement> {
+    const [userAchievement] = await db.insert(userAchievements).values(insertUserAchievement).returning();
+    return userAchievement;
+  }
+
+  async updateUserAchievementProgress(id: number, progress: any): Promise<UserAchievement> {
+    const [userAchievement] = await db
+      .update(userAchievements)
+      .set({ progress })
+      .where(eq(userAchievements.id, id))
+      .returning();
+    return userAchievement;
+  }
+
+  async markAchievementCompleted(id: number): Promise<UserAchievement> {
+    const [userAchievement] = await db
+      .update(userAchievements)
+      .set({ isCompleted: true })
+      .where(eq(userAchievements.id, id))
+      .returning();
+    return userAchievement;
+  }
+
+  // User stats operations
+  async getUserStats(userId: number): Promise<UserStats | undefined> {
+    const [stats] = await db.select().from(userStats).where(eq(userStats.userId, userId));
+    return stats;
+  }
+
+  async createUserStats(insertUserStats: InsertUserStats): Promise<UserStats> {
+    const [stats] = await db.insert(userStats).values(insertUserStats).returning();
+    return stats;
+  }
+
+  async updateUserStats(userId: number, updates: Partial<InsertUserStats>): Promise<UserStats> {
+    const [stats] = await db
+      .update(userStats)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(userStats.userId, userId))
+      .returning();
+    return stats;
+  }
+
+  // Activity log operations
+  async createActivityLog(insertActivityLog: InsertActivityLog): Promise<ActivityLog> {
+    const [activity] = await db.insert(activityLog).values(insertActivityLog).returning();
+    return activity;
+  }
+
+  async getUserActivityLog(userId: number, limit: number = 50): Promise<ActivityLog[]> {
+    return await db
+      .select()
+      .from(activityLog)
+      .where(eq(activityLog.userId, userId))
+      .orderBy(activityLog.createdAt)
+      .limit(limit);
   }
 }
 
