@@ -1,0 +1,101 @@
+<!-- MXRaceHub Custom Head Extensions -->
+<script>
+// Immediately prevent JavaScript errors before any other scripts load
+(function() {
+  'use strict';
+  
+  // Prevent mediumZoom errors completely
+  if (typeof window.mediumZoom === 'undefined') {
+    window.mediumZoom = function() {
+      return {
+        attach: function() { return this; },
+        detach: function() { return this; },
+        update: function() { return this; },
+        clone: function() { return this; },
+        on: function() { return this; },
+        off: function() { return this; },
+        open: function() { return this; },
+        close: function() { return this; },
+        toggle: function() { return this; },
+        getOptions: function() { return {}; },
+        getImages: function() { return []; },
+        getZoomedImage: function() { return null; }
+      };
+    };
+  }
+  
+  // Prevent jQuery errors completely
+  if (typeof window.$ === 'undefined') {
+    window.$ = window.jQuery = function(selector) {
+      return {
+        ready: function(fn) { 
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fn);
+          } else {
+            fn();
+          }
+          return this;
+        },
+        on: function() { return this; },
+        off: function() { return this; },
+        click: function() { return this; },
+        each: function() { return this; },
+        find: function() { return this; },
+        addClass: function() { return this; },
+        removeClass: function() { return this; },
+        toggleClass: function() { return this; },
+        hide: function() { return this; },
+        show: function() { return this; },
+        attr: function() { return this; },
+        css: function() { return this; },
+        html: function() { return this; },
+        text: function() { return this; },
+        val: function() { return this; },
+        length: 0,
+        get: function() { return null; }
+      };
+    };
+  }
+})();
+</script>
+
+<!-- Custom CSS for enhanced team pages -->
+<style>
+.team-header {
+  transition: all 0.3s ease;
+}
+
+.rider-card {
+  transition: all 0.2s ease;
+  border: 1px solid #e2e8f0;
+}
+
+.rider-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Ensure team pages look professional */
+.team-stats-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.loading-spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #ff6600;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+</style>
