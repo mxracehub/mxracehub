@@ -220,6 +220,79 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Failed to verify solvency" });
     }
   });
+
+  // Get house bank account configuration (admin only)
+  app.get("/api/admin/bank-config", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      // In production, add admin role check here
+      const userId = (req.user as any).id;
+      
+      const bankInfo = houseBankService.getBankAccountInfo();
+      
+      res.json(bankInfo);
+    } catch (error) {
+      console.error('Error getting bank configuration:', error);
+      res.status(500).json({ message: "Failed to get bank configuration" });
+    }
+  });
+
+  // Update house bank account configuration (admin only)
+  app.put("/api/admin/bank-config", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      // In production, add admin role check here
+      const userId = (req.user as any).id;
+      
+      const { accountNumber, routingNumber, accountName, bankName } = req.body;
+      
+      // Validate required fields
+      if (!accountNumber || !routingNumber) {
+        return res.status(400).json({ 
+          message: "Account number and routing number are required" 
+        });
+      }
+
+      // Basic validation for account and routing numbers
+      if (!/^\d{8,17}$/.test(accountNumber)) {
+        return res.status(400).json({ 
+          message: "Invalid account number format (8-17 digits required)" 
+        });
+      }
+
+      if (!/^\d{9}$/.test(routingNumber)) {
+        return res.status(400).json({ 
+          message: "Invalid routing number format (9 digits required)" 
+        });
+      }
+
+      // Update configuration
+      houseBankService.updateBankConfiguration({
+        accountNumber,
+        routingNumber,
+        accountName,
+        bankName
+      });
+
+      // Return updated configuration (masked)
+      const updatedConfig = houseBankService.getBankAccountInfo();
+      
+      res.json({ 
+        success: true, 
+        message: "Bank configuration updated successfully",
+        config: updatedConfig
+      });
+    } catch (error) {
+      console.error('Error updating bank configuration:', error);
+      res.status(500).json({ message: "Failed to update bank configuration" });
+    }
+  });
   
   // Integrated Betting System with Wallet
   

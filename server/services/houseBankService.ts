@@ -6,11 +6,74 @@ import { eq, sum, and, gte } from "drizzle-orm";
 export class HouseBankService {
   private houseBankAccountId: string;
   private houseBankBalance: number = 0;
+  private bankAccountNumber: string;
+  private bankRoutingNumber: string;
+  private bankAccountName: string;
+  private bankName: string;
 
   constructor() {
-    // In production, this would be your actual business bank account
+    // Configure house bank account from environment variables
     this.houseBankAccountId = process.env.HOUSE_BANK_ACCOUNT_ID || "HOUSE_BANK_PRIMARY";
+    this.bankAccountNumber = process.env.HOUSE_BANK_ACCOUNT_NUMBER || "";
+    this.bankRoutingNumber = process.env.HOUSE_BANK_ROUTING_NUMBER || "";
+    this.bankAccountName = process.env.HOUSE_BANK_ACCOUNT_NAME || "MXRaceHub House Account";
+    this.bankName = process.env.HOUSE_BANK_NAME || "Primary Business Bank";
+    
+    this.validateBankConfiguration();
     this.initializeHouseBankBalance();
+  }
+
+  // Validate bank account configuration
+  private validateBankConfiguration() {
+    if (!this.bankAccountNumber || !this.bankRoutingNumber) {
+      console.warn('⚠️ House bank account not fully configured. Set HOUSE_BANK_ACCOUNT_NUMBER and HOUSE_BANK_ROUTING_NUMBER environment variables for production use.');
+    } else {
+      console.log('🏦 House bank account configured:', {
+        accountName: this.bankAccountName,
+        bankName: this.bankName,
+        accountNumber: this.maskAccountNumber(this.bankAccountNumber),
+        routingNumber: this.maskRoutingNumber(this.bankRoutingNumber)
+      });
+    }
+  }
+
+  // Security helpers for masking sensitive data
+  private maskAccountNumber(accountNumber: string): string {
+    if (accountNumber.length <= 4) return accountNumber;
+    return '*'.repeat(accountNumber.length - 4) + accountNumber.slice(-4);
+  }
+
+  private maskRoutingNumber(routingNumber: string): string {
+    if (routingNumber.length <= 4) return routingNumber;
+    return '*'.repeat(routingNumber.length - 4) + routingNumber.slice(-4);
+  }
+
+  // Get bank account configuration (for admin use)
+  getBankAccountInfo() {
+    return {
+      accountName: this.bankAccountName,
+      bankName: this.bankName,
+      accountNumber: this.maskAccountNumber(this.bankAccountNumber),
+      routingNumber: this.maskRoutingNumber(this.bankRoutingNumber),
+      isConfigured: !!(this.bankAccountNumber && this.bankRoutingNumber)
+    };
+  }
+
+  // Update bank account configuration (for admin use)
+  updateBankConfiguration(config: {
+    accountNumber?: string;
+    routingNumber?: string;
+    accountName?: string;
+    bankName?: string;
+  }) {
+    if (config.accountNumber) this.bankAccountNumber = config.accountNumber;
+    if (config.routingNumber) this.bankRoutingNumber = config.routingNumber;
+    if (config.accountName) this.bankAccountName = config.accountName;
+    if (config.bankName) this.bankName = config.bankName;
+    
+    this.validateBankConfiguration();
+    
+    console.log('🏦 House bank configuration updated');
   }
 
   // Initialize and verify house bank balance
