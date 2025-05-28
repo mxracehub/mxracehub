@@ -304,6 +304,8 @@ layout: "single"
   </div>
 </div>
 
+<script src="/js/teams-page.js"></script>
+
 <style>
   .team-profile {
     max-width: 1200px;
@@ -311,19 +313,25 @@ layout: "single"
   }
 
   .team-header {
-    background-color: #e2001a;
+    background: linear-gradient(135deg, #e2001a 0%, #cc0017 100%);
     padding: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 2rem;
     border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(226, 0, 26, 0.3);
   }
 
   .team-logo {
     max-width: 300px;
     max-height: 150px;
     filter: brightness(0) invert(1);
+    transition: transform 0.3s ease;
+  }
+
+  .team-logo:hover {
+    transform: scale(1.05);
   }
 
   .team-overview {
@@ -573,10 +581,17 @@ layout: "single"
     height: 200px;
     object-fit: cover;
     transition: transform 0.3s ease;
+    background-color: #f5f5f5;
+    loading: lazy;
   }
 
   .gallery-item:hover .gallery-img {
     transform: scale(1.05);
+  }
+
+  .gallery-img[src=""] {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f0f0f0'/%3E%3Ctext x='50' y='50' font-family='Arial' font-size='14' fill='%23999' text-anchor='middle' dy='0.3em'%3ELoading...%3C/text%3E%3C/svg%3E");
+    background-size: cover;
   }
 
   .gallery-caption {
@@ -633,6 +648,15 @@ layout: "single"
   }
 
   @media (max-width: 767px) {
+    .team-header {
+      padding: 2rem 1rem;
+    }
+
+    .team-logo {
+      max-width: 200px;
+      max-height: 100px;
+    }
+
     .team-meta {
       flex-direction: column;
       gap: 0.75rem;
@@ -652,10 +676,33 @@ layout: "single"
 
     .timeline-item::before {
       left: -2rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
 
     .history-timeline::before {
       left: 0.6rem;
+    }
+
+    .riders-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .team-gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .partners-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .championship-table {
+      font-size: 0.9rem;
+    }
+
+    .championship-table th,
+    .championship-table td {
+      padding: 0.75rem 0.5rem;
     }
   }
 </style>
