@@ -101,7 +101,7 @@ description: "Explore Supercross and Motocross tracks from across the country fe
 
 <h2>Browse All Tracks</h2>
 
-<div class="interactive-track-grid">
+<div class="interactive-track-grid hidden">
   <div class="tracks-grid">
     <div class="tracks-list">
       <h3>Supercross</h3>
