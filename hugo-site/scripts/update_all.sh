@@ -48,6 +48,16 @@ else
     log_message "ERROR: Interview content update failed"
 fi
 
+# Update race schedule
+log_message "Updating race schedule..."
+python3 "$SCRIPT_DIR/update_schedule.py" --force 2>&1 | tee -a "$LOG_FILE"
+
+if [ $? -eq 0 ]; then
+    log_message "Race schedule update completed successfully"
+else
+    log_message "ERROR: Race schedule update failed"
+fi
+
 # Check if Hugo server is running
 if pgrep -f "hugo server" > /dev/null; then
     log_message "Hugo server detected - content will auto-refresh"
