@@ -1,9 +1,12 @@
 ---
-title: "250 Class Riders"
-description: "Profiles of the top professional riders competing in the 250 class of AMA Supercross and Pro Motocross"
-layout: "list"
-markup: "html"
+description: Profiles of the top professional riders competing in the 250 class of
+  AMA Supercross and Pro Motocross
+layout: list
+markup: html
+profile_image: /img/riders/_index.svg
+title: 250 Class Riders
 ---
+
 
 # 250 Class Riders
 

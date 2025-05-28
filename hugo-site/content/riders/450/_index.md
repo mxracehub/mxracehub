@@ -1,9 +1,12 @@
 ---
-title: "450 Class Riders"
-description: "Profiles of the top professional riders competing in the premier 450 class of AMA Supercross and Pro Motocross"
-layout: "list"
-markup: "html"
+description: Profiles of the top professional riders competing in the premier 450
+  class of AMA Supercross and Pro Motocross
+layout: list
+markup: html
+profile_image: /img/riders/_index.svg
+title: 450 Class Riders
 ---
+
 
 # 450 Class Riders
 

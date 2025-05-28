@@ -1,9 +1,11 @@
 ---
-title: "All Riders"
-description: "Search and filter all professional Supercross and Motocross riders"
-layout: "single"
-markup: "html"
+description: Search and filter all professional Supercross and Motocross riders
+layout: single
+markup: html
+profile_image: /img/riders/_index.svg
+title: All Riders
 ---
+
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <h1 class="text-3xl font-bold mb-8">All MX/SX Riders</h1>

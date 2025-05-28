@@ -1,37 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 600" width="500" height="600">
-  <!-- Background with Honda red gradient -->
+<svg width="400" height="500" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="honda-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#E2001A;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#E2001A;stop-opacity:0.7" />
+    <linearGradient id="teamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#CC0000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="helmetGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#CC0000;stop-opacity:1" />
     </linearGradient>
   </defs>
   
-  <!-- Background -->
-  <rect width="500" height="600" fill="url(#honda-gradient)" />
+  <!-- Background Circle -->
+  <circle cx="200" cy="250" r="180" fill="url(#teamGradient)" opacity="0.1"/>
   
-  <!-- Rider shape silhouette -->
-  <path d="M250,150 C350,150 400,250 400,350 C400,450 350,550 250,550 C150,550 100,450 100,350 C100,250 150,150 250,150" fill="#222" opacity="0.6" />
+  <!-- Rider Number Background -->
+  <circle cx="200" cy="100" r="50" fill="url(#teamGradient)" stroke="#FFFFFF" stroke-width="3"/>
   
-  <!-- Rider number -->
-  <text x="250" y="400" font-family="Impact, sans-serif" font-size="220" fill="white" text-anchor="middle" dominant-baseline="middle">96</text>
+  <!-- Rider Number -->
+  <text x="200" y="115" font-family="Arial Black, sans-serif" font-size="36" font-weight="bold" 
+        text-anchor="middle" fill="#FFFFFF">96</text>
   
-  <!-- Team Name -->
-  <text x="250" y="520" font-family="Arial, sans-serif" font-size="20" fill="white" text-anchor="middle" dominant-baseline="middle">TEAM HONDA HRC</text>
+  <!-- Rider Silhouette -->
+  <!-- Helmet -->
+  <ellipse cx="200" cy="200" rx="25" ry="30" fill="url(#helmetGradient)" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- Visor -->
+  <ellipse cx="200" cy="195" rx="20" ry="12" fill="#FFFFFF" opacity="0.8"/>
+  
+  <!-- Body/Jersey -->
+  <rect x="175" y="220" width="50" height="80" rx="10" fill="url(#teamGradient)" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- Arms -->
+  <ellipse cx="160" cy="240" rx="12" ry="35" fill="#000000" stroke="#FFFFFF" stroke-width="1"/>
+  <ellipse cx="240" cy="240" rx="12" ry="35" fill="#000000" stroke="#FFFFFF" stroke-width="1"/>
+  
+  <!-- Gloves -->
+  <circle cx="160" cy="270" r="8" fill="#CC0000"/>
+  <circle cx="240" cy="270" r="8" fill="#CC0000"/>
+  
+  <!-- Pants -->
+  <rect x="180" y="290" width="40" height="60" rx="8" fill="#000000" stroke="#FFFFFF" stroke-width="2"/>
+  
+  <!-- Legs -->
+  <ellipse cx="185" cy="360" rx="8" ry="30" fill="#000000"/>
+  <ellipse cx="215" cy="360" rx="8" ry="30" fill="#000000"/>
+  
+  <!-- Boots -->
+  <ellipse cx="185" cy="385" rx="12" ry="15" fill="#CC0000"/>
+  <ellipse cx="215" cy="385" rx="12" ry="15" fill="#CC0000"/>
+  
+  <!-- Class Badge -->
+  <rect x="320" y="20" width="60" height="25" rx="5" fill="#CC0000" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="350" y="37" font-family="Arial, sans-serif" font-size="14" font-weight="bold" 
+        text-anchor="middle" fill="#FFFFFF">450</text>
+  
+  <!-- Nationality Flag Area -->
+  <rect x="20" y="20" width="40" height="25" rx="3" fill="#000000" stroke="#FFFFFF" stroke-width="1"/>
+  <text x="40" y="37" font-family="Arial, sans-serif" font-size="12" font-weight="bold" 
+        text-anchor="middle" fill="#FFFFFF">Australia</text>
   
   <!-- Rider Name -->
-  <text x="250" y="100" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">HUNTER LAWRENCE</text>
+  <text x="200" y="450" font-family="Arial, sans-serif" font-size="20" font-weight="bold" 
+        text-anchor="middle" fill="#CC0000">HUNTER LAWRENCE</text>
   
-  <!-- Honda Wings Logo (simplified) -->
-  <path d="M340,50 L380,50 L380,70 L340,70 Z" fill="white" />
-  <path d="M350,70 C350,70 365,90 380,70" stroke="white" stroke-width="4" fill="none" />
-  <path d="M340,70 C340,70 320,90 300,70" stroke="white" stroke-width="4" fill="none" />
-  
-  <!-- Red Bull Sponsor Logo (simplified) -->
-  <circle cx="160" cy="60" r="20" fill="#C8102E" />
-  <circle cx="200" cy="60" r="20" fill="#C8102E" />
-  <rect x="140" y="58" width="80" height="4" fill="white" />
-  
-  <!-- Photo credit notice -->
-  <text x="250" y="580" font-family="Arial, sans-serif" font-size="10" fill="white" text-anchor="middle">Placeholder image - replace with licensed photo</text>
+  <!-- Team Name -->
+  <text x="200" y="475" font-family="Arial, sans-serif" font-size="12" 
+        text-anchor="middle" fill="#000000" opacity="0.8">Team Honda HRC</text>
 </svg>

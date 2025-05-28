@@ -1,8 +1,11 @@
 ---
-title: "Riders"
-description: "Profiles of top Supercross and Motocross riders competing in the 450 and 250 classes"
-layout: "list"
+description: Profiles of top Supercross and Motocross riders competing in the 450
+  and 250 classes
+layout: list
+profile_image: /img/riders/_index.svg
+title: Riders
 ---
+
 
 # Rider Profiles
 
