@@ -3,6 +3,7 @@ import { db } from "../db";
 import { users, bankAccounts, cryptoWallets, walletTransactions, paymentMethods } from "@shared/schema";
 import { eq, and, desc } from "drizzle-orm";
 import Stripe from "stripe";
+import { houseBankService } from "./houseBankService";
 
 // Initialize Stripe if available
 let stripe: Stripe | undefined;
@@ -58,7 +59,7 @@ export class WalletService {
     }
   }
 
-  // Add funds to account via multiple methods
+  // Add funds to account via multiple methods - integrated with house bank
   async addFunds(userId: number, method: string, amount: number, paymentDetails: any) {
     try {
       if (amount < 1 || amount > 10000) {
@@ -84,88 +85,67 @@ export class WalletService {
           throw new Error('Unsupported payment method');
       }
 
-      // Record transaction
-      const [transaction] = await db.insert(walletTransactions).values({
-        userId,
-        transactionType: 'deposit',
-        method,
-        amount: amount.toString(),
-        status: transactionResult.status,
-        externalTransactionId: transactionResult.externalId,
-        destinationDetails: paymentDetails,
-        fees: transactionResult.fees || '0.00',
-        notes: transactionResult.notes
-      }).returning();
-
-      // Update user balance if successful
+      // Process deposit through house bank system if successful
       if (transactionResult.status === 'completed') {
-        await this.updateUserBalance(userId, amount, 'add');
-      }
+        const result = await houseBankService.processUserDeposit(
+          userId, 
+          amount, 
+          transactionResult.externalId, 
+          method
+        );
+        
+        return {
+          success: true,
+          transaction: transactionResult,
+          newBalance: result.newBalance
+        };
+      } else {
+        // Record pending transaction
+        await db.insert(walletTransactions).values({
+          userId,
+          transactionType: 'deposit',
+          method,
+          amount: amount.toString(),
+          status: transactionResult.status,
+          externalTransactionId: transactionResult.externalId,
+          destinationDetails: paymentDetails,
+          fees: transactionResult.fees || '0.00',
+          notes: transactionResult.notes
+        });
 
-      return {
-        success: true,
-        transaction,
-        newBalance: await this.getUserBalance(userId)
-      };
+        return {
+          success: true,
+          transaction: transactionResult,
+          newBalance: await this.getUserBalance(userId)
+        };
+      }
     } catch (error) {
       console.error('Error adding funds:', error);
       throw error;
     }
   }
 
-  // Withdraw funds to bank account or crypto wallet
+  // Withdraw funds to bank account or crypto wallet - integrated with house bank
   async withdrawFunds(userId: number, method: string, amount: number, destinationDetails: any) {
     try {
-      const currentBalance = await this.getUserBalance(userId);
-      
       if (amount < 10) {
         throw new Error('Minimum withdrawal amount is $10');
       }
-      
-      if (amount > currentBalance) {
-        throw new Error('Insufficient funds');
-      }
 
       const fees = this.calculateWithdrawalFees(method, amount);
-      const totalAmount = amount + fees;
-
-      if (totalAmount > currentBalance) {
-        throw new Error('Insufficient funds including fees');
-      }
-
-      let withdrawalResult;
       
-      switch (method) {
-        case 'bank_transfer':
-          withdrawalResult = await this.processBankWithdrawal(userId, amount, destinationDetails);
-          break;
-        case 'crypto':
-          withdrawalResult = await this.processCryptoWithdrawal(userId, amount, destinationDetails);
-          break;
-        default:
-          throw new Error('Unsupported withdrawal method');
-      }
-
-      // Record transaction
-      const [transaction] = await db.insert(walletTransactions).values({
-        userId,
-        transactionType: 'withdrawal',
-        method,
-        amount: amount.toString(),
-        status: withdrawalResult.status,
-        externalTransactionId: withdrawalResult.externalId,
-        destinationDetails,
-        fees: fees.toString(),
-        notes: withdrawalResult.notes
-      }).returning();
-
-      // Update user balance
-      await this.updateUserBalance(userId, totalAmount, 'subtract');
+      // Process withdrawal through house bank system (includes all validation)
+      const result = await houseBankService.processUserWithdrawal(
+        userId, 
+        amount, 
+        fees, 
+        { ...destinationDetails, method }
+      );
 
       return {
         success: true,
-        transaction,
-        newBalance: await this.getUserBalance(userId),
+        transaction: { transactionId: result.transactionId },
+        newBalance: result.newBalance,
         fees
       };
     } catch (error) {

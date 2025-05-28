@@ -141,6 +141,85 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(400).json({ message: error.message });
     }
   });
+
+  // House Bank System Integration - Secure Fund Management
+  const { houseBankService } = await import("./services/houseBankService");
+
+  // Add betting winnings to user account (automatically adds to house bank)
+  app.post("/api/betting/add-winnings", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const { winningAmount, betId } = req.body;
+      
+      const result = await houseBankService.addBettingWinnings(userId, winningAmount, betId);
+      
+      res.json(result);
+    } catch (error) {
+      console.error('Error adding betting winnings:', error);
+      res.status(400).json({ message: error.message });
+    }
+  });
+
+  // Deduct betting loss from user account
+  app.post("/api/betting/deduct-loss", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const userId = (req.user as any).id;
+      const { lossAmount, betId } = req.body;
+      
+      const result = await houseBankService.deductBettingLoss(userId, lossAmount, betId);
+      
+      res.json(result);
+    } catch (error) {
+      console.error('Error deducting betting loss:', error);
+      res.status(400).json({ message: error.message });
+    }
+  });
+
+  // Get house bank status (admin only - for monitoring)
+  app.get("/api/admin/house-bank-status", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      // In production, add admin role check here
+      const userId = (req.user as any).id;
+      
+      const status = await houseBankService.getHouseBankStatus();
+      
+      res.json(status);
+    } catch (error) {
+      console.error('Error getting house bank status:', error);
+      res.status(500).json({ message: "Failed to get house bank status" });
+    }
+  });
+
+  // Verify house bank solvency (admin only - for monitoring)
+  app.get("/api/admin/verify-solvency", async (req, res) => {
+    try {
+      if (!req.isAuthenticated() || !req.user) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      // In production, add admin role check here
+      const userId = (req.user as any).id;
+      
+      const solvencyCheck = await houseBankService.verifyHouseBankSolvency();
+      
+      res.json(solvencyCheck);
+    } catch (error) {
+      console.error('Error verifying house bank solvency:', error);
+      res.status(500).json({ message: "Failed to verify solvency" });
+    }
+  });
   
   // Rider endpoints
   app.get("/api/riders", async (req, res) => {

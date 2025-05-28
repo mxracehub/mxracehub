@@ -319,6 +319,17 @@ export const paymentMethods = pgTable("payment_methods", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+// House bank transactions - secure fund pooling system
+export const houseBankTransactions = pgTable("house_bank_transactions", {
+  id: serial("id").primaryKey(),
+  accountId: varchar("account_id", { length: 100 }).notNull(), // House bank account identifier
+  transactionType: varchar("transaction_type", { length: 20 }).notNull(), // deposit, withdrawal
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  metadata: json("metadata"), // Transaction details, user info, etc.
+  processedAt: timestamp("processed_at").defaultNow().notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Achievement system tables
 export const achievements = pgTable("achievements", {
   id: serial("id").primaryKey(),
