@@ -687,8 +687,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<!-- Load Social Sharing for Big Wins -->
+<!-- Load Social Sharing and Bet Slip Sharing -->
 <script src="/js/social-sharing.js"></script>
+<script src="/js/bet-slip-sharing.js"></script>
 
 <script>
 // Enhanced live betting with win sharing
