@@ -68,6 +68,16 @@ else
     log_message "ERROR: Betting page update failed"
 fi
 
+# Update race schedule with Universe.com ticket links
+log_message "Updating race schedule with ticket links..."
+python3 "$SCRIPT_DIR/update_tickets.py" 2>&1 | tee -a "$LOG_FILE"
+
+if [ $? -eq 0 ]; then
+    log_message "Race schedule with tickets updated successfully"
+else
+    log_message "ERROR: Ticket links update failed"
+fi
+
 # Check if Hugo server is running
 if pgrep -f "hugo server" > /dev/null; then
     log_message "Hugo server detected - content will auto-refresh"

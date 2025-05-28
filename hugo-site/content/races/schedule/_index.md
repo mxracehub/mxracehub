@@ -1,333 +1,150 @@
 ---
-title: "Full Schedule"
-description: "Complete schedule for 2025 AMA Supercross and Pro Motocross seasons"
-layout: "list"
+title: "2025 Race Schedule"
+description: "Complete 2025 schedule for AMA Supercross and Pro Motocross with ticket links and venue information"
 ---
 
 # 2025 Race Schedule
 
 Plan your race viewing with the complete 2025 schedule for AMA Supercross and Pro Motocross. Find dates, venues, and ticket information for all the races in the upcoming season.
 
----
-
-## 🔴 Next Race
-### Round 10: Seattle Supercross
-**Date:** March 8, 2025  
-**Venue:** Lumen Field  
-**Location:** Seattle, WA  
-**Classes:** 450SX, 250SX West  
-
-[Get Tickets](/tickets/seattle-2025/) | [View Betting Odds](/betting/odds/seattle-2025/)
+[Buy Tickets](#tickets) | [Upcoming Races](/races/upcoming/) | [Track Info](/tracks/)
 
 ---
 
 ## AMA Supercross Championship
 
-### Round 1: Anaheim Supercross
-**Date:** January 4, 2025  
-**Venue:** Angel Stadium  
-**Location:** Anaheim, CA  
-**Classes:** 450SX, 250SX West  
-**Status:** ✅ Completed  
+### 2025 Supercross Schedule
 
-[Get Tickets](/tickets/anaheim1-2025/) | [View Betting Odds](/betting/odds/anaheim1-2025/)
-
----
-
-### Round 2: San Diego Supercross
-**Date:** January 11, 2025  
-**Venue:** Snapdragon Stadium  
-**Location:** San Diego, CA  
-**Classes:** 450SX, 250SX West  
-**Status:** ✅ Completed  
-
-[Get Tickets](/tickets/san-diego-2025/) | [View Betting Odds](/betting/odds/san-diego-2025/)
-
----
-
-### Round 3: Anaheim Supercross
-**Date:** January 18, 2025  
-**Venue:** Angel Stadium  
-**Location:** Anaheim, CA  
-**Classes:** 450SX, 250SX West  
-**Status:** ✅ Completed  
-
-[Get Tickets](/tickets/anaheim2-2025/) | [View Betting Odds](/betting/odds/anaheim2-2025/)
+| Round | Date | Venue | Location | Classes | Status | Actions |
+|-------|------|-------|----------|---------|--------|---------|
+| Round 1 | January 04, 2025 | Angel Stadium | Anaheim, CA | 450SX, 250SX West | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 2 | January 11, 2025 | Snapdragon Stadium | San Diego, CA | 450SX, 250SX West | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 3 | January 18, 2025 | Angel Stadium | Anaheim, CA | 450SX, 250SX West | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 4 | January 25, 2025 | State Farm Stadium | Glendale, AZ | 450SX, 250SX West | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 5 | February 01, 2025 | Ford Field | Detroit, MI | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 6 | February 08, 2025 | Raymond James Stadium | Tampa, FL | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 7 | February 15, 2025 | AT&T Stadium | Arlington, TX | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 8 | February 22, 2025 | Daytona International Speedway | Daytona Beach, FL | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 9 | March 01, 2025 | Lucas Oil Stadium | Indianapolis, IN | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 10 | March 08, 2025 | Lumen Field | Seattle, WA | 450SX, 250SX West | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 11 | March 15, 2025 | Empower Field | Denver, CO | 450SX, 250SX West | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 12 | March 29, 2025 | NRG Stadium | Houston, TX | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 13 | April 05, 2025 | Mercedes-Benz Stadium | Atlanta, GA | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 14 | April 12, 2025 | Nissan Stadium | Nashville, TN | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 15 | April 19, 2025 | Gillette Stadium | Foxborough, MA | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 16 | April 26, 2025 | MetLife Stadium | East Rutherford, NJ | 450SX, 250SX East | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 17 | May 03, 2025 | Rice-Eccles Stadium | Salt Lake City, UT | 450SX, 250SX West | ✅ Completed | Race Completed \| [Results](/results/) |
 
 ---
 
-### Round 4: Glendale Supercross
-**Date:** January 25, 2025  
-**Venue:** State Farm Stadium  
-**Location:** Glendale, AZ  
-**Classes:** 450SX, 250SX West  
-**Status:** ✅ Completed  
+## Pro Motocross Championship
 
-[Get Tickets](/tickets/glendale-2025/) | [View Betting Odds](/betting/odds/glendale-2025/)
+### 2025 Pro Motocross Schedule
 
----
-
-### Round 5: Detroit Supercross
-**Date:** February 1, 2025  
-**Venue:** Ford Field  
-**Location:** Detroit, MI  
-**Classes:** 450SX, 250SX East  
-**Status:** ✅ Completed  
-
-[Get Tickets](/tickets/detroit-2025/) | [View Betting Odds](/betting/odds/detroit-2025/)
-
----
-
-### Round 6: Tampa Supercross
-**Date:** February 8, 2025  
-**Venue:** Raymond James Stadium  
-**Location:** Tampa, FL  
-**Classes:** 450SX, 250SX East  
-**Status:** ✅ Completed  
-
-[Get Tickets](/tickets/tampa-2025/) | [View Betting Odds](/betting/odds/tampa-2025/)
+| Round | Date | Venue | Location | Classes | Status | Actions |
+|-------|------|-------|----------|---------|--------|---------|
+| Round 1 | May 24, 2025 | Fox Raceway | Pala, CA | 450MX, 250MX | ✅ Completed | Race Completed \| [Results](/results/) |
+| Round 2 | May 31, 2025 | Thunder Valley Motocross Park | Lakewood, CO | 450MX, 250MX | 🔴 Next Race | [Get Tickets](https://www.universe.com/events/supercross-thunder-valley-motocross-park-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 3 | June 07, 2025 | Southwick Motocross Park | Southwick, MA | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-southwick-motocross-park-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 4 | June 14, 2025 | High Point Raceway | Mt. Morris, PA | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-high-point-raceway-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 5 | June 21, 2025 | Muddy Creek Raceway | Blountville, TN | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-muddy-creek-raceway-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 6 | June 28, 2025 | RedBud MX | Buchanan, MI | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-redbud-mx-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 7 | July 12, 2025 | Spring Creek Motocross Park | Millville, MN | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-spring-creek-motocross-park-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 8 | July 19, 2025 | Washougal Motocross Park | Washougal, WA | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-washougal-motocross-park-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 9 | July 26, 2025 | Unadilla Motocross | New Berlin, NY | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-unadilla-motocross-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 10 | August 16, 2025 | Budds Creek Motocross | Mechanicsville, MD | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-budds-creek-motocross-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 11 | August 23, 2025 | Ironman Raceway | Crawfordsville, IN | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-ironman-raceway-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
+| Round 12 | August 30, 2025 | Fox Raceway | Pala, CA | 450MX, 250MX | 🟡 Upcoming | [Buy Tickets](https://www.universe.com/events/supercross-fox-raceway-pro-motocross-2025) \| [Betting Odds](/betting/odds/) |
 
 ---
 
-### Round 7: Arlington Supercross
-**Date:** February 15, 2025  
-**Venue:** AT&T Stadium  
-**Location:** Arlington, TX  
-**Classes:** 450SX, 250SX East  
-**Status:** ✅ Completed  
+## 🎟️ Ticket Information {#tickets}
 
-[Get Tickets](/tickets/arlington-2025/) | [View Betting Odds](/betting/odds/arlington-2025/)
+### How to Buy Tickets
 
----
+**Official Ticket Sources:**
+- [Universe.com](https://www.universe.com) - Primary ticket marketplace
+- [Ticketmaster](https://www.ticketmaster.com) - Major venue ticketing
+- [SeatGeek](https://seatgeek.com) - Secondary market options
+- **Venue Box Office** - Direct from track/stadium
 
-### Round 8: Daytona Supercross
-**Date:** February 22, 2025  
-**Venue:** Daytona International Speedway  
-**Location:** Daytona Beach, FL  
-**Classes:** 450SX, 250SX East  
-**Status:** ✅ Completed  
+### Ticket Types Available
+- **General Admission** - Basic stadium seating
+- **Reserved Seating** - Assigned seats with better views  
+- **VIP Packages** - Premium experience with amenities
+- **Pit Passes** - Access to practice and rider areas
+- **Camping Passes** - On-site camping for outdoor tracks
 
-[Get Tickets](/tickets/daytona-2025/) | [View Betting Odds](/betting/odds/daytona-2025/)
-
----
-
-### Round 9: Indianapolis Supercross
-**Date:** March 1, 2025  
-**Venue:** Lucas Oil Stadium  
-**Location:** Indianapolis, IN  
-**Classes:** 450SX, 250SX East  
-**Status:** ✅ Completed  
-
-[Get Tickets](/tickets/indianapolis-2025/) | [View Betting Odds](/betting/odds/indianapolis-2025/)
+### Pricing Guide
+- **General Admission:** $25-$45
+- **Reserved Seating:** $45-$85
+- **Premium Seating:** $85-$150
+- **VIP Experiences:** $150-$300+
+- **Pit Passes:** $15-$25 (additional)
 
 ---
 
-### Round 10: Seattle Supercross
-**Date:** March 8, 2025  
-**Venue:** Lumen Field  
-**Location:** Seattle, WA  
-**Classes:** 450SX, 250SX West  
-**Status:** 🔴 Next Race  
+## 🏁 Next Race
 
-[Get Tickets](/tickets/seattle-2025/) | [View Betting Odds](/betting/odds/seattle-2025/)
+### Pro Motocross Round 2: Lakewood, CO
+**Thunder Valley Motocross Park**  
+**May 31, 2025 (Saturday)**  
+**Classes:** 450MX, 250MX
 
----
-
-### Round 11: Denver Supercross
-**Date:** March 15, 2025  
-**Venue:** Empower Field at Mile High  
-**Location:** Denver, CO  
-**Classes:** 450SX, 250SX West  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/denver-2025/) | [View Betting Odds](/betting/odds/denver-2025/)
+**🎟️ Tickets Available**  
+[Buy Tickets Now](https://www.universe.com/events/supercross-thunder-valley-motocross-park-pro-motocross-2025) | [View Seating Chart](/venues/thunder-valley-motocross-park) | [Betting Odds](/betting/odds/)
 
 ---
 
-### Round 12: Birmingham Supercross
-**Date:** March 22, 2025  
-**Venue:** Protective Stadium  
-**Location:** Birmingham, AL  
-**Classes:** 450SX, 250SX East  
-**Status:** 🟡 Upcoming  
+## 📅 Season Overview
 
-[Get Tickets](/tickets/birmingham-2025/) | [View Betting Odds](/betting/odds/birmingham-2025/)
+### Championship Points
+- **Supercross Season:** January 4 - May 3, 2025 (17 rounds)
+- **Pro Motocross Season:** May 24 - August 30, 2025 (12 rounds)
+- **SuperMotocross Playoffs:** September 2025
 
----
-
-### Round 13: Philadelphia Supercross
-**Date:** March 29, 2025  
-**Venue:** Lincoln Financial Field  
-**Location:** Philadelphia, PA  
-**Classes:** 450SX, 250SX East  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/philadelphia-2025/) | [View Betting Odds](/betting/odds/philadelphia-2025/)
+### Key Dates
+- **Season Opener:** January 4, 2025 - Anaheim 1
+- **Daytona Supercross:** February 22, 2025 - Unique outdoor supercross
+- **Pro Motocross Opener:** May 24, 2025 - Fox Raceway
+- **Season Finale:** August 30, 2025 - Fox Raceway
 
 ---
 
-### Round 14: Boston Supercross
-**Date:** April 5, 2025  
-**Venue:** Gillette Stadium  
-**Location:** Foxborough, MA  
-**Classes:** 450SX, 250SX East  
-**Status:** 🟡 Upcoming  
+## 🏟️ Venue Information
 
-[Get Tickets](/tickets/boston-2025/) | [View Betting Odds](/betting/odds/boston-2025/)
+### Stadium Venues (Supercross)
+- **Angel Stadium (Anaheim)** - Rounds 1 & 3
+- **Lucas Oil Stadium (Indianapolis)** - Round 9
+- **MetLife Stadium (East Rutherford)** - Round 16
+- **Rice-Eccles Stadium (Salt Lake City)** - Round 17 (Finals)
 
----
-
-### Round 15: Pittsburgh Supercross
-**Date:** April 12, 2025  
-**Venue:** Acrisure Stadium  
-**Location:** Pittsburgh, PA  
-**Classes:** 450SX, 250SX East  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/pittsburgh-2025/) | [View Betting Odds](/betting/odds/pittsburgh-2025/)
+### Outdoor Tracks (Pro Motocross)
+- **Fox Raceway (Pala, CA)** - Rounds 1 & 12
+- **RedBud MX (Buchanan, MI)** - Round 6
+- **Washougal MX (Washougal, WA)** - Round 8
+- **Unadilla MX (New Berlin, NY)** - Round 9
 
 ---
 
-### Round 16: Nashville Supercross
-**Date:** April 26, 2025  
-**Venue:** Nissan Stadium  
-**Location:** Nashville, TN  
-**Classes:** 450SX, 250SX East  
-**Status:** 🟡 Upcoming  
+## 🎯 Planning Your Visit
 
-[Get Tickets](/tickets/nashville-2025/) | [View Betting Odds](/betting/odds/nashville-2025/)
+### Travel Tips
+- **Book Early** - Popular races sell out quickly
+- **Check Weather** - Outdoor events weather dependent
+- **Parking** - Arrive early for best parking options
+- **Gear** - Bring ear protection and sunscreen
 
----
-
-### Round 17: Salt Lake City Supercross
-**Date:** May 3, 2025  
-**Venue:** Rice-Eccles Stadium  
-**Location:** Salt Lake City, UT  
-**Classes:** 450SX, 250SX West  
-**Status:** 🟡 Season Finale  
-
-[Get Tickets](/tickets/salt-lake-city-2025/) | [View Betting Odds](/betting/odds/salt-lake-city-2025/)
+### What to Expect
+- **Gates Open** - Typically 2-3 hours before racing
+- **Practice Sessions** - Morning qualifying rounds
+- **Racing** - Main events usually start afternoon/evening
+- **Autograph Sessions** - Meet riders after practice
 
 ---
 
-## AMA Pro Motocross Championship
+**Ready to attend a race?** Click the ticket links above to secure your seats for the 2025 season!
 
-### Round 1: Fox Raceway National
-**Date:** May 24, 2025  
-**Location:** Pala, CA  
-**Classes:** 450, 250  
-**Status:** 🏁 Season Opener  
+[View Upcoming Races](/races/upcoming/) | [Track Information](/tracks/) | [Betting Hub](/betting/)
 
-[Get Tickets](/tickets/fox-raceway-2025/) | [View Betting Odds](/betting/odds/fox-raceway-2025/)
-
----
-
-### Round 2: Hangtown Classic
-**Date:** May 31, 2025  
-**Location:** Rancho Cordova, CA  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/hangtown-2025/) | [View Betting Odds](/betting/odds/hangtown-2025/)
-
----
-
-### Round 3: Thunder Valley National
-**Date:** June 7, 2025  
-**Location:** Lakewood, CO  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/thunder-valley-2025/) | [View Betting Odds](/betting/odds/thunder-valley-2025/)
-
----
-
-### Round 4: High Point National
-**Date:** June 14, 2025  
-**Location:** Mt. Morris, PA  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/high-point-2025/) | [View Betting Odds](/betting/odds/high-point-2025/)
-
----
-
-### Round 5: Southwick National
-**Date:** June 28, 2025  
-**Location:** Southwick, MA  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/southwick-2025/) | [View Betting Odds](/betting/odds/southwick-2025/)
-
----
-
-### Round 6: RedBud National
-**Date:** July 5, 2025  
-**Location:** Buchanan, MI  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/redbud-2025/) | [View Betting Odds](/betting/odds/redbud-2025/)
-
----
-
-### Round 7: Spring Creek National
-**Date:** July 19, 2025  
-**Location:** Millville, MN  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/spring-creek-2025/) | [View Betting Odds](/betting/odds/spring-creek-2025/)
-
----
-
-### Round 8: Washougal National
-**Date:** July 26, 2025  
-**Location:** Washougal, WA  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/washougal-2025/) | [View Betting Odds](/betting/odds/washougal-2025/)
-
----
-
-### Round 9: Unadilla National
-**Date:** August 9, 2025  
-**Location:** New Berlin, NY  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/unadilla-2025/) | [View Betting Odds](/betting/odds/unadilla-2025/)
-
----
-
-### Round 10: Budds Creek National
-**Date:** August 16, 2025  
-**Location:** Mechanicsville, MD  
-**Classes:** 450, 250  
-**Status:** 🟡 Upcoming  
-
-[Get Tickets](/tickets/budds-creek-2025/) | [View Betting Odds](/betting/odds/budds-creek-2025/)
-
----
-
-### Round 11: Ironman National
-**Date:** August 30, 2025  
-**Location:** Crawfordsville, IN  
-**Classes:** 450, 250  
-**Status:** 🟡 Season Finale  
-
-[Get Tickets](/tickets/ironman-2025/) | [View Betting Odds](/betting/odds/ironman-2025/)
-
----
-
-## Quick Navigation
-
-- **[Supercross Races](/races/supercross/)** - Indoor stadium racing
-- **[Motocross Races](/races/motocross/)** - Outdoor nationals
-- **[Live Streaming](/live-stream/)** - Watch races online
-- **[Standings](/races/standings/)** - Current championship points
-- **[Betting](/betting/)** - Race odds and predictions
-
-*Schedule automatically updates weekly to highlight the next upcoming race. All times subject to change.*
+*Last updated: May 28, 2025 at 05:31 PM*
