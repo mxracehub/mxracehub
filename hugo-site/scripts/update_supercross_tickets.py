@@ -160,9 +160,9 @@ def get_enhanced_race_schedule():
             race["official_ticket_url"] = f"https://www.promotocross.com/tickets/{venue_slug}"
             race["ticket_source"] = "Pro Motocross"
         
-        # Set Universe.com as backup option
-        universe_search = f"{race['venue']} {race['series']} {race_date.strftime('%Y')}"
-        race["universe_ticket_url"] = f"https://www.universe.com/events/{universe_search.lower().replace(' ', '-')}"
+        # Set tickets page as backup option
+        race["tickets_page_url"] = "/tickets/"
+        race["betting_odds_url"] = "/betting/odds/"
         
         # Set race status
         if race_date < today:
@@ -225,7 +225,7 @@ Plan your race viewing with the complete 2025 schedule for AMA Supercross and Pr
 | Round {race['round']} | {race['formatted_date']} | {race['venue']} | {race['location']} | {race['classes']} | {race['status_emoji']} {race['status_text']} | """
             
             if race["ticket_available"]:
-                content += f"[{race['ticket_text']}]({race['official_ticket_url']}) \\| [Alt Source]({race['universe_ticket_url']}) |"
+                content += f"[{race['ticket_text']}]({race['official_ticket_url']}) \\| [All Tickets]({race['tickets_page_url']}) |"
             else:
                 content += f"{race['ticket_text']} \\| [Results](/results/) |"
 
@@ -249,7 +249,7 @@ Plan your race viewing with the complete 2025 schedule for AMA Supercross and Pr
 | Round {race['round']} | {race['formatted_date']} | {race['venue']} | {race['location']} | {race['classes']} | {race['status_emoji']} {race['status_text']} | """
             
             if race["ticket_available"]:
-                content += f"[{race['ticket_text']}]({race['official_ticket_url']}) \\| [Universe]({race['universe_ticket_url']}) |"
+                content += f"[{race['ticket_text']}]({race['official_ticket_url']}) \\| [All Tickets]({race['tickets_page_url']}) |"
             else:
                 content += f"{race['ticket_text']} \\| [Results](/results/) |"
 
@@ -305,8 +305,8 @@ Plan your race viewing with the complete 2025 schedule for AMA Supercross and Pr
         if next_race["ticket_available"]:
             content += f"""**🎟️ Official Tickets Available**  
 [Buy Official Tickets]({next_race['official_ticket_url']}) ({next_race['ticket_source']})  
-[Alternative Source]({next_race['universe_ticket_url']}) (Universe.com)  
-[Betting Odds](/betting/odds/) | [Race Information](/races/events/)
+[View All Tickets]({next_race['tickets_page_url']}) (Complete Guide)  
+[Betting Odds]({next_race['betting_odds_url']}) | [Race Information](/races/events/)
 
 """
         else:
