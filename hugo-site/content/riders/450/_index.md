@@ -20,7 +20,7 @@ The 450 class represents the pinnacle of professional Supercross and Motocross r
     </div>
   </div>
   <div class="mt-2 text-sm text-neutral-500">
-    <span id="rider-count-450">6</span> riders found
+    <span id="rider-count-450">11</span> riders found
   </div>
 </div>
 
@@ -209,6 +209,130 @@ The 450 class represents the pinnacle of professional Supercross and Motocross r
         <a href="/riders/450/jason-anderson/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
         <div class="flex space-x-2">
           <a href="/betting/rider/jason-anderson/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Jason</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
+    <div class="relative">
+      <img src="/img/sample/default-rider.svg" alt="Ken Roczen" class="w-full h-56 object-cover">
+      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">94</div>
+    </div>
+    <div class="p-5">
+      <h3 class="text-xl font-bold mb-2">Ken Roczen</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 mb-3">H.E.P. Motorsports Suzuki</p>
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Age</span>
+          <span class="font-bold">30</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Wins</span>
+          <span class="font-bold">18</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Titles</span>
+          <span class="font-bold">0</span>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <a href="/riders/450/ken-roczen/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
+        <div class="flex space-x-2">
+          <a href="/betting/rider/ken-roczen/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Ken</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
+    <div class="relative">
+      <img src="/img/sample/default-rider.svg" alt="Malcolm Stewart" class="w-full h-56 object-cover">
+      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">27</div>
+    </div>
+    <div class="p-5">
+      <h3 class="text-xl font-bold mb-2">Malcolm Stewart</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Husqvarna Factory Racing</p>
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Age</span>
+          <span class="font-bold">32</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Wins</span>
+          <span class="font-bold">3</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Titles</span>
+          <span class="font-bold">0</span>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <a href="/riders/450/malcolm-stewart/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
+        <div class="flex space-x-2">
+          <a href="/betting/rider/malcolm-stewart/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Malcolm</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
+    <div class="relative">
+      <img src="/img/sample/default-rider.svg" alt="Dylan Ferrandis" class="w-full h-56 object-cover">
+      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">14</div>
+    </div>
+    <div class="p-5">
+      <h3 class="text-xl font-bold mb-2">Dylan Ferrandis</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Honda HRC</p>
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Age</span>
+          <span class="font-bold">29</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Wins</span>
+          <span class="font-bold">4</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Titles</span>
+          <span class="font-bold">1</span>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <a href="/riders/450/dylan-ferrandis/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
+        <div class="flex space-x-2">
+          <a href="/betting/rider/dylan-ferrandis/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Dylan</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
+    <div class="relative">
+      <img src="/img/sample/default-rider.svg" alt="Shane McElrath" class="w-full h-56 object-cover">
+      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">12</div>
+    </div>
+    <div class="p-5">
+      <h3 class="text-xl font-bold mb-2">Shane McElrath</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Rocky Mountain ATV/MC KTM</p>
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Age</span>
+          <span class="font-bold">31</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Wins</span>
+          <span class="font-bold">2</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Titles</span>
+          <span class="font-bold">0</span>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <a href="/riders/450/shane-mcelrath/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
+        <div class="flex space-x-2">
+          <a href="/betting/rider/shane-mcelrath/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Shane</a>
         </div>
       </div>
     </div>

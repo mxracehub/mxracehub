@@ -20,7 +20,7 @@ The 250 class represents the development division of professional Supercross and
     </div>
   </div>
   <div class="mt-2 text-sm text-neutral-500">
-    <span id="rider-count-250">6</span> riders found
+    <span id="rider-count-250">9</span> riders found
   </div>
 </div>
 
@@ -214,6 +214,99 @@ The 250 class represents the development division of professional Supercross and
         <a href="/riders/250/pierce-brown/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
         <div class="flex space-x-2">
           <a href="/betting/rider/pierce-brown/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Pierce</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
+    <div class="relative">
+      <img src="/img/sample/default-rider.svg" alt="Jordon Smith" class="w-full h-56 object-cover">
+      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">31</div>
+    </div>
+    <div class="p-5">
+      <h3 class="text-xl font-bold mb-2">Jordon Smith</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Phoenix Racing Honda</p>
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Age</span>
+          <span class="font-bold">27</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Wins</span>
+          <span class="font-bold">3</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Titles</span>
+          <span class="font-bold">0</span>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <a href="/riders/250/jordon-smith/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
+        <div class="flex space-x-2">
+          <a href="/betting/rider/jordon-smith/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Jordon</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
+    <div class="relative">
+      <img src="/img/sample/default-rider.svg" alt="Chance Hymas" class="w-full h-56 object-cover">
+      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">30</div>
+    </div>
+    <div class="p-5">
+      <h3 class="text-xl font-bold mb-2">Chance Hymas</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Team Honda HRC</p>
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Age</span>
+          <span class="font-bold">19</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Wins</span>
+          <span class="font-bold">1</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Titles</span>
+          <span class="font-bold">0</span>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <a href="/riders/250/chance-hymas/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
+        <div class="flex space-x-2">
+          <a href="/betting/rider/chance-hymas/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Chance</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rider-card bg-neutral-100 dark:bg-neutral-800 rounded-lg overflow-hidden shadow-lg">
+    <div class="relative">
+      <img src="/img/sample/default-rider.svg" alt="Jo Shimoda" class="w-full h-56 object-cover">
+      <div class="absolute top-0 left-0 bg-black/70 text-white font-bold text-2xl m-2 w-12 h-12 flex items-center justify-center rounded-full">91</div>
+    </div>
+    <div class="p-5">
+      <h3 class="text-xl font-bold mb-2">Jo Shimoda</h3>
+      <p class="text-neutral-600 dark:text-neutral-400 mb-3">Monster Energy Pro Circuit Kawasaki</p>
+      <div class="grid grid-cols-3 gap-2 mb-4 text-center text-sm">
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Age</span>
+          <span class="font-bold">23</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Wins</span>
+          <span class="font-bold">4</span>
+        </div>
+        <div class="bg-neutral-200 dark:bg-neutral-700 p-2 rounded">
+          <span class="block text-xs uppercase">Titles</span>
+          <span class="font-bold">0</span>
+        </div>
+      </div>
+      <div class="flex justify-between items-center">
+        <a href="/riders/250/jo-shimoda/" class="text-primary hover:text-primary-700 dark:hover:text-primary-300 font-medium">Full Profile</a>
+        <div class="flex space-x-2">
+          <a href="/betting/rider/jo-shimoda/" class="px-2 py-1 bg-primary text-white text-xs rounded hover:bg-primary-700">Bet on Jo</a>
         </div>
       </div>
     </div>
@@ -457,3 +550,37 @@ The 250 class represents the development division of professional Supercross and
 <div class="text-center my-8">
   <a href="/betting/predictions/250/" class="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-700 font-medium">View 250 Class Betting Predictions</a>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('rider-search-250');
+  const riderCount = document.getElementById('rider-count-250');
+  const riderCards = document.querySelectorAll('.rider-card');
+  
+  function updateRiderCount() {
+    const visibleRiders = document.querySelectorAll('.rider-card:not(.hidden)');
+    riderCount.textContent = visibleRiders.length;
+  }
+  
+  function filterRiders(searchTerm) {
+    riderCards.forEach(card => {
+      const riderName = card.querySelector('h3').textContent.toLowerCase();
+      const teamName = card.querySelector('p').textContent.toLowerCase();
+      
+      if (riderName.includes(searchTerm.toLowerCase()) || teamName.includes(searchTerm.toLowerCase())) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    updateRiderCount();
+  }
+  
+  searchInput.addEventListener('input', function() {
+    filterRiders(this.value);
+  });
+  
+  // Initialize count
+  updateRiderCount();
+});
+</script>
