@@ -152,12 +152,10 @@ smartTOCHideUnfocusedChildren = false
   # token = "XXXXXX"
   # enableTrackEvent = false
 
-[buymeacoffee]
-  identifier = "nunocoracao"
-  globalWidget = true
-  globalWidgetMessage = ""
-  globalWidgetColor = "#FFDD00"
-  globalWidgetPosition = "Right"
+# BuyMeACoffee widget disabled for MXRaceHub
+# [buymeacoffee]
+#   identifier = ""
+#   globalWidget = false
 
 [verification]
   # google = ""
