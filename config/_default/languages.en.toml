@@ -4,12 +4,12 @@ languageName = "English"
 weight = 1
 
 title = "MXRaceHub - Ultimate Supercross and Motocross Platform"
-description = "MXRaceHub is the ultimate platform for Supercross and Motocross fans. Get live race schedules, betting odds, rider profiles, track information, and complete championship coverage."
 
 # Footer content
 copyright = "© 2025 MXRaceHub - Supercross and Motocross Fan Platform"
 
 [params]
+  description = "MXRaceHub is the ultimate platform for Supercross and Motocross fans. Get live race schedules, betting odds, rider profiles, track information, and complete championship coverage."
   displayName = "EN"
   isoCode = "en"
   rtl = false

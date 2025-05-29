@@ -4,12 +4,12 @@ languageName = "日本語"
 weight = 4
 
 title = "MXRaceHub - スーパークロス・モトクロス総合プラットフォーム"
-description = "MXRaceHubは、スーパークロスとモトクロスファンのための総合プラットフォームです。ライブレーススケジュール、ベッティングオッズ、ライダープロフィール、トラック情報、完全なチャンピオンシップ報道を提供します。"
 
 # Footer content
 copyright = "© 2025 MXRaceHub - スーパークロス・モトクロスファンプラットフォーム"
 
 [params]
+  description = "MXRaceHubは、スーパークロスとモトクロスファンのための総合プラットフォームです。ライブレーススケジュール、ベッティングオッズ、ライダープロフィール、トラック情報、完全なチャンピオンシップ報道を提供します。"
   displayName = "JP"
   isoCode = "ja"
   rtl = false

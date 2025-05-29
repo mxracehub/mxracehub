@@ -4,12 +4,12 @@ languageName = "Italiano"
 weight = 3
 
 title = "MXRaceHub - Piattaforma Definitiva per Supercross e Motocross"
-description = "MXRaceHub è la piattaforma definitiva per appassionati di Supercross e Motocross. Ottieni orari delle gare in diretta, quote delle scommesse, profili dei piloti, informazioni sui circuiti e copertura completa del campionato."
 
 # Footer content
 copyright = "© 2025 MXRaceHub - Piattaforma per Appassionati di Supercross e Motocross"
 
 [params]
+  description = "MXRaceHub è la piattaforma definitiva per appassionati di Supercross e Motocross. Ottieni orari delle gare in diretta, quote delle scommesse, profili dei piloti, informazioni sui circuiti e copertura completa del campionato."
   displayName = "IT"
   isoCode = "it"
   rtl = false
