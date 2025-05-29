@@ -1,23 +1,66 @@
+# English Language Configuration for MXRaceHub
 languageCode = "en"
 languageName = "English"
 weight = 1
-#title = "Blowfish"
 
-#[params]
-  displayName = "English"
+title = "MXRaceHub - Ultimate Supercross and Motocross Platform"
+description = "MXRaceHub is the ultimate platform for Supercross and Motocross fans. Get live race schedules, betting odds, rider profiles, track information, and complete championship coverage."
+
+# Footer content
+copyright = "© 2025 MXRaceHub - Supercross and Motocross Fan Platform"
+
+[params]
+  displayName = "EN"
   isoCode = "en"
   rtl = false
   dateFormat = "2 January 2006"
-  logo = "img/blowfish_logo_transparent.png"
-  description = "A powerful, lightweight theme for Hugo."
-
-#[params.author]
-  name = "Blowfish"
-  email = "nuno@n9o.xyz"
-  image = "img/blowfish_logo.png"
-  headline = "A powerful, lightweight theme for Hugo."
-  bio = "A powerful, lightweight theme for Hugo."
-  links = [
-    { x-twitter = "https://twitter.com/burufugu" },
-    { github = "https://github.com/nunocoracao/blowfish" },
-  ]
+  
+  # Navigation and UI translations
+  mainSections = ["races", "riders", "tracks", "betting"]
+  
+  # Site specific parameters
+  author = "MXRaceHub Team"
+  keywords = ["supercross", "motocross", "AMA", "racing", "betting", "riders", "tracks", "championship", "motorsports", "dirt bike"]
+  
+  # Social media
+  twitter_site = "@mxracehub"
+  
+  # UI Text translations
+  [params.ui]
+    readingTime = "reading time"
+    words = "words"
+    minute = "min"
+    minutes = "mins"
+    
+  # Navigation translations
+  [params.nav]
+    home = "Home"
+    races = "Races"
+    riders = "Riders"
+    tracks = "Tracks"
+    betting = "Betting"
+    schedule = "Schedule"
+    standings = "Standings"
+    
+  # Common action words
+  [params.actions]
+    readMore = "Read more"
+    viewAll = "View all"
+    login = "Log in"
+    logout = "Log out"
+    register = "Register"
+    placeBet = "Place bet"
+    viewProfile = "View profile"
+    
+  # Time and date
+  [params.time]
+    dateFormat = "2 January 2006"
+    timeFormat = "15:04"
+    
+  # Betting specific
+  [params.betting]
+    odds = "Odds"
+    bet = "Bet"
+    winner = "Winner"
+    place = "Place"
+    show = "Show"

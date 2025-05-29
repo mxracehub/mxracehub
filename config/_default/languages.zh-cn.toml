@@ -1,10 +1,7 @@
 # Chinese Language Configuration for MXRaceHub
 languageCode = "zh-cn"
 languageName = "简体中文"
-displayName = "CN"
-isoCode = "zh-cn"
 weight = 5
-rtl = false
 
 title = "MXRaceHub - 超级越野摩托车和越野摩托车终极平台"
 description = "MXRaceHub是超级越野摩托车和越野摩托车爱好者的终极平台。获取实时比赛时间表、投注赔率、车手档案、赛道信息和完整的锦标赛报道。"
@@ -13,6 +10,10 @@ description = "MXRaceHub是超级越野摩托车和越野摩托车爱好者的�
 copyright = "© 2025 MXRaceHub - 超级越野摩托车和越野摩托车爱好者平台"
 
 [params]
+  displayName = "CN"
+  isoCode = "zh-cn"
+  rtl = false
+  
   # Navigation and UI translations
   mainSections = ["比赛", "车手", "赛道", "投注"]
   

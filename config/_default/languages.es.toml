@@ -1,10 +1,7 @@
 # Spanish Language Configuration for MXRaceHub
 languageCode = "es"
 languageName = "Español"
-displayName = "ES"
-isoCode = "es"
 weight = 2
-rtl = false
 
 title = "MXRaceHub - Plataforma Definitiva de Supercross y Motocross"
 description = "MXRaceHub es la plataforma definitiva para fanáticos del Supercross y Motocross. Obtén horarios de carreras en vivo, cuotas de apuestas, perfiles de pilotos, información de pistas y cobertura completa del campeonato."
@@ -13,6 +10,10 @@ description = "MXRaceHub es la plataforma definitiva para fanáticos del Supercr
 copyright = "© 2025 MXRaceHub - Plataforma de Fanáticos de Supercross y Motocross"
 
 [params]
+  displayName = "ES"
+  isoCode = "es"
+  rtl = false
+  
   # Navigation and UI translations
   mainSections = ["carreras", "pilotos", "pistas", "apuestas"]
   
