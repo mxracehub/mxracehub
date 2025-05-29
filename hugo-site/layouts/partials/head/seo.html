@@ -1,0 +1,129 @@
+<!-- Google Search Optimization Meta Tags -->
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow">
+
+<!-- Basic SEO Meta Tags -->
+<meta name="description" content="{{ if .Page.Description }}{{ .Page.Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<meta name="keywords" content="{{ if .Page.Params.keywords }}{{ delimit .Page.Params.keywords ", " }}{{ else }}{{ delimit .Site.Params.keywords ", " }}{{ end }}">
+<meta name="author" content="{{ if .Page.Params.author }}{{ .Page.Params.author }}{{ else }}{{ .Site.Params.author }}{{ end }}">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+<meta property="og:title" content="{{ if .Title }}{{ .Title }} | {{ .Site.Title }}{{ else }}{{ .Site.Title }}{{ end }}">
+<meta property="og:description" content="{{ if .Page.Description }}{{ .Page.Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+{{ with .Site.Params.images }}
+<meta property="og:image" content="{{ index . 0 | absURL }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+{{ end }}
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="{{ .Site.Params.twitter_card | default "summary_large_image" }}">
+<meta name="twitter:title" content="{{ if .Title }}{{ .Title }} | {{ .Site.Title }}{{ else }}{{ .Site.Title }}{{ end }}">
+<meta name="twitter:description" content="{{ if .Page.Description }}{{ .Page.Description }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+{{ with .Site.Params.twitter_site }}
+<meta name="twitter:site" content="{{ . }}">
+{{ end }}
+{{ with .Site.Params.images }}
+<meta name="twitter:image" content="{{ index . 0 | absURL }}">
+{{ end }}
+
+<!-- Article specific meta tags -->
+{{ if .IsPage }}
+{{ with .PublishDate }}
+<meta property="article:published_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}">
+{{ end }}
+{{ with .Lastmod }}
+<meta property="article:modified_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}">
+{{ end }}
+{{ with .Page.Params.tags }}
+{{ range . }}
+<meta property="article:tag" content="{{ . }}">
+{{ end }}
+{{ end }}
+{{ end }}
+
+<!-- Site verification -->
+{{ with .Site.Params.google_site_verification }}
+<meta name="google-site-verification" content="{{ . }}">
+{{ end }}
+{{ with .Site.Params.bing_site_verification }}
+<meta name="msvalidate.01" content="{{ . }}">
+{{ end }}
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{{ if .IsHome }}Organization{{ else }}WebPage{{ end }}",
+  {{ if .IsHome }}
+  "name": "{{ .Site.Title }}",
+  "url": "{{ .Site.BaseURL }}",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "{{ .Site.Params.organization_logo | absURL }}"
+  },
+  "description": "{{ .Site.Params.description }}",
+  "sameAs": [
+    "{{ .Site.Params.twitter_site | default "" }}"
+  ]
+  {{ else }}
+  "name": "{{ .Title }}",
+  "url": "{{ .Permalink }}",
+  "description": "{{ if .Page.Description }}{{ .Page.Description }}{{ else }}{{ .Site.Params.description }}{{ end }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "{{ .Site.Title }}",
+    "url": "{{ .Site.BaseURL }}"
+  }
+  {{ end }}
+}
+</script>
+
+<!-- Racing-specific structured data for race pages -->
+{{ if and .IsPage (or (in .RelPermalink "/races/") (in .RelPermalink "/schedule/")) }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SportsEvent",
+  "name": "{{ .Title }}",
+  "description": "{{ .Description }}",
+  "url": "{{ .Permalink }}",
+  "sport": {
+    "@type": "Sport",
+    "name": "Motocross"
+  },
+  "organizer": {
+    "@type": "Organization",
+    "name": "AMA Supercross"
+  }
+}
+</script>
+{{ end }}
+
+<!-- Rider-specific structured data -->
+{{ if and .IsPage (in .RelPermalink "/riders/") }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ .Title }}",
+  "description": "{{ .Description }}",
+  "url": "{{ .Permalink }}",
+  "sport": {
+    "@type": "Sport",
+    "name": "Motocross"
+  },
+  "occupation": {
+    "@type": "Occupation",
+    "name": "Professional Motocross Racer"
+  }
+}
+</script>
+{{ end }}

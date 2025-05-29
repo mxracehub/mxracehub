@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Lang }}" dir="{{ .Site.Language.LanguageDirection | default "ltr" }}">
+<head>
+  {{ partial "head/head.html" . }}
+  <title>{{ if .Title }}{{ .Title }} | {{ .Site.Title }}{{ else }}{{ .Site.Title }}{{ end }}</title>
+</head>
+<body class="{{ if .Site.Params.darkMode }}dark{{ end }}">
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  <!-- Header -->
+  <header role="banner">
+    {{ partial "header.html" . }}
+  </header>
+  
+  <!-- Breadcrumb Navigation -->
+  {{ partial "breadcrumb.html" . }}
+  
+  <!-- Main Content -->
+  <main id="main-content" role="main">
+    {{ block "main" . }}{{ end }}
+  </main>
+  
+  <!-- Footer -->
+  <footer role="contentinfo">
+    {{ partial "footer.html" . }}
+  </footer>
+  
+  <!-- Analytics and performance tracking -->
+  {{ partial "analytics.html" . }}
+</body>
+</html>
+
+<style>
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+</style>

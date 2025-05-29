@@ -1,0 +1,71 @@
+<!-- Breadcrumb Navigation for Google Search -->
+{{ if not .IsHome }}
+<nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ .Site.BaseURL }}" itemprop="item">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+    
+    {{ $sections := split (trim .RelPermalink "/") "/" }}
+    {{ $currentPath := "" }}
+    {{ range $index, $section := $sections }}
+      {{ $currentPath = printf "%s/%s" $currentPath $section }}
+      {{ $isLast := eq (add $index 1) (len $sections) }}
+      
+      <li class="breadcrumb-item{{ if $isLast }} active{{ end }}" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        {{ if not $isLast }}
+        <a href="{{ $currentPath | relURL }}" itemprop="item">
+          <span itemprop="name">{{ humanize $section | title }}</span>
+        </a>
+        {{ else }}
+        <span itemprop="name">{{ $.Title }}</span>
+        {{ end }}
+        <meta itemprop="position" content="{{ add $index 2 }}" />
+      </li>
+    {{ end }}
+  </ol>
+</nav>
+
+<style>
+.breadcrumb-nav {
+  margin: 1rem 0;
+  padding: 0.5rem 0;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+  margin: 0 0.5rem;
+  color: #6b7280;
+}
+
+.breadcrumb-item a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+  color: #6b7280;
+}
+</style>
+{{ end }}
