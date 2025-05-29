@@ -159,7 +159,7 @@
                 <div class="event-description">{{ .description }}</div>
               </div>
               {{ if .tickets_url }}
-                <a href="{{ .tickets_url }}" class="event-tickets-link" target="_blank">Get Tickets</a>
+                <a href="{{ .tickets_url }}" class="event-tickets-link">Get Tickets</a>
               {{ end }}
             </div>
           {{ end }}
@@ -186,7 +186,7 @@
                     </iframe>
                   </div>
                 {{ else }}
-                  <a href="{{ .url }}" target="_blank" class="video-link">
+                  <a href="{{ .url }}" class="video-link">
                     <div class="video-thumbnail">
                       {{ if .thumbnail }}
                         <img src="{{ .thumbnail }}" alt="{{ .title }}">
@@ -263,7 +263,7 @@
         
         {{ with $.Params.map_url }}
         <div class="track-map">
-          <a href="{{ . }}" target="_blank" class="map-link">View on Google Maps</a>
+          <a href="{{ . }}" class="map-link">View on Google Maps</a>
         </div>
         {{ end }}
       </div>
@@ -277,7 +277,7 @@
             <div class="accommodation-item">
               <div class="accommodation-name">{{ .name }}</div>
               <div class="accommodation-distance">{{ .distance }} from track</div>
-              {{ with .url }}<a href="{{ . }}" target="_blank" class="accommodation-link">View Details</a>{{ end }}
+              {{ with .url }}<a href="{{ . }}" class="accommodation-link">View Details</a>{{ end }}
             </div>
           {{ end }}
         </div>

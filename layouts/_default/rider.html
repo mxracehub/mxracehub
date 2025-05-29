@@ -177,7 +177,7 @@
                     </iframe>
                   </div>
                 {{ else }}
-                  <a href="{{ .url }}" target="_blank" class="video-link">
+                  <a href="{{ .url }}" class="video-link">
                     <div class="video-thumbnail">
                       {{ if .thumbnail }}
                         <img src="{{ .thumbnail }}" alt="{{ .title }}">
@@ -223,11 +223,11 @@
       <div class="rider-social">
         <h2>Follow {{ $.Title }}</h2>
         <div class="social-links">
-          {{ with .instagram }}<a href="{{ . }}" target="_blank" class="social-link instagram">Instagram</a>{{ end }}
-          {{ with .twitter }}<a href="{{ . }}" target="_blank" class="social-link twitter">Twitter</a>{{ end }}
-          {{ with .facebook }}<a href="{{ . }}" target="_blank" class="social-link facebook">Facebook</a>{{ end }}
-          {{ with .youtube }}<a href="{{ . }}" target="_blank" class="social-link youtube">YouTube</a>{{ end }}
-          {{ with .tiktok }}<a href="{{ . }}" target="_blank" class="social-link tiktok">TikTok</a>{{ end }}
+          {{ with .instagram }}<a href="{{ . }}" class="social-link instagram">Instagram</a>{{ end }}
+          {{ with .twitter }}<a href="{{ . }}" class="social-link twitter">Twitter</a>{{ end }}
+          {{ with .facebook }}<a href="{{ . }}" class="social-link facebook">Facebook</a>{{ end }}
+          {{ with .youtube }}<a href="{{ . }}" class="social-link youtube">YouTube</a>{{ end }}
+          {{ with .tiktok }}<a href="{{ . }}" class="social-link tiktok">TikTok</a>{{ end }}
         </div>
       </div>
       {{ end }}
