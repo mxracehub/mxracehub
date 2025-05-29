@@ -1,0 +1,32 @@
+{{/* Analytics Partial for MXRaceHub */}}
+{{/* This template handles analytics integration */}}
+
+{{/* Google Analytics 4 Support */}}
+{{ if .Site.Config.Services.GoogleAnalytics.ID }}
+  {{ template "_internal/google_analytics.html" . }}
+{{ end }}
+
+{{/* Fathom Analytics Support */}}
+{{ with .Site.Params.fathomAnalytics.site }}
+  <script src="https://cdn.usefathom.com/script.js" data-site="{{ . }}" 
+  {{ with $.Site.Params.fathomAnalytics.domain }}data-canonical="{{ . }}"{{ end }} defer></script>
+{{ end }}
+
+{{/* Umami Analytics Support */}}
+{{ with .Site.Params.umamiAnalytics.websiteid }}
+  <script defer src="https://{{ $.Site.Params.umamiAnalytics.domain | default "analytics.umami.is" }}/script.js" 
+  data-website-id="{{ . }}"
+  {{ with $.Site.Params.umamiAnalytics.dataDomains }}data-domains="{{ . }}"{{ end }}
+  {{ with $.Site.Params.umamiAnalytics.scriptName }}data-script="{{ . }}"{{ end }}></script>
+{{ end }}
+
+{{/* Seline Analytics Support */}}
+{{ with .Site.Params.selineAnalytics.token }}
+  <script>
+    !function(e,t,n,s,u,a){e.twicConfiguration=s||{},e.TwicObject=u,e[u]=e[u]||function(){
+    (e[u].q=e[u].q||[]).push(arguments)},e[u].l=1*new Date;a=t.createElement(n),
+    a.async=1,a.src="https://twicpics.com/v1/script",t.head.appendChild(a)}
+    (window,document,"script",{},"twic");
+    twic("view", "{{ . }}");
+  </script>
+{{ end }}
