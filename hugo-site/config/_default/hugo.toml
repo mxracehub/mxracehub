@@ -6,7 +6,7 @@ disableKinds = []
 ignoreFiles = []
 baseURL = "https://mxracehub.site"
 defaultContentLanguage = "en"
-disableLanguages = ["it", "ja", "zh-cn"] # Enable English and Spanish for MXRaceHub
+# All languages enabled for MXRaceHub international expansion
 
 enableRobotsTXT = true
 summaryLength = 30

@@ -1,23 +1,64 @@
+# Japanese Language Configuration for MXRaceHub
 languageCode = "ja"
 languageName = "日本語"
-weight = 3
-#title = "Blowfish"
+displayName = "JP"
+isoCode = "ja"
+weight = 4
+rtl = false
 
-#[params]
-  displayName = "日本語"
-  isoCode = "ja"
-  rtl = false
-  dateFormat = "2006-01-02"
-  logo = "img/blowfish_logo_transparent.png"
-  description = "強力で、軽量な Hugo のテーマです。"
+title = "MXRaceHub - スーパークロス・モトクロス総合プラットフォーム"
+description = "MXRaceHubは、スーパークロスとモトクロスファンのための総合プラットフォームです。ライブレーススケジュール、ベッティングオッズ、ライダープロフィール、トラック情報、完全なチャンピオンシップ報道を提供します。"
 
-#[params.author]
-  name = "Blowfish"
-  email = "nuno@n9o.xyz"
-  image = "img/blowfish_logo.png"
-  headline = "強力で、軽量な Hugo のテーマです。"
-  bio = "強力で、軽量な Hugo のテーマです。"
-  links = [
-    { x-twitter = "https://twitter.com/burufugu" },
-    { github = "https://github.com/nunocoracao/blowfish" },
-  ]
+# Footer content
+copyright = "© 2025 MXRaceHub - スーパークロス・モトクロスファンプラットフォーム"
+
+[params]
+  # Navigation and UI translations
+  mainSections = ["レース", "ライダー", "トラック", "ベッティング"]
+  
+  # Site specific parameters
+  author = "MXRaceHubチーム"
+  keywords = ["スーパークロス", "モトクロス", "AMA", "レース", "ベッティング", "ライダー", "トラック", "チャンピオンシップ", "モータースポーツ", "ダートバイク"]
+  
+  # Social media
+  twitter_site = "@mxracehub"
+  
+  # UI Text translations
+  [params.ui]
+    readingTime = "読み時間"
+    words = "文字"
+    minute = "分"
+    minutes = "分"
+    
+  # Navigation translations
+  [params.nav]
+    home = "ホーム"
+    races = "レース"
+    riders = "ライダー"
+    tracks = "トラック"
+    betting = "ベッティング"
+    schedule = "スケジュール"
+    standings = "順位表"
+    
+  # Common action words
+  [params.actions]
+    readMore = "続きを読む"
+    viewAll = "すべて見る"
+    login = "ログイン"
+    logout = "ログアウト"
+    register = "登録"
+    placeBet = "ベット"
+    viewProfile = "プロフィール表示"
+    
+  # Time and date
+  [params.time]
+    dateFormat = "2006年1月2日"
+    timeFormat = "15:04"
+    
+  # Betting specific
+  [params.betting]
+    odds = "オッズ"
+    bet = "ベット"
+    winner = "勝者"
+    place = "プレース"
+    show = "ショー"

@@ -1,22 +1,64 @@
+# Chinese Language Configuration for MXRaceHub
 languageCode = "zh-cn"
 languageName = "简体中文"
-weight = 4
-#title = "Blowfish"
+displayName = "CN"
+isoCode = "zh-cn"
+weight = 5
+rtl = false
 
-#[params]
-  displayName = "简体中文"
-  isoCode = "zh-cn"
-  rtl = false
-  dateFormat = "2006-01-02"
-  logo = "img/blowfish_logo_transparent.png"
-  description = "一个强大、轻量级的 Hugo 主题。"
+title = "MXRaceHub - 超级越野摩托车和越野摩托车终极平台"
+description = "MXRaceHub是超级越野摩托车和越野摩托车爱好者的终极平台。获取实时比赛时间表、投注赔率、车手档案、赛道信息和完整的锦标赛报道。"
 
-#[params.author]
-  name = "Blowfish"
-  image = "img/blowfish_logo.png"
-  headline = "一个强大、轻量级的 Hugo 主题。"
-  bio = "一个强大、轻量级的 Hugo 主题。"
-  links = [
-    { x-twitter = "https://twitter.com/burufugu" },
-    { github = "https://github.com/nunocoracao/blowfish" },
-  ]
+# Footer content
+copyright = "© 2025 MXRaceHub - 超级越野摩托车和越野摩托车爱好者平台"
+
+[params]
+  # Navigation and UI translations
+  mainSections = ["比赛", "车手", "赛道", "投注"]
+  
+  # Site specific parameters
+  author = "MXRaceHub团队"
+  keywords = ["超级越野摩托车", "越野摩托车", "AMA", "比赛", "投注", "车手", "赛道", "锦标赛", "摩托运动", "越野摩托"]
+  
+  # Social media
+  twitter_site = "@mxracehub"
+  
+  # UI Text translations
+  [params.ui]
+    readingTime = "阅读时间"
+    words = "字"
+    minute = "分钟"
+    minutes = "分钟"
+    
+  # Navigation translations
+  [params.nav]
+    home = "首页"
+    races = "比赛"
+    riders = "车手"
+    tracks = "赛道"
+    betting = "投注"
+    schedule = "赛程"
+    standings = "排名"
+    
+  # Common action words
+  [params.actions]
+    readMore = "阅读更多"
+    viewAll = "查看全部"
+    login = "登录"
+    logout = "登出"
+    register = "注册"
+    placeBet = "下注"
+    viewProfile = "查看档案"
+    
+  # Time and date
+  [params.time]
+    dateFormat = "2006年1月2日"
+    timeFormat = "15:04"
+    
+  # Betting specific
+  [params.betting]
+    odds = "赔率"
+    bet = "投注"
+    winner = "冠军"
+    place = "名次"
+    show = "显示"
