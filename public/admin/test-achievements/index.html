@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow">
+
+
+<meta name="description" content="Complete guide to testing and configuring the MXRaceHub achievement system">
+<meta name="keywords" content="supercross, motocross, AMA, racing, betting, riders, tracks, championship, motorsports, dirt bike">
+<meta name="author" content="MXRaceHub Team">
+
+
+<link rel="canonical" href="https://mxracehub.site/admin/test-achievements/">
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Achievement System Testing Guide | MXRaceHub - Ultimate Supercross and Motocross Platform">
+<meta property="og:description" content="Complete guide to testing and configuring the MXRaceHub achievement system">
+<meta property="og:url" content="https://mxracehub.site/admin/test-achievements/">
+<meta property="og:site_name" content="MXRaceHub - Ultimate Supercross and Motocross Platform">
+
+<meta property="og:image" content="https://mxracehub.site/img/mxracehub-og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta property="og:locale" content="en_US">
+
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Achievement System Testing Guide | MXRaceHub - Ultimate Supercross and Motocross Platform">
+<meta name="twitter:description" content="Complete guide to testing and configuring the MXRaceHub achievement system">
+
+<meta name="twitter:site" content="@mxracehub">
+
+
+<meta name="twitter:image" content="https://mxracehub.site/img/mxracehub-og-image.jpg">
+
+
+
+
+
+
+<meta property="article:modified_time" content="2025-05-29T11:41:46Z">
+
+
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  
+  "name": "Achievement System Testing Guide",
+  "url": "https:\/\/mxracehub.site\/admin\/test-achievements\/",
+  "description": "Complete guide to testing and configuring the MXRaceHub achievement system",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "MXRaceHub - Ultimate Supercross and Motocross Platform",
+    "url": "https:\/\/mxracehub.site\/"
+  }
+  
+}
+</script>
+
+
+
+
+
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.google-analytics.com">
+
+
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+
+
+
+
+
+
+
+
+
+
+<link rel="preload" href="/css/custom.css" as="style">
+<link rel="preload" href="/fonts/main.woff2" as="font" type="font/woff2" crossorigin>
+
+
+<style>
+   
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 1rem; }
+  h1 { font-size: clamp(1.75rem, 5vw, 3rem); line-height: 1.2; }
+</style>
+  <title>Achievement System Testing Guide | MXRaceHub - Ultimate Supercross and Motocross Platform</title>
+</head>
+<body class="">
+  
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
+  
+  <header role="banner">
+    
+<style>
+   
+  
+   
+  main.main {
+    padding-top: 1rem;
+  }
+  
+   
+  .container {
+    max-width: 1280px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin: 0 auto;
+  }
+  
+   
+  .content {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+  </header>
+  
+  
+  
+
+<nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="https://mxracehub.site/" itemprop="item">
+        <span itemprop="name">Home</span>
+      </a>
+      <meta itemprop="position" content="1" />
+    </li>
+    
+    
+    
+    
+      
+      
+      
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        
+        <a href="/admin" itemprop="item">
+          <span itemprop="name">Admin</span>
+        </a>
+        
+        <meta itemprop="position" content="2" />
+      </li>
+    
+      
+      
+      
+      <li class="breadcrumb-item active" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        
+        <span itemprop="name">Achievement System Testing Guide</span>
+        
+        <meta itemprop="position" content="3" />
+      </li>
+    
+  </ol>
+</nav>
+
+<style>
+.breadcrumb-nav {
+  margin: 1rem 0;
+  padding: 0.5rem 0;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
+  margin: 0 0.5rem;
+  color: #6b7280;
+}
+
+.breadcrumb-item a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+  color: #6b7280;
+}
+</style>
+
+  
+  
+  <main id="main-content" role="main">
+    
+<div class="container mx-auto px-4 py-8">
+  <article class="content-wrapper">
+    <header class="content-header mb-8">
+      <h1 class="title text-3xl md:text-4xl font-bold mb-2">Achievement System Testing Guide</h1>
+      
+        <p class="description text-gray-600 dark:text-gray-400">Complete guide to testing and configuring the MXRaceHub achievement system</p>
+      
+    </header>
+    
+    <div class="content prose dark:prose-invert max-w-none">
+      
+
+<h1 class="relative group">Achievement System Testing Guide 
+    <div id="achievement-system-testing-guide" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#achievement-system-testing-guide" aria-label="Anchor">#</a>
+    </span>        
+    
+</h1>
+
+
+<h2 class="relative group">🎯 How to Test Achievement Triggers 
+    <div id="-how-to-test-achievement-triggers" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#-how-to-test-achievement-triggers" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+
+
+<h3 class="relative group">1. <strong>Test First Bet Badge</strong> 
+    <div id="1-test-first-bet-badge" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#1-test-first-bet-badge" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simulate placing a first bet for user ID 1</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-placed <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;betAmount&#34;: 25.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Expected Result: &#34;First Bet&#34; badge awarded + activity logged</span>
+</span></span></code></pre></div>
+
+<h3 class="relative group">2. <strong>Test High Roller Badge</strong> 
+    <div id="2-test-high-roller-badge" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#2-test-high-roller-badge" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simulate placing a high-value bet</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-placed <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;betAmount&#34;: 150.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Expected Result: &#34;High Roller&#34; badge awarded (bet &gt;= $100)</span>
+</span></span></code></pre></div>
+
+<h3 class="relative group">3. <strong>Test Lucky Winner Badge</strong> 
+    <div id="3-test-lucky-winner-badge" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#3-test-lucky-winner-badge" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simulate winning a bet</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-won <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;winAmount&#34;: 50.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Expected Result: &#34;Lucky Winner&#34; badge awarded for first win</span>
+</span></span></code></pre></div>
+
+<h3 class="relative group">4. <strong>Test Win Streak Badge</strong> 
+    <div id="4-test-win-streak-badge" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#4-test-win-streak-badge" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simulate multiple wins to build streak</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-won <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;winAmount&#34;: 30.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Repeat 3 times to trigger &#34;Win Streak Master&#34; badge</span>
+</span></span></code></pre></div>
+
+<h3 class="relative group">5. <strong>Test Profile Complete Badge</strong> 
+    <div id="5-test-profile-complete-badge" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#5-test-profile-complete-badge" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Simulate profile completion</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/profile-updated <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -H <span class="s2">&#34;Content-Type: application/json&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;completionPercentage&#34;: 100}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Expected Result: &#34;Profile Complete&#34; badge awarded</span>
+</span></span></code></pre></div>
+
+<h3 class="relative group">6. <strong>Check User Achievement Status</strong> 
+    <div id="6-check-user-achievement-status" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#6-check-user-achievement-status" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Get complete user achievement overview</span>
+</span></span><span class="line"><span class="cl">curl http://localhost:8080/api/test/user/1/status
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Shows all badges, progress, and recent activity</span>
+</span></span></code></pre></div>
+
+<h2 class="relative group">⚙️ How to Adjust Badge Requirements 
+    <div id="-how-to-adjust-badge-requirements" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#-how-to-adjust-badge-requirements" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+
+
+<h3 class="relative group">Method 1: Update Configuration File 
+    <div id="method-1-update-configuration-file" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#method-1-update-configuration-file" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>Edit <code>server/config/achievementConfig.ts</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// Make High Roller easier to get
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">HIGH_ROLLER</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">requirements</span><span class="o">:</span> <span class="p">{</span> <span class="nx">high_value_bet</span>: <span class="kt">50</span> <span class="p">},</span> <span class="c1">// Changed from 100 to 50
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Make Race Prophet harder to achieve  
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">RACE_PROPHET</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">requirements</span><span class="o">:</span> <span class="p">{</span> <span class="nx">correct_predictions</span>: <span class="kt">20</span> <span class="p">},</span> <span class="c1">// Changed from 10 to 20
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Reduce friend inviter requirement
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">FRIEND_INVITER</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">requirements</span><span class="o">:</span> <span class="p">{</span> <span class="nx">friends_invited</span>: <span class="kt">3</span> <span class="p">},</span> <span class="c1">// Changed from 5 to 3
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div>
+
+<h3 class="relative group">Method 2: Real-Time Testing Scenarios 
+    <div id="method-2-real-time-testing-scenarios" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#method-2-real-time-testing-scenarios" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p><strong>Scenario A: Easy Mode (Lower Requirements)</strong></p>
+<ul>
+<li>First Bet: 1 bet (unchanged)</li>
+<li>High Roller: $50 (reduced from $100)</li>
+<li>Race Prophet: 5 predictions (reduced from 10)</li>
+<li>Friend Inviter: 3 friends (reduced from 5)</li>
+<li>Win Streak: 2 wins (reduced from 3)</li>
+</ul>
+<p><strong>Scenario B: Challenge Mode (Higher Requirements)</strong></p>
+<ul>
+<li>High Roller: $250 (increased from $100)</li>
+<li>Race Prophet: 25 predictions (increased from 10)</li>
+<li>Friend Inviter: 10 friends (increased from 5)</li>
+<li>Win Streak: 5 wins (increased from 3)</li>
+<li>Daily Visitor: 14 days (increased from 7)</li>
+</ul>
+
+
+<h2 class="relative group">🧪 Complete Testing Sequence 
+    <div id="-complete-testing-sequence" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#-complete-testing-sequence" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+
+
+<h3 class="relative group">Test User Journey (User ID: 1) 
+    <div id="test-user-journey-user-id-1" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#test-user-journey-user-id-1" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 1. Reset user for clean test</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/reset-user <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. Place first bet (triggers First Bet badge)</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-placed <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;betAmount&#34;: 25.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. Win the bet (triggers Lucky Winner badge)</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-won <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;winAmount&#34;: 40.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 4. Place high-value bet (triggers High Roller badge)</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-placed <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;betAmount&#34;: 125.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 5. Win again (building streak)</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-won <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;winAmount&#34;: 200.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 6. Win third time (triggers Win Streak Master)</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/bet-won <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;winAmount&#34;: 75.00}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 7. Complete profile (triggers Profile Complete)</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/profile-updated <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1, &#34;completionPercentage&#34;: 100}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 8. Invite friends (progress toward Friend Inviter)</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/friend-invited <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>  -d <span class="s1">&#39;{&#34;userId&#34;: 1}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 9. Check final status</span>
+</span></span><span class="line"><span class="cl">curl http://localhost:8080/api/test/user/1/status
+</span></span></code></pre></div>
+
+<h2 class="relative group">📊 Expected Results Dashboard 
+    <div id="-expected-results-dashboard" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#-expected-results-dashboard" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>After running the complete test sequence, you should see:</p>
+<p><strong>✅ Completed Badges:</strong></p>
+<ul>
+<li>🎯 First Bet</li>
+<li>💰 High Roller</li>
+<li>🍀 Lucky Winner</li>
+<li>⚡ Win Streak Master</li>
+<li>✅ Profile Complete</li>
+</ul>
+<p><strong>📈 User Stats:</strong></p>
+<ul>
+<li>Total Bets: 2</li>
+<li>Winning Bets: 3</li>
+<li>Current Streak: 3</li>
+<li>Total Winnings: $315.00</li>
+<li>Profile Completion: 100%</li>
+</ul>
+
+
+<h2 class="relative group">🎮 Interactive Testing Tips 
+    <div id="-interactive-testing-tips" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#-interactive-testing-tips" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+
+
+<h3 class="relative group">Quick Badge Testing 
+    <div id="quick-badge-testing" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#quick-badge-testing" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<ol>
+<li><strong>Use Postman or curl</strong> for API testing</li>
+<li><strong>Check console logs</strong> for achievement awards</li>
+<li><strong>Monitor database</strong> for real-time updates</li>
+<li><strong>Test edge cases</strong> (exactly meeting requirements)</li>
+</ol>
+
+
+<h3 class="relative group">Common Test Scenarios 
+    <div id="common-test-scenarios" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#common-test-scenarios" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<ul>
+<li><strong>New User</strong>: Test first-time achievements</li>
+<li><strong>Returning User</strong>: Test streak and progress tracking</li>
+<li><strong>High Activity</strong>: Test multiple rapid achievements</li>
+<li><strong>Edge Cases</strong>: Test boundary conditions (exactly $100 bet, etc.)</li>
+</ul>
+
+
+<h2 class="relative group">🔧 Troubleshooting 
+    <div id="-troubleshooting" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#-troubleshooting" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+
+
+<h3 class="relative group">If Badges Don&rsquo;t Trigger: 
+    <div id="if-badges-dont-trigger" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#if-badges-dont-trigger" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<ol>
+<li>Check user stats exist in database</li>
+<li>Verify achievement requirements in config</li>
+<li>Look for console error messages</li>
+<li>Confirm user ID exists</li>
+</ol>
+
+
+<h3 class="relative group">To Reset Everything: 
+    <div id="to-reset-everything" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#to-reset-everything" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Reset user stats</span>
+</span></span><span class="line"><span class="cl">curl -X POST http://localhost:8080/api/test/reset-user -d <span class="s1">&#39;{&#34;userId&#34;: 1}&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Reinitialize achievement system</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Restart server to reload configurations</span>
+</span></span></code></pre></div>
+
+<h2 class="relative group">🚀 Going Live 
+    <div id="-going-live" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#-going-live" aria-label="Anchor">#</a>
+    </span>        
+    
+</h2>
+<p>Once testing is complete:</p>
+<ol>
+<li>Remove test endpoints from production</li>
+<li>Configure final badge requirements</li>
+<li>Set up real user onboarding triggers</li>
+<li>Monitor achievement completion rates</li>
+<li>Adjust requirements based on user engagement data</li>
+</ol>
+<p>The achievement system is now ready to boost user engagement across MXRaceHub!</p>
+
+    </div>
+  </article>
+</div>
+
+  </main>
+  
+  
+  <footer role="contentinfo">
+    <footer id="site-footer" class="py-4 print:hidden border-t border-neutral-200 dark:border-neutral-700">
+  <div class="container">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex flex-wrap justify-center md:justify-start">
+        
+        
+          
+          <nav class="flex text-sm font-medium text-neutral-500 dark:text-neutral-400">
+            <ul class="flex flex-row flex-wrap list-none justify-center">
+              
+              <li class="mr-4 mb-2 last:mr-0">
+                
+                <a class="hover:text-primary-500 flex items-center" href="/about/"
+                  title="">
+                  
+                  About
+                </a>
+                
+              </li>
+              
+              <li class="mr-4 mb-2 last:mr-0">
+                
+                <a class="hover:text-primary-500 flex items-center" href="/contact/"
+                  title="">
+                  
+                  Contact
+                </a>
+                
+              </li>
+              
+              <li class="mr-4 mb-2 last:mr-0">
+                
+                <a class="hover:text-primary-500 flex items-center" href="/terms/"
+                  title="">
+                  
+                  Terms
+                </a>
+                
+              </li>
+              
+              <li class="mr-4 mb-2 last:mr-0">
+                
+                <a class="hover:text-primary-500 flex items-center" href="/privacy/"
+                  title="">
+                  
+                  Privacy
+                </a>
+                
+              </li>
+              
+              <li class="mr-4 mb-2 last:mr-0">
+                
+                <a class="hover:text-primary-500 flex items-center" href="/betting/policies/"
+                  title="">
+                  
+                  Betting Policies
+                </a>
+                
+              </li>
+              
+            </ul>
+          </nav>
+          
+        
+      </div>
+
+      <div class="flex flex-wrap justify-center md:justify-end gap-4">
+        
+        
+        <p class="text-sm text-neutral-500 dark:text-neutral-400">
+          &copy; 2025 MXRaceHub
+        </p>
+        
+
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+  </script>
+  
+  
+  
+<script>
+
+(function() {
+  'use strict';
+  
+  
+  window.mediumZoom = function() {
+    return {
+      attach: function() { return this; },
+      detach: function() { return this; },
+      update: function() { return this; },
+      clone: function() { return this; },
+      on: function() { return this; },
+      off: function() { return this; },
+      open: function() { return this; },
+      close: function() { return this; },
+      toggle: function() { return this; },
+      getOptions: function() { return {}; },
+      getImages: function() { return []; },
+      getZoomedImage: function() { return null; }
+    };
+  };
+
+  
+  const originalError = console.error;
+  console.error = function() {
+    const message = Array.from(arguments).join(' ');
+    if (message.includes('mediumZoom') || message.includes('Uncaught ReferenceError')) {
+      return; 
+    }
+    originalError.apply(console, arguments);
+  };
+
+  
+  window.addEventListener('error', function(e) {
+    if (e.message && (e.message.includes('mediumZoom') || e.message.includes('is not defined'))) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }, true);
+})();
+</script>
+  
+</footer>
+  </footer>
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+<style>
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+</style>

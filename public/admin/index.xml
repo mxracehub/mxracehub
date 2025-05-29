@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Admins on MXRaceHub - Ultimate Supercross and Motocross Platform</title>
+    <link>https://mxracehub.site/admin/</link>
+    <description>Recent content in Admins on MXRaceHub - Ultimate Supercross and Motocross Platform</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <managingEditor>team@mxracehub.com (MXRaceHub Team)</managingEditor>
+    <webMaster>team@mxracehub.com (MXRaceHub Team)</webMaster>
+    <copyright>© 2025 MXRaceHub Team</copyright>
+    <atom:link href="https://mxracehub.site/admin/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Achievement System Testing Guide</title>
+      <link>https://mxracehub.site/admin/test-achievements/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://mxracehub.site/admin/test-achievements/</guid>
+      <description>Achievement System Testing Guide # 🎯 How to Test Achievement Triggers # 1. Test First Bet Badge # # Simulate placing a first bet for user ID 1 curl -X POST http://localhost:8080/api/test/bet-placed \ -H &amp;#34;Content-Type: application/json&amp;#34; \ -d &amp;#39;{&amp;#34;userId&amp;#34;: 1, &amp;#34;betAmount&amp;#34;: 25.</description>
+    </item>
+    
+  </channel>
+</rss>

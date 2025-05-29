@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors on MXRaceHub - Plataforma Definitiva de Supercross y Motocross</title>
+    <link>https://mxracehub.site/es/authors/</link>
+    <description>Recent content in Authors on MXRaceHub - Plataforma Definitiva de Supercross y Motocross</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>es</language>
+    <managingEditor>team@mxracehub.com (MXRaceHub Team)</managingEditor>
+    <webMaster>team@mxracehub.com (MXRaceHub Team)</webMaster>
+    <copyright>© 2025 MXRaceHub Team</copyright>
+    <atom:link href="https://mxracehub.site/es/authors/index.xml" rel="self" type="application/rss+xml" />
+  </channel>
+</rss>
