@@ -1,9 +1,9 @@
 languageCode = "en"
 languageName = "English"
 weight = 1
-#title = "Blowfish"
+title = "Blowfish"
 
-#[params]
+[params]
   displayName = "English"
   isoCode = "en"
   rtl = false
@@ -11,7 +11,7 @@ weight = 1
   logo = "img/blowfish_logo_transparent.png"
   description = "A powerful, lightweight theme for Hugo."
 
-#[params.author]
+[params.author]
   name = "Blowfish"
   email = "nuno@n9o.xyz"
   image = "img/blowfish_logo.png"

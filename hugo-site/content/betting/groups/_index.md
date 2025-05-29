@@ -1,10 +1,6 @@
 ---
-title: "Motocross Betting Groups - Join or Create Private Racing Pools"
-description: "Create private betting groups for Supercross and Motocross races. Join betting pools with friends, compete on leaderboards, and make race day more exciting with group wagering and competitions."
-keywords: ["motocross betting groups", "supercross betting pools", "racing bet groups", "private betting circles", "MX betting communities", "race wagering groups", "motocross gambling", "betting leaderboards"]
-sitemap:
-  priority: 0.8
-  changefreq: "weekly"
+title: "Betting Groups"
+description: "Join or create betting groups with friends to place friendly wagers on races"
 ---
 
 # MX Betting Groups

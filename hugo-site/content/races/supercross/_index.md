@@ -1,11 +1,7 @@
 ---
-title: "AMA Supercross 2025 - Live Schedule, Results & Championship Standings"
-description: "Complete AMA Supercross 2025 coverage: live race schedules, championship standings, rider profiles, track information, and betting odds. Follow Jett Lawrence, Chase Sexton, and Haiden Deegan through the season."
-keywords: ["AMA Supercross 2025", "supercross schedule", "supercross standings", "Jett Lawrence", "Chase Sexton", "Haiden Deegan", "450SX", "250SX", "supercross results", "supercross betting"]
+title: "Supercross"
+description: "Everything you need to know about AMA Supercross racing, including schedules, results, and standings."
 layout: "list"
-sitemap:
-  priority: 0.9
-  changefreq: "daily"
 ---
 
 # AMA Supercross

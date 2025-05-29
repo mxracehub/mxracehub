@@ -48,15 +48,6 @@
   url = "https://twitter.com/mxracehub"
   weight = 110
 
-[[main]]
-  identifier = "language-switch"
-  name = "ES"
-  url = "/es/"
-  weight = 120
-  [main.params]
-    class = "language-switch"
-    title = "Cambiar a Español"
-
 
 # -- MXRaceHub Footer Menu --
 # Links displayed at the bottom of all pages

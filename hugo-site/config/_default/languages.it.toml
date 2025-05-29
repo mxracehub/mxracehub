@@ -1,64 +1,22 @@
-# Italian Language Configuration for MXRaceHub
 languageCode = "it"
 languageName = "Italiano"
-displayName = "IT"
-isoCode = "it"
-weight = 3
-rtl = false
-
-title = "MXRaceHub - Piattaforma Definitiva per Supercross e Motocross"
-description = "MXRaceHub è la piattaforma definitiva per appassionati di Supercross e Motocross. Ottieni orari delle gare in diretta, quote delle scommesse, profili dei piloti, informazioni sui circuiti e copertura completa del campionato."
-
-# Footer content
-copyright = "© 2025 MXRaceHub - Piattaforma per Appassionati di Supercross e Motocross"
+weight = 2
+title = "Blowfish"
 
 [params]
-  # Navigation and UI translations
-  mainSections = ["gare", "piloti", "circuiti", "scommesse"]
-  
-  # Site specific parameters
-  author = "Team MXRaceHub"
-  keywords = ["supercross", "motocross", "AMA", "gare", "scommesse", "piloti", "circuiti", "campionato", "sport motoristici", "dirt bike"]
-  
-  # Social media
-  twitter_site = "@mxracehub"
-  
-  # UI Text translations
-  [params.ui]
-    readingTime = "tempo di lettura"
-    words = "parole"
-    minute = "min"
-    minutes = "mins"
-    
-  # Navigation translations
-  [params.nav]
-    home = "Home"
-    races = "Gare"
-    riders = "Piloti"
-    tracks = "Circuiti"
-    betting = "Scommesse"
-    schedule = "Programma"
-    standings = "Classifica"
-    
-  # Common action words
-  [params.actions]
-    readMore = "Leggi di più"
-    viewAll = "Vedi tutto"
-    login = "Accedi"
-    logout = "Esci"
-    register = "Registrati"
-    placeBet = "Scommetti"
-    viewProfile = "Vedi profilo"
-    
-  # Time and date
-  [params.time]
-    dateFormat = "2 January 2006"
-    timeFormat = "15:04"
-    
-  # Betting specific
-  [params.betting]
-    odds = "Quote"
-    bet = "Scommessa"
-    winner = "Vincitore"
-    place = "Piazzamento"
-    show = "Mostra"
+  displayName = "Italiano"
+  isoCode = "it"
+  rtl = false
+  dateFormat = "2 January 2006"
+  logo = "img/blowfish_logo_transparent.png"
+  description = "Un potente, leggero tema per Hugo."
+
+[params.author]
+  name = "Blowfish"
+  image = "img/blowfish_logo.png"
+  headline = "Un potente, leggero tema per Hugo."
+  bio = "Un potente, leggero tema per Hugo."
+  links = [
+    { x-twitter = "https://twitter.com/burufugu" },
+    { github = "https://github.com/nunocoracao/blowfish" },
+  ]

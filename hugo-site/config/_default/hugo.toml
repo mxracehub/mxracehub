@@ -4,9 +4,9 @@
 theme = ["blowfish"]
 disableKinds = []
 ignoreFiles = []
-baseURL = "https://mxracehub.site"
+baseURL = "/"
 defaultContentLanguage = "en"
-# All languages enabled for MXRaceHub international expansion
+disableLanguages = ["it", "ja", "zh-cn"] # Only use English for MXRaceHub
 
 enableRobotsTXT = true
 summaryLength = 30
@@ -16,35 +16,10 @@ buildDrafts = false
 buildFuture = false
 
 enableEmoji = true
-enableGitInfo = true
 
 # Site title and description
-title = "MXRaceHub - Ultimate Supercross & Motocross Platform"
+title = "MXRaceHub"
 copyright = "© 2025 MXRaceHub - Supercross and Motocross Fan Platform"
-
-# Google Search Console and Analytics
-googleAnalytics = ""  # Add your GA4 measurement ID here
-
-# SEO and Social Media
-[params]
-  description = "MXRaceHub is the ultimate platform for Supercross and Motocross fans. Get live race schedules, betting odds, rider profiles, track information, and comprehensive championship coverage."
-  keywords = ["supercross", "motocross", "AMA", "racing", "betting", "riders", "tracks", "championship", "motorsports", "dirt bike"]
-  author = "MXRaceHub Team"
-  
-  # Open Graph / Facebook
-  images = ["/img/mxracehub-og-image.jpg"]
-  
-  # Twitter Card
-  twitter_card = "summary_large_image"
-  twitter_site = "@mxracehub"
-  
-  # Schema.org structured data
-  organization_name = "MXRaceHub"
-  organization_logo = "/img/mxracehub-logo.png"
-  
-  # Site verification
-  google_site_verification = ""  # Add your Google Search Console verification code
-  bing_site_verification = ""    # Add your Bing Webmaster verification code
 
 [pagination]
   pagerSize = 100
