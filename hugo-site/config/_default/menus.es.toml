@@ -1,38 +1,38 @@
-# -- MXRaceHub Main Menu --
-# Main navigation for our Supercross and Motocross platform
+# -- MXRaceHub Menú Principal (Español) --
+# Navegación principal para nuestra plataforma de Supercross y Motocross
 
 [[main]]
-  name = "Home"
+  name = "Inicio"
   pageRef = "/"
   weight = 10
 
 [[main]]
-  name = "Races"
+  name = "Carreras"
   pageRef = "races/"
   weight = 20
 
 [[main]]
-  name = "Riders"
+  name = "Pilotos"
   pageRef = "riders/"
   weight = 30
 
 [[main]]
-  name = "Tracks"
+  name = "Pistas"
   pageRef = "tracks/"
   weight = 40
 
 [[main]]
-  name = "Betting"
+  name = "Apuestas"
   pageRef = "betting/"
   weight = 50
 
 [[main]]
-  name = "News"
+  name = "Noticias"
   pageRef = "news/"
   weight = 60
 
 [[main]]
-  name = "Watch Live"
+  name = "Ver En Vivo"
   pageRef = "watch/"
   weight = 70
 
@@ -50,38 +50,38 @@
 
 [[main]]
   identifier = "language-switch"
-  name = "ES"
-  url = "/es/"
+  name = "EN"
+  url = "/"
   weight = 120
   [main.params]
     class = "language-switch"
-    title = "Cambiar a Español"
+    title = "Switch to English"
 
 
-# -- MXRaceHub Footer Menu --
-# Links displayed at the bottom of all pages
+# -- MXRaceHub Menú del Pie de Página --
+# Enlaces mostrados en la parte inferior de todas las páginas
 
 [[footer]]
-  name = "About"
+  name = "Acerca"
   pageRef = "about/"
   weight = 10
 
 [[footer]]
-  name = "Contact"
+  name = "Contacto"
   pageRef = "contact/"
   weight = 20
 
 [[footer]]
-  name = "Terms"
+  name = "Términos"
   pageRef = "terms/"
   weight = 30
 
 [[footer]]
-  name = "Privacy"
+  name = "Privacidad"
   pageRef = "privacy/"
   weight = 40
 
 [[footer]]
-  name = "Betting Policies"
+  name = "Políticas de Apuestas"
   pageRef = "betting/policies/"
   weight = 50

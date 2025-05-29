@@ -482,3 +482,63 @@ details > *, summary > * {
     visibility: visible !important;
   }
 }
+
+/* Language Switch Button Styling */
+.language-switch {
+  background: linear-gradient(135deg, #f97316, #ea580c) !important;
+  color: white !important;
+  border: 2px solid #ea580c !important;
+  border-radius: 20px !important;
+  padding: 6px 12px !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 40px !important;
+  height: 32px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.language-switch:hover {
+  background: linear-gradient(135deg, #ea580c, #c2410c) !important;
+  border-color: #c2410c !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+  color: white !important;
+}
+
+.language-switch:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Responsive language switch for mobile */
+@media (max-width: 768px) {
+  .language-switch {
+    font-size: 0.8rem !important;
+    padding: 4px 8px !important;
+    min-width: 35px !important;
+    height: 28px !important;
+  }
+}
+
+/* Language switch positioning in navigation */
+nav .language-switch {
+  margin-left: 8px !important;
+}
+
+/* Dark mode support for language switch */
+@media (prefers-color-scheme: dark) {
+  .language-switch {
+    background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+    border-color: #b91c1c !important;
+  }
+  
+  .language-switch:hover {
+    background: linear-gradient(135deg, #b91c1c, #991b1b) !important;
+    border-color: #991b1b !important;
+  }
+}

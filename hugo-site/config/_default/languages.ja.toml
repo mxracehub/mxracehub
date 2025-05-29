@@ -1,9 +1,9 @@
 languageCode = "ja"
 languageName = "日本語"
 weight = 3
-title = "Blowfish"
+#title = "Blowfish"
 
-[params]
+#[params]
   displayName = "日本語"
   isoCode = "ja"
   rtl = false
@@ -11,7 +11,7 @@ title = "Blowfish"
   logo = "img/blowfish_logo_transparent.png"
   description = "強力で、軽量な Hugo のテーマです。"
 
-[params.author]
+#[params.author]
   name = "Blowfish"
   email = "nuno@n9o.xyz"
   image = "img/blowfish_logo.png"

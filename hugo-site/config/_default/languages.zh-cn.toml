@@ -1,9 +1,9 @@
 languageCode = "zh-cn"
 languageName = "简体中文"
 weight = 4
-title = "Blowfish"
+#title = "Blowfish"
 
-[params]
+#[params]
   displayName = "简体中文"
   isoCode = "zh-cn"
   rtl = false
@@ -11,7 +11,7 @@ title = "Blowfish"
   logo = "img/blowfish_logo_transparent.png"
   description = "一个强大、轻量级的 Hugo 主题。"
 
-[params.author]
+#[params.author]
   name = "Blowfish"
   image = "img/blowfish_logo.png"
   headline = "一个强大、轻量级的 Hugo 主题。"

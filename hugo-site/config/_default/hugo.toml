@@ -4,9 +4,9 @@
 theme = ["blowfish"]
 disableKinds = []
 ignoreFiles = []
-baseURL = "https://mxracehub.replit.app"
+baseURL = "https://mxracehub.site"
 defaultContentLanguage = "en"
-disableLanguages = ["it", "ja", "zh-cn"] # Only use English for MXRaceHub
+disableLanguages = ["it", "ja", "zh-cn"] # Enable English and Spanish for MXRaceHub
 
 enableRobotsTXT = true
 summaryLength = 30
