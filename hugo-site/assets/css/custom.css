@@ -437,3 +437,48 @@ img, video, iframe {
     font-weight: 600;
   }
 }
+
+/* Hide details and summary elements from users while keeping them for SEO */
+details, summary {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+/* Ensure content inside details/summary is also hidden */
+details > *, summary > * {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Make sure search engines can still index the content for SEO */
+@media print {
+  details, summary {
+    display: block !important;
+    visibility: visible !important;
+    height: auto !important;
+    overflow: visible !important;
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    opacity: 1 !important;
+  }
+  
+  details > *, summary > * {
+    display: block !important;
+    visibility: visible !important;
+  }
+}
