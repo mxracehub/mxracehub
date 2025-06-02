@@ -1,0 +1,27 @@
+{{ $name := .Get "name" }}
+{{ $image := .Get "image" }}
+{{ $type := .Get "type" | default "motocross" }}
+{{ $location := .Get "location" }}
+{{ $date := .Get "date" }}
+{{ $tv := .Get "tv" | default false }}
+{{ $channel := .Get "channel" }}
+{{ $length := .Get "length" }}
+{{ $elevation := .Get "elevation" }}
+
+{{ $trackData := dict 
+  "name" $name
+  "image" $image
+  "type" $type
+  "location" $location
+  "date" $date
+  "tv" $tv
+  "channel" $channel
+  "length" $length
+  "elevation" $elevation
+}}
+
+{{ if .Inner }}
+  {{ $trackData = merge $trackData (dict "description" .Inner) }}
+{{ end }}
+
+{{ partial "track-card.html" $trackData }}

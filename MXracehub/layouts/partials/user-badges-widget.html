@@ -1,0 +1,125 @@
+{{ $userId := .Params.user_id | default 1 }}
+
+<!-- Compact User Badges Widget -->
+<div class="user-badges-widget bg-white rounded-lg shadow-md p-6 border border-gray-100">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-gray-900 flex items-center">
+      <svg class="w-5 h-5 text-yellow-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+      </svg>
+      Your Badges
+    </h3>
+    <a href="/profile/achievements/" class="text-red-600 hover:text-red-700 text-sm font-medium hover:underline">
+      View All
+    </a>
+  </div>
+
+  <!-- Badge Summary Stats -->
+  <div class="grid grid-cols-3 gap-4 mb-6">
+    <div class="text-center">
+      <div class="text-2xl font-bold text-gray-900" id="widget-total-badges">0</div>
+      <div class="text-xs text-gray-500">Total</div>
+    </div>
+    <div class="text-center">
+      <div class="text-2xl font-bold text-green-600" id="widget-completed-badges">0</div>
+      <div class="text-xs text-gray-500">Earned</div>
+    </div>
+    <div class="text-center">
+      <div class="text-2xl font-bold text-blue-600" id="widget-user-level">1</div>
+      <div class="text-xs text-gray-500">Level</div>
+    </div>
+  </div>
+
+  <!-- Recent Badges -->
+  <div class="mb-4">
+    <h4 class="text-sm font-medium text-gray-700 mb-3">Recent Badges</h4>
+    <div id="widget-recent-badges" class="flex flex-wrap gap-2">
+      <!-- Recent badges will be populated by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Progress Indicator -->
+  <div class="mb-4">
+    <div class="flex justify-between text-sm text-gray-600 mb-2">
+      <span>Progress to Next Level</span>
+      <span id="widget-progress-text">0/3</span>
+    </div>
+    <div class="w-full bg-gray-200 rounded-full h-2">
+      <div id="widget-progress-bar" class="bg-red-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="text-center">
+    <a href="/betting/place-bet/" class="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded-lg hover:bg-red-700 transition-colors">
+      <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+      </svg>
+      Earn More Badges
+    </a>
+  </div>
+</div>
+
+<script>
+// Widget-specific badge functionality
+function initUserBadgesWidget() {
+  // Sample data for the widget (replace with API calls)
+  const completedBadges = [
+    { name: "First Bet", icon: "🎯", category: "betting", badgeColor: "bg-green-500" },
+    { name: "Profile Complete", icon: "✅", category: "community", badgeColor: "bg-blue-500" },
+    { name: "Early Adopter", icon: "🚀", category: "milestones", badgeColor: "bg-red-600" }
+  ];
+  
+  const totalBadges = 8;
+  const completedCount = completedBadges.length;
+  const userLevel = Math.floor(completedCount / 3) + 1;
+  const progressToNext = completedCount % 3;
+  const progressPercentage = (progressToNext / 3) * 100;
+
+  // Update widget stats
+  document.getElementById('widget-total-badges').textContent = totalBadges;
+  document.getElementById('widget-completed-badges').textContent = completedCount;
+  document.getElementById('widget-user-level').textContent = userLevel;
+  document.getElementById('widget-progress-text').textContent = `${progressToNext}/3`;
+  document.getElementById('widget-progress-bar').style.width = `${progressPercentage}%`;
+
+  // Display recent badges
+  const recentBadgesContainer = document.getElementById('widget-recent-badges');
+  if (completedBadges.length === 0) {
+    recentBadgesContainer.innerHTML = `
+      <div class="text-center w-full py-4">
+        <p class="text-gray-500 text-sm">No badges earned yet</p>
+        <p class="text-gray-400 text-xs">Start betting to earn your first badge!</p>
+      </div>
+    `;
+  } else {
+    recentBadgesContainer.innerHTML = completedBadges.slice(0, 6).map(badge => `
+      <div class="flex items-center ${badge.badgeColor} text-white rounded-full px-3 py-1 text-xs font-medium" title="${badge.name}">
+        <span class="mr-1">${badge.icon}</span>
+        <span class="hidden sm:inline">${badge.name}</span>
+      </div>
+    `).join('');
+  }
+}
+
+// Initialize widget when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('widget-total-badges')) {
+    initUserBadgesWidget();
+  }
+});
+</script>
+
+<style>
+.user-badges-widget {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.user-badges-widget .badge-pill {
+  transition: all 0.2s ease;
+}
+
+.user-badges-widget .badge-pill:hover {
+  transform: scale(1.05);
+}
+</style>

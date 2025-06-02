@@ -1,0 +1,16 @@
+# MXRaceHub Automated Content Updates
+# 
+# This crontab configuration automatically updates video content every Monday
+# To install this crontab, run: crontab hugo-site/scripts/crontab.txt
+#
+# Format: minute hour day month weekday command
+#
+
+# Update video content every Monday at 6:00 AM
+0 6 * * 1 /bin/bash /path/to/your/project/hugo-site/scripts/update_videos.sh
+
+# Backup: Update video content every Monday at 6:00 PM as well (in case morning fails)
+0 18 * * 1 /bin/bash /path/to/your/project/hugo-site/scripts/update_videos.sh
+
+# Optional: Run a manual check every Sunday at 11:59 PM to prepare for Monday
+59 23 * * 0 echo "Video update scheduled for tomorrow morning" >> /path/to/your/project/hugo-site/logs/video_updates.log

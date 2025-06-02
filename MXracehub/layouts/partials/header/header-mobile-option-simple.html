@@ -1,0 +1,54 @@
+<div class="mobile-nav-item">
+  {{ $currentPage := .Page }}
+  {{ if .URL }}
+  <a href="{{ .URL }}" {{ if or (strings.HasPrefix .URL "http:" ) (strings.HasPrefix .URL "https:" ) }}
+    target="_blank" {{ end }} class="mobile-nav-link">
+    {{ if .Pre }}
+    <span class="mobile-nav-icon">
+      {{ partial "icon.html" .Pre }}
+    </span>
+    {{ end }}
+    {{ .Name | markdownify }}
+  </a>
+  {{ else if .PageRef }}
+    {{ if eq .PageRef "/" }}
+    <a href="/" class="mobile-nav-link {{ if and $currentPage $currentPage.IsHome }}active{{ end }}">
+    {{ else }}
+    <a href="/{{ .PageRef }}/" class="mobile-nav-link {{ if and $currentPage (eq $currentPage.RelPermalink (print "/" .PageRef "/")) }}active{{ end }}">
+    {{ end }}
+      {{ if .Pre }}
+      <span class="mobile-nav-icon">
+        {{ partial "icon.html" .Pre }}
+      </span>
+      {{ end }}
+      {{ .Name | markdownify }}
+    </a>
+  {{ end }}
+</div>
+
+<style>
+  .mobile-nav-item {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+  
+  .mobile-nav-link {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color, #333);
+    text-decoration: none;
+    padding: 0.25rem 0;
+  }
+  
+  .mobile-nav-link.active {
+    color: var(--primary-color, #E2001A);
+  }
+  
+  .mobile-nav-icon {
+    margin-right: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+  }
+</style>
