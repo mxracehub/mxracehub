@@ -1,6 +1,6 @@
-[submodule "mxracehub"]
+[submodule "public"]
 
-path = mxracehub
+path = public
 url = https://github.com/mxracehub/mxracehub.github.io.git
 branch = main
 update = merge
