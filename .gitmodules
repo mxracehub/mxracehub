@@ -1,4 +1,4 @@
 [submodule "public"]
 
-path = mxracehub
+path = public
 url = https://github.com/mxracehub/mxracehub.github.io.git
