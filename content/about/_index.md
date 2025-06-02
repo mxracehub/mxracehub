@@ -3,9 +3,9 @@ title: "About MXRaceHub"
 description: "Learn about our Supercross and Motocross fan platform"
 ---
 
-# About MXRaceHub
+# About MXRaceHub   
 
-MXRaceHub is the ultimate destination for Supercross and Motocross racing fans. Our platform provides comprehensive coverage of races, rider profiles, track information, and interactive features that enhance your experience as a fan of the sport.
+MXRaceHub is the ultimate destination for Supercross and Motocross racing fans. Our platform provides comprehensive coverage of races, rider profiles, track information, and interactive features that enhance your experience as a fan of the sport. mmm
 
 ## Our Mission
 
