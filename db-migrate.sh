@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Script to handle database migrations for MXRaceHub
+# Script to handle database migrations for MXRaceHub from the hugo-site directory
+cd "$(dirname "$0")" # Change to the script's directory
 
 # Display help message
 function show_help {

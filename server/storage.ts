@@ -1,15 +1,11 @@
 import { users, type User, type InsertUser, riders, type Rider, type InsertRider, 
-  teams, type Team, type InsertTeam, tracks, type Track, type InsertTrack, races, type Race, type InsertRace,
+  tracks, type Track, type InsertTrack, races, type Race, type InsertRace,
   friendBets, type FriendBet, type InsertFriendBet, groups, type Group, type InsertGroup,
   groupMembers, type GroupMember, type InsertGroupMember, groupBets, type GroupBet, type InsertGroupBet,
   groupBetOptions, type GroupBetOption, type InsertGroupBetOption, 
   groupBetParticipations, type GroupBetParticipation, type InsertGroupBetParticipation,
   transactions, type Transaction, type InsertTransaction, 
-  memberships, type Membership, type InsertMembership,
-  achievements, type Achievement, type InsertAchievement,
-  userAchievements, type UserAchievement, type InsertUserAchievement,
-  userStats, type UserStats, type InsertUserStats,
-  activityLog, type ActivityLog, type InsertActivityLog } from "@shared/schema";
+  memberships, type Membership, type InsertMembership } from "@shared/schema";
 import { db } from "./db";
 import { eq, and } from "drizzle-orm";
 import session from "express-session";
@@ -23,26 +19,15 @@ export interface IStorage {
   // User operations
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
-  getUserWithMembershipDetails(id: number): Promise<any>;
   createUser(insertUser: InsertUser): Promise<User>;
   updateStripeCustomerId(userId: number, stripeCustomerId: string): Promise<User>;
   updateUserStripeInfo(userId: number, info: { stripeCustomerId: string, stripeSubscriptionId: string }): Promise<User>;
-  
-  // Team operations
-  getTeam(id: number): Promise<Team | undefined>;
-  getTeams(): Promise<Team[]>;
-  getTeamByName(name: string): Promise<Team | undefined>;
-  createTeam(insertTeam: InsertTeam): Promise<Team>;
-  updateTeam(id: number, updates: Partial<InsertTeam>): Promise<Team>;
   
   // Rider operations
   getRider(id: number): Promise<Rider | undefined>;
   getRiderByNumber(number: number, division: string): Promise<Rider | undefined>;
   getRidersByDivision(division: string): Promise<Rider[]>;
-  getRidersByTeam(teamId: number): Promise<Rider[]>;
-  getActiveRiders(): Promise<Rider[]>;
   createRider(insertRider: InsertRider): Promise<Rider>;
-  updateRider(id: number, updates: Partial<InsertRider>): Promise<Rider>;
   
   // Track operations
   getTrack(id: number): Promise<Track | undefined>;
@@ -102,30 +87,16 @@ export interface IStorage {
   getUserMembership(userId: number): Promise<Membership | undefined>;
   cancelMembership(membershipId: number): Promise<Membership>;
   
+  // Bank account operations
+  getUserBankAccounts(userId: number): Promise<BankAccount[]>;
+  getBankAccount(id: number): Promise<BankAccount | undefined>;
+  createBankAccount(insertBankAccount: InsertBankAccount): Promise<BankAccount>;
+  updateBankAccount(id: number, updates: Partial<InsertBankAccount>): Promise<BankAccount>;
+  deleteBankAccount(id: number): Promise<void>;
+  setDefaultBankAccount(userId: number, accountId: number): Promise<BankAccount>;
+  
   // Session store
   sessionStore: session.Store;
-  
-  // Achievement operations
-  getAchievements(): Promise<Achievement[]>;
-  getAchievement(id: number): Promise<Achievement | undefined>;
-  createAchievement(insertAchievement: InsertAchievement): Promise<Achievement>;
-  
-  // User achievement operations
-  getUserAchievements(userId: number): Promise<UserAchievement[]>;
-  getUserAchievementsByCategory(userId: number, category: string): Promise<UserAchievement[]>;
-  getUserAchievement(userId: number, achievementId: number): Promise<UserAchievement | undefined>;
-  createUserAchievement(insertUserAchievement: InsertUserAchievement): Promise<UserAchievement>;
-  updateUserAchievementProgress(id: number, progress: any): Promise<UserAchievement>;
-  markAchievementCompleted(id: number): Promise<UserAchievement>;
-  
-  // User stats operations
-  getUserStats(userId: number): Promise<UserStats | undefined>;
-  createUserStats(insertUserStats: InsertUserStats): Promise<UserStats>;
-  updateUserStats(userId: number, updates: Partial<InsertUserStats>): Promise<UserStats>;
-  
-  // Activity log operations
-  createActivityLog(insertActivityLog: InsertActivityLog): Promise<ActivityLog>;
-  getUserActivityLog(userId: number, limit?: number): Promise<ActivityLog[]>;
 }
 
 // Database storage implementation
@@ -150,46 +121,6 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  async getUserWithMembershipDetails(id: number): Promise<any> {
-    const { friendMembershipService } = await import("./services/friendMembershipService");
-    
-    try {
-      // Get user with complete membership dashboard
-      const membershipDashboard = await friendMembershipService.getMembershipDashboard(id);
-      
-      return {
-        ...membershipDashboard.user,
-        membershipDetails: {
-          type: membershipDashboard.membershipStatus.type,
-          isActive: membershipDashboard.membershipStatus.isActive,
-          isFree: membershipDashboard.membershipStatus.isFree,
-          expiresAt: membershipDashboard.membershipStatus.expiresAt,
-          eligibility: membershipDashboard.eligibility,
-        },
-        friendGroups: membershipDashboard.friendGroups,
-        friendGroupsCount: membershipDashboard.user.friendGroupsCount || 0,
-        hasActiveFriendBets: membershipDashboard.user.hasActiveFriendBets || false,
-      };
-    } catch (error) {
-      console.error('Error loading membership details:', error);
-      // Fallback to basic user data
-      const user = await this.getUser(id);
-      return {
-        ...user,
-        membershipDetails: {
-          type: user?.membershipType || 'free',
-          isActive: false,
-          isFree: user?.membershipType === 'premium_free',
-          expiresAt: user?.membershipExpiresAt,
-          eligibility: { eligible: false, reason: 'Error loading details' },
-        },
-        friendGroups: [],
-        friendGroupsCount: 0,
-        hasActiveFriendBets: false,
-      };
-    }
-  }
-
   async createUser(insertUser: InsertUser): Promise<User> {
     const [user] = await db.insert(users).values(insertUser).returning();
     return user;
@@ -204,7 +135,7 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  async updateUserStripeInfo(userId: number, info: { stripeCustomerId: string; stripeSubscriptionId: string }): Promise<User> {
+  async updateUserStripeInfo(userId: number, info: { stripeCustomerId: string, stripeSubscriptionId: string }): Promise<User> {
     const [user] = await db
       .update(users)
       .set({
@@ -214,31 +145,6 @@ export class DatabaseStorage implements IStorage {
       .where(eq(users.id, userId))
       .returning();
     return user;
-  }
-
-  // Team operations
-  async getTeam(id: number): Promise<Team | undefined> {
-    const [team] = await db.select().from(teams).where(eq(teams.id, id));
-    return team;
-  }
-
-  async getTeams(): Promise<Team[]> {
-    return await db.select().from(teams).orderBy(teams.name);
-  }
-
-  async getTeamByName(name: string): Promise<Team | undefined> {
-    const [team] = await db.select().from(teams).where(eq(teams.name, name));
-    return team;
-  }
-
-  async createTeam(insertTeam: InsertTeam): Promise<Team> {
-    const [team] = await db.insert(teams).values(insertTeam).returning();
-    return team;
-  }
-
-  async updateTeam(id: number, updates: Partial<InsertTeam>): Promise<Team> {
-    const [team] = await db.update(teams).set(updates).where(eq(teams.id, id)).returning();
-    return team;
   }
 
   // Rider operations
@@ -259,21 +165,8 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(riders).where(eq(riders.division, division));
   }
 
-  async getRidersByTeam(teamId: number): Promise<Rider[]> {
-    return await db.select().from(riders).where(eq(riders.teamId, teamId));
-  }
-
-  async getActiveRiders(): Promise<Rider[]> {
-    return await db.select().from(riders).where(eq(riders.isActive, true));
-  }
-
   async createRider(insertRider: InsertRider): Promise<Rider> {
     const [rider] = await db.insert(riders).values(insertRider).returning();
-    return rider;
-  }
-
-  async updateRider(id: number, updates: Partial<InsertRider>): Promise<Rider> {
-    const [rider] = await db.update(riders).set(updates).where(eq(riders.id, id)).returning();
     return rider;
   }
 
@@ -534,98 +427,71 @@ export class DatabaseStorage implements IStorage {
     return membership;
   }
 
-  // Achievement operations
-  async getAchievements(): Promise<Achievement[]> {
-    return await db.select().from(achievements).where(eq(achievements.isActive, true));
+  // Bank account operations
+  async getUserBankAccounts(userId: number): Promise<BankAccount[]> {
+    return await db.select().from(bankAccounts).where(eq(bankAccounts.userId, userId));
   }
 
-  async getAchievement(id: number): Promise<Achievement | undefined> {
-    const [achievement] = await db.select().from(achievements).where(eq(achievements.id, id));
-    return achievement;
+  async getBankAccount(id: number): Promise<BankAccount | undefined> {
+    const [account] = await db.select().from(bankAccounts).where(eq(bankAccounts.id, id));
+    return account;
   }
 
-  async createAchievement(insertAchievement: InsertAchievement): Promise<Achievement> {
-    const [achievement] = await db.insert(achievements).values(insertAchievement).returning();
-    return achievement;
+  async createBankAccount(insertBankAccount: InsertBankAccount): Promise<BankAccount> {
+    // Reset default status of other accounts if this one is set as default
+    if (insertBankAccount.isDefault) {
+      await db
+        .update(bankAccounts)
+        .set({ isDefault: false })
+        .where(eq(bankAccounts.userId, insertBankAccount.userId));
+    }
+
+    const [account] = await db.insert(bankAccounts).values(insertBankAccount).returning();
+    return account;
   }
 
-  // User achievement operations
-  async getUserAchievements(userId: number): Promise<UserAchievement[]> {
-    return await db.select().from(userAchievements).where(eq(userAchievements.userId, userId));
-  }
+  async updateBankAccount(id: number, updates: Partial<InsertBankAccount>): Promise<BankAccount> {
+    // If setting as default, reset other accounts first
+    if (updates.isDefault) {
+      const [account] = await db.select().from(bankAccounts).where(eq(bankAccounts.id, id));
+      if (account) {
+        await db
+          .update(bankAccounts)
+          .set({ isDefault: false })
+          .where(eq(bankAccounts.userId, account.userId));
+      }
+    }
 
-  async getUserAchievementsByCategory(userId: number, category: string): Promise<UserAchievement[]> {
-    return await db
-      .select()
-      .from(userAchievements)
-      .innerJoin(achievements, eq(userAchievements.achievementId, achievements.id))
-      .where(and(eq(userAchievements.userId, userId), eq(achievements.category, category)));
-  }
-
-  async getUserAchievement(userId: number, achievementId: number): Promise<UserAchievement | undefined> {
-    const [userAchievement] = await db
-      .select()
-      .from(userAchievements)
-      .where(and(eq(userAchievements.userId, userId), eq(userAchievements.achievementId, achievementId)));
-    return userAchievement;
-  }
-
-  async createUserAchievement(insertUserAchievement: InsertUserAchievement): Promise<UserAchievement> {
-    const [userAchievement] = await db.insert(userAchievements).values(insertUserAchievement).returning();
-    return userAchievement;
-  }
-
-  async updateUserAchievementProgress(id: number, progress: any): Promise<UserAchievement> {
-    const [userAchievement] = await db
-      .update(userAchievements)
-      .set({ progress })
-      .where(eq(userAchievements.id, id))
+    const [updatedAccount] = await db
+      .update(bankAccounts)
+      .set(updates)
+      .where(eq(bankAccounts.id, id))
       .returning();
-    return userAchievement;
+    return updatedAccount;
   }
 
-  async markAchievementCompleted(id: number): Promise<UserAchievement> {
-    const [userAchievement] = await db
-      .update(userAchievements)
-      .set({ isCompleted: true })
-      .where(eq(userAchievements.id, id))
+  async deleteBankAccount(id: number): Promise<void> {
+    await db.delete(bankAccounts).where(eq(bankAccounts.id, id));
+  }
+
+  async setDefaultBankAccount(userId: number, accountId: number): Promise<BankAccount> {
+    // First, set all user's accounts to non-default
+    await db
+      .update(bankAccounts)
+      .set({ isDefault: false })
+      .where(eq(bankAccounts.userId, userId));
+    
+    // Then set the specified account as default
+    const [account] = await db
+      .update(bankAccounts)
+      .set({ 
+        isDefault: true,
+        lastUsed: new Date()
+      })
+      .where(eq(bankAccounts.id, accountId))
       .returning();
-    return userAchievement;
-  }
-
-  // User stats operations
-  async getUserStats(userId: number): Promise<UserStats | undefined> {
-    const [stats] = await db.select().from(userStats).where(eq(userStats.userId, userId));
-    return stats;
-  }
-
-  async createUserStats(insertUserStats: InsertUserStats): Promise<UserStats> {
-    const [stats] = await db.insert(userStats).values(insertUserStats).returning();
-    return stats;
-  }
-
-  async updateUserStats(userId: number, updates: Partial<InsertUserStats>): Promise<UserStats> {
-    const [stats] = await db
-      .update(userStats)
-      .set({ ...updates, updatedAt: new Date() })
-      .where(eq(userStats.userId, userId))
-      .returning();
-    return stats;
-  }
-
-  // Activity log operations
-  async createActivityLog(insertActivityLog: InsertActivityLog): Promise<ActivityLog> {
-    const [activity] = await db.insert(activityLog).values(insertActivityLog).returning();
-    return activity;
-  }
-
-  async getUserActivityLog(userId: number, limit: number = 50): Promise<ActivityLog[]> {
-    return await db
-      .select()
-      .from(activityLog)
-      .where(eq(activityLog.userId, userId))
-      .orderBy(activityLog.createdAt)
-      .limit(limit);
+    
+    return account;
   }
 }
 

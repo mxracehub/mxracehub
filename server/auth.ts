@@ -5,11 +5,11 @@ import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage";
-import { User as SelectUser } from "@shared/schema";
+import { User } from "@shared/schema";
 
 declare global {
   namespace Express {
-    interface User extends SelectUser {}
+    interface User extends User {}
   }
 }
 
@@ -75,9 +75,8 @@ export function setupAuth(app: Express) {
 
   passport.deserializeUser(async (id: number, done) => {
     try {
-      // Load user with complete membership details including friend groups
-      const userWithMembership = await storage.getUserWithMembershipDetails(id);
-      done(null, userWithMembership);
+      const user = await storage.getUser(id);
+      done(null, user);
     } catch (error) {
       done(error);
     }
@@ -111,7 +110,7 @@ export function setupAuth(app: Express) {
         
         // Remove password from response
         const userResponse = { ...user };
-        delete (userResponse as any).password;
+        delete userResponse.password;
         
         return res.status(201).json(userResponse);
       });
@@ -121,29 +120,18 @@ export function setupAuth(app: Express) {
   });
 
   app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", async (err: any, user: any, info: any) => {
+    passport.authenticate("local", (err, user, info) => {
       if (err) return next(err);
       if (!user) return res.status(401).json({ message: info.message || "Authentication failed" });
       
-      req.login(user, async (loginErr) => {
+      req.login(user, (loginErr) => {
         if (loginErr) return next(loginErr);
         
-        try {
-          // Load complete membership details for the logged-in user
-          const userWithMembership = await storage.getUserWithMembershipDetails(user.id);
-          
-          // Remove password from response
-          const userResponse = { ...userWithMembership };
-          delete (userResponse as any).password;
-          
-          return res.json(userResponse);
-        } catch (error) {
-          console.error('Error loading membership details on login:', error);
-          // Fallback to basic user data without password
-          const userResponse = { ...user };
-          delete (userResponse as any).password;
-          return res.json(userResponse);
-        }
+        // Remove password from response
+        const userResponse = { ...user };
+        delete userResponse.password;
+        
+        return res.json(userResponse);
       });
     })(req, res, next);
   });

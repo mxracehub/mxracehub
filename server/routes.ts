@@ -1,20 +1,19 @@
-import type { Express, Request, Response } from "express";
+import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer } from "ws";
 import Stripe from "stripe";
+import crypto from "crypto";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
-import { users, friendBets, groups, groupBets, races, riders, teams, tracks, transactions, memberships, savedBetForms, insertTeamSchema, insertRiderSchema } from "@shared/schema";
-import { RaceCompletionService } from "./services/raceCompletionService";
-import { PayoutService } from "./services/payoutService";
+import { users, friendBets, groups, groupBets, races, riders, tracks, transactions, memberships, bankAccounts } from "@shared/schema";
 
 // Initialize Stripe if the API key is available
 let stripe: Stripe | undefined;
 if (process.env.STRIPE_SECRET_KEY) {
   stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2025-04-30.basil",
+    apiVersion: "2023-10-16",
   });
 }
 
@@ -26,627 +25,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date() });
   });
-
-  // Enhanced user profile endpoint with complete membership sync
-  app.get("/api/user/profile", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      
-      // Get complete membership details - same as login
-      const userWithMembership = await storage.getUserWithMembershipDetails(userId);
-      
-      // Remove password from response
-      const userResponse = { ...userWithMembership };
-      delete (userResponse as any).password;
-      
-      res.json(userResponse);
-    } catch (error) {
-      console.error('Error fetching user profile:', error);
-      res.status(500).json({ message: "Failed to fetch user profile" });
-    }
-  });
-
-  // Comprehensive Wallet API Endpoints
-  const { walletService } = await import("./services/walletService");
-
-  // Get complete wallet data (auto-syncs with account)
-  app.get("/api/wallet", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const walletData = await walletService.getWalletData(userId);
-      
-      res.json(walletData);
-    } catch (error) {
-      console.error('Error fetching wallet data:', error);
-      res.status(500).json({ message: "Failed to fetch wallet data" });
-    }
-  });
-
-  // Add funds to account
-  app.post("/api/wallet/add-funds", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const { method, amount, paymentDetails } = req.body;
-      
-      const result = await walletService.addFunds(userId, method, amount, paymentDetails);
-      
-      res.json(result);
-    } catch (error) {
-      console.error('Error adding funds:', error);
-      res.status(400).json({ message: error.message });
-    }
-  });
-
-  // Withdraw funds to bank or crypto
-  app.post("/api/wallet/withdraw", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const { method, amount, destinationDetails } = req.body;
-      
-      const result = await walletService.withdrawFunds(userId, method, amount, destinationDetails);
-      
-      res.json(result);
-    } catch (error) {
-      console.error('Error withdrawing funds:', error);
-      res.status(400).json({ message: error.message });
-    }
-  });
-
-  // Add bank account for withdrawals
-  app.post("/api/wallet/bank-accounts", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const bankAccount = await walletService.addBankAccount(userId, req.body);
-      
-      res.json(bankAccount);
-    } catch (error) {
-      console.error('Error adding bank account:', error);
-      res.status(400).json({ message: error.message });
-    }
-  });
-
-  // Add crypto wallet for withdrawals
-  app.post("/api/wallet/crypto-wallets", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const cryptoWallet = await walletService.addCryptoWallet(userId, req.body);
-      
-      res.json(cryptoWallet);
-    } catch (error) {
-      console.error('Error adding crypto wallet:', error);
-      res.status(400).json({ message: error.message });
-    }
-  });
-
-  // Professional Payment Gateway Service Integration
-  const { houseBankService } = await import("./services/houseBankService");
-  const { paymentGatewayService } = await import("./services/gatewayService");
-
-  // Add betting winnings to user account (automatically adds to house bank)
-  app.post("/api/betting/add-winnings", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const { winningAmount, betId } = req.body;
-      
-      const result = await houseBankService.addBettingWinnings(userId, winningAmount, betId);
-      
-      res.json(result);
-    } catch (error) {
-      console.error('Error adding betting winnings:', error);
-      res.status(400).json({ message: error.message });
-    }
-  });
-
-  // Deduct betting loss from user account
-  app.post("/api/betting/deduct-loss", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const { lossAmount, betId } = req.body;
-      
-      const result = await houseBankService.deductBettingLoss(userId, lossAmount, betId);
-      
-      res.json(result);
-    } catch (error) {
-      console.error('Error deducting betting loss:', error);
-      res.status(400).json({ message: error.message });
-    }
-  });
-
-  // Get house bank status (admin only - for monitoring)
-  app.get("/api/admin/house-bank-status", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      // In production, add admin role check here
-      const userId = (req.user as any).id;
-      
-      const status = await houseBankService.getHouseBankStatus();
-      
-      res.json(status);
-    } catch (error) {
-      console.error('Error getting house bank status:', error);
-      res.status(500).json({ message: "Failed to get house bank status" });
-    }
-  });
-
-  // Verify house bank solvency (admin only - for monitoring)
-  app.get("/api/admin/verify-solvency", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      // In production, add admin role check here
-      const userId = (req.user as any).id;
-      
-      const solvencyCheck = await houseBankService.verifyHouseBankSolvency();
-      
-      res.json(solvencyCheck);
-    } catch (error) {
-      console.error('Error verifying house bank solvency:', error);
-      res.status(500).json({ message: "Failed to verify solvency" });
-    }
-  });
-
-  // Get house bank account configuration (admin only)
-  app.get("/api/admin/bank-config", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      // In production, add admin role check here
-      const userId = (req.user as any).id;
-      
-      const bankInfo = houseBankService.getBankAccountInfo();
-      
-      res.json(bankInfo);
-    } catch (error) {
-      console.error('Error getting bank configuration:', error);
-      res.status(500).json({ message: "Failed to get bank configuration" });
-    }
-  });
-
-  // Update house bank account configuration (admin only)
-  app.put("/api/admin/bank-config", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      // In production, add admin role check here
-      const userId = (req.user as any).id;
-      
-      const { accountNumber, routingNumber, accountName, bankName } = req.body;
-      
-      // Validate required fields
-      if (!accountNumber || !routingNumber) {
-        return res.status(400).json({ 
-          message: "Account number and routing number are required" 
-        });
-      }
-
-      // Basic validation for account and routing numbers
-      if (!/^\d{8,17}$/.test(accountNumber)) {
-        return res.status(400).json({ 
-          message: "Invalid account number format (8-17 digits required)" 
-        });
-      }
-
-      if (!/^\d{9}$/.test(routingNumber)) {
-        return res.status(400).json({ 
-          message: "Invalid routing number format (9 digits required)" 
-        });
-      }
-
-      // Update configuration
-      houseBankService.updateBankConfiguration({
-        accountNumber,
-        routingNumber,
-        accountName,
-        bankName
-      });
-
-      // Return updated configuration (masked)
-      const updatedConfig = houseBankService.getBankAccountInfo();
-      
-      res.json({ 
-        success: true, 
-        message: "Bank configuration updated successfully",
-        config: updatedConfig
-      });
-    } catch (error) {
-      console.error('Error updating bank configuration:', error);
-      res.status(500).json({ message: "Failed to update bank configuration" });
-    }
-  });
-
-  // Professional Payment Gateway Service Endpoints
   
-  // Process deposit through gateway
-  app.post("/api/gateway/deposit", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const { amount, method, paymentDetails } = req.body;
-      
-      // Validate inputs
-      if (!amount || amount <= 0) {
-        return res.status(400).json({ message: "Invalid amount" });
-      }
-      
-      if (!method) {
-        return res.status(400).json({ message: "Payment method required" });
-      }
-
-      // Process deposit through professional gateway
-      const result = await paymentGatewayService.processDeposit(userId, amount, method, paymentDetails);
-      
-      res.json({
-        success: true,
-        message: "Deposit processed successfully",
-        ...result
-      });
-    } catch (error) {
-      console.error('Error processing deposit:', error);
-      res.status(400).json({ message: error.message });
-    }
-  });
-
-  // Process withdrawal through gateway
-  app.post("/api/gateway/withdrawal", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const { amount, method, destinationDetails } = req.body;
-      
-      // Validate inputs
-      if (!amount || amount <= 0) {
-        return res.status(400).json({ message: "Invalid amount" });
-      }
-      
-      if (!method) {
-        return res.status(400).json({ message: "Withdrawal method required" });
-      }
-
-      if (!destinationDetails) {
-        return res.status(400).json({ message: "Destination details required" });
-      }
-
-      // Process withdrawal through professional gateway
-      const result = await paymentGatewayService.processWithdrawal(userId, amount, method, destinationDetails);
-      
-      res.json({
-        success: true,
-        message: "Withdrawal processed successfully",
-        ...result
-      });
-    } catch (error) {
-      console.error('Error processing withdrawal:', error);
-      res.status(400).json({ message: error.message });
-    }
-  });
-
-  // Get gateway status and statistics (admin only)
-  app.get("/api/admin/gateway-status", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      // In production, add admin role check here
-      const userId = (req.user as any).id;
-      
-      const gatewayStatus = await paymentGatewayService.getGatewayStatus();
-      
-      res.json(gatewayStatus);
-    } catch (error) {
-      console.error('Error getting gateway status:', error);
-      res.status(500).json({ message: "Failed to get gateway status" });
-    }
-  });
-
-  // Update gateway configuration (admin only)
-  app.put("/api/admin/gateway-config", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      // In production, add admin role check here
-      const userId = (req.user as any).id;
-      
-      const { gatewayName, accountId, fees } = req.body;
-      
-      // Update gateway configuration
-      paymentGatewayService.updateGatewayConfig({
-        gatewayName,
-        accountId,
-        fees
-      });
-      
-      // Get updated status
-      const updatedStatus = await paymentGatewayService.getGatewayStatus();
-      
-      res.json({ 
-        success: true, 
-        message: "Gateway configuration updated successfully",
-        gateway: updatedStatus
-      });
-    } catch (error) {
-      console.error('Error updating gateway configuration:', error);
-      res.status(500).json({ message: "Failed to update gateway configuration" });
-    }
-  });
-  
-  // Integrated Betting System with Wallet
-  
-  // Place a bet - automatically deducts from user wallet
-  app.post("/api/bets", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const { raceId, groupId, betType, amount, betDetails } = req.body;
-
-      // Validate bet amount
-      if (!amount || amount <= 0) {
-        return res.status(400).json({ message: "Invalid bet amount" });
-      }
-
-      // Check user balance
-      const userBalance = await houseBankService.getUserBalance(userId);
-      if (userBalance < amount) {
-        return res.status(400).json({ 
-          message: `Insufficient funds. Balance: $${userBalance.toFixed(2)}, Required: $${amount.toFixed(2)}` 
-        });
-      }
-
-      // Create the bet record
-      const [bet] = await db.insert(groupBets).values({
-        groupId,
-        creatorId: userId,
-        raceId,
-        betType,
-        betDetails: betDetails,
-        amount: amount.toString(),
-        status: 'active'
-      }).returning();
-
-      // Deduct bet amount from user balance through house bank
-      await houseBankService.deductBettingLoss(userId, amount, bet.id);
-
-      res.json({ 
-        success: true, 
-        bet,
-        newBalance: await houseBankService.getUserBalance(userId)
-      });
-    } catch (error) {
-      console.error('Error placing bet:', error);
-      res.status(500).json({ message: error.message });
-    }
-  });
-
-  // Settle a bet - automatically adds winnings to user wallet
-  app.post("/api/bets/:betId/settle", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const betId = parseInt(req.params.betId);
-      const { winningUserId, winningAmount } = req.body;
-
-      // Validate inputs
-      if (!winningUserId || !winningAmount || winningAmount <= 0) {
-        return res.status(400).json({ message: "Invalid settlement parameters" });
-      }
-
-      // Update bet status
-      await storage.settleGroupBet(betId, winningUserId);
-
-      // Add winnings to winner's account through house bank
-      await houseBankService.addBettingWinnings(winningUserId, winningAmount, betId);
-
-      res.json({ 
-        success: true,
-        message: "Bet settled successfully",
-        winnerBalance: await houseBankService.getUserBalance(winningUserId)
-      });
-    } catch (error) {
-      console.error('Error settling bet:', error);
-      res.status(500).json({ message: error.message });
-    }
-  });
-
-  // Get user's active bets with balance info
-  app.get("/api/bets/user", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      
-      // Get user's bets and current balance
-      const [userBets, currentBalance] = await Promise.all([
-        storage.getUserGroupBetParticipations(userId),
-        houseBankService.getUserBalance(userId)
-      ]);
-
-      res.json({
-        bets: userBets,
-        currentBalance,
-        canPlaceBets: currentBalance > 0
-      });
-    } catch (error) {
-      console.error('Error fetching user bets:', error);
-      res.status(500).json({ message: "Failed to fetch user bets" });
-    }
-  });
-
-  // Friend betting with wallet integration
-  app.post("/api/bets/friend", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const creatorId = (req.user as any).id;
-      const { targetId, amount, betType, betDetails } = req.body;
-
-      // Check creator balance
-      const creatorBalance = await houseBankService.getUserBalance(creatorId);
-      if (creatorBalance < amount) {
-        return res.status(400).json({ 
-          message: `Insufficient funds. Balance: $${creatorBalance.toFixed(2)}` 
-        });
-      }
-
-      // Create friend bet
-      const [friendBet] = await db.insert(friendBets).values({
-        creatorId,
-        targetId,
-        amount: amount.toString(),
-        betType,
-        betDetails,
-        status: 'pending'
-      }).returning();
-
-      // Hold creator's funds (deduct from balance)
-      await houseBankService.deductBettingLoss(creatorId, amount, friendBet.id);
-
-      res.json({ 
-        success: true, 
-        friendBet,
-        newBalance: await houseBankService.getUserBalance(creatorId)
-      });
-    } catch (error) {
-      console.error('Error creating friend bet:', error);
-      res.status(500).json({ message: error.message });
-    }
-  });
-
-  // Accept friend bet - deducts from target user's balance
-  app.post("/api/bets/friend/:betId/accept", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const userId = (req.user as any).id;
-      const betId = parseInt(req.params.betId);
-
-      // Get bet details
-      const bet = await storage.getFriendBet(betId);
-      if (!bet || bet.targetId !== userId) {
-        return res.status(404).json({ message: "Bet not found or not authorized" });
-      }
-
-      const betAmount = parseFloat(bet.amount);
-
-      // Check user balance
-      const userBalance = await houseBankService.getUserBalance(userId);
-      if (userBalance < betAmount) {
-        return res.status(400).json({ 
-          message: `Insufficient funds. Balance: $${userBalance.toFixed(2)}` 
-        });
-      }
-
-      // Deduct from target user's balance
-      await houseBankService.deductBettingLoss(userId, betAmount, betId);
-
-      // Update bet status
-      await storage.updateFriendBetStatus(betId, 'active');
-
-      res.json({ 
-        success: true,
-        newBalance: await houseBankService.getUserBalance(userId)
-      });
-    } catch (error) {
-      console.error('Error accepting friend bet:', error);
-      res.status(500).json({ message: error.message });
-    }
-  });
-
-  // Settle friend bet - adds winnings to winner
-  app.post("/api/bets/friend/:betId/settle", async (req, res) => {
-    try {
-      if (!req.isAuthenticated() || !req.user) {
-        return res.status(401).json({ message: "Not authenticated" });
-      }
-
-      const betId = parseInt(req.params.betId);
-      const { winningUserId } = req.body;
-
-      // Get bet details
-      const bet = await storage.getFriendBet(betId);
-      if (!bet) {
-        return res.status(404).json({ message: "Bet not found" });
-      }
-
-      const betAmount = parseFloat(bet.amount);
-      const totalPayout = betAmount * 2; // Winner gets both amounts
-
-      // Add winnings to winner
-      await houseBankService.addBettingWinnings(winningUserId, totalPayout, betId);
-
-      // Update bet status
-      await storage.settleFriendBet(betId, winningUserId);
-
-      res.json({ 
-        success: true,
-        payout: totalPayout,
-        winnerBalance: await houseBankService.getUserBalance(winningUserId)
-      });
-    } catch (error) {
-      console.error('Error settling friend bet:', error);
-      res.status(500).json({ message: error.message });
-    }
-  });
-
   // Rider endpoints
   app.get("/api/riders", async (req, res) => {
     try {
@@ -679,77 +58,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching rider:", error);
       res.status(500).json({ message: "Failed to fetch rider" });
-    }
-  });
-  
-  // Team endpoints
-  app.get("/api/teams", async (req, res) => {
-    try {
-      const teamList = await storage.getTeams();
-      res.json(teamList);
-    } catch (error) {
-      console.error("Error fetching teams:", error);
-      res.status(500).json({ message: "Failed to fetch teams" });
-    }
-  });
-  
-  app.get("/api/teams/:id", async (req, res) => {
-    try {
-      const teamId = parseInt(req.params.id);
-      const team = await storage.getTeam(teamId);
-      
-      if (!team) {
-        return res.status(404).json({ message: "Team not found" });
-      }
-      
-      res.json(team);
-    } catch (error) {
-      console.error("Error fetching team:", error);
-      res.status(500).json({ message: "Failed to fetch team" });
-    }
-  });
-  
-  app.get("/api/teams/:id/riders", async (req, res) => {
-    try {
-      const teamId = parseInt(req.params.id);
-      const riders = await storage.getRidersByTeam(teamId);
-      res.json(riders);
-    } catch (error) {
-      console.error("Error fetching team riders:", error);
-      res.status(500).json({ message: "Failed to fetch team riders" });
-    }
-  });
-  
-  app.post("/api/teams", async (req, res) => {
-    try {
-      const teamData = insertTeamSchema.parse(req.body);
-      const newTeam = await storage.createTeam(teamData);
-      res.status(201).json(newTeam);
-    } catch (error) {
-      console.error("Error creating team:", error);
-      res.status(500).json({ message: "Failed to create team" });
-    }
-  });
-  
-  // Enhanced rider endpoints for dynamic loading
-  app.get("/api/riders/active", async (req, res) => {
-    try {
-      const activeRiders = await storage.getActiveRiders();
-      res.json(activeRiders);
-    } catch (error) {
-      console.error("Error fetching active riders:", error);
-      res.status(500).json({ message: "Failed to fetch active riders" });
-    }
-  });
-  
-  app.post("/api/riders", async (req, res) => {
-    try {
-      const riderData = insertRiderSchema.parse(req.body);
-      const newRider = await storage.createRider(riderData);
-      res.status(201).json(newRider);
-    } catch (error) {
-      console.error("Error creating rider:", error);
-      res.status(500).json({ message: "Failed to create rider" });
     }
   });
   
@@ -1228,6 +536,164 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Bank account endpoints
+  app.get("/api/bank-accounts", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    try {
+      const accounts = await storage.getUserBankAccounts(req.user!.id);
+      res.json(accounts);
+    } catch (error) {
+      console.error("Error fetching bank accounts:", error);
+      res.status(500).json({ message: "Failed to fetch bank accounts" });
+    }
+  });
+
+  app.get("/api/bank-accounts/:id", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const accountId = parseInt(req.params.id, 10);
+    
+    try {
+      const account = await storage.getBankAccount(accountId);
+      
+      if (!account) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      // Security check - users can only access their own accounts
+      if (account.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      res.json(account);
+    } catch (error) {
+      console.error("Error fetching bank account:", error);
+      res.status(500).json({ message: "Failed to fetch bank account" });
+    }
+  });
+
+  app.post("/api/bank-accounts", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const { accountHolderName, accountNumber, routingNumber, accountType, bankName, isDefault = false } = req.body;
+    
+    if (!accountHolderName || !accountNumber || !routingNumber || !accountType) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    try {
+      // In a production environment, you'd want to encrypt the accountNumber and routingNumber
+      // before storing them in the database
+      const newAccount = await storage.createBankAccount({
+        userId: req.user!.id,
+        accountHolderName,
+        accountNumber,
+        routingNumber,
+        accountType,
+        bankName,
+        isDefault,
+        isVerified: false // New accounts start as unverified
+      });
+      
+      res.status(201).json(newAccount);
+    } catch (error) {
+      console.error("Error creating bank account:", error);
+      res.status(500).json({ message: "Failed to create bank account" });
+    }
+  });
+
+  app.put("/api/bank-accounts/:id", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const accountId = parseInt(req.params.id, 10);
+    const { accountHolderName, bankName, isDefault } = req.body;
+    
+    // Only allow updating non-sensitive information
+    const updates: any = {};
+    if (accountHolderName !== undefined) updates.accountHolderName = accountHolderName;
+    if (bankName !== undefined) updates.bankName = bankName;
+    if (isDefault !== undefined) updates.isDefault = isDefault;
+    
+    try {
+      // Check if the account exists and belongs to the user
+      const existingAccount = await storage.getBankAccount(accountId);
+      if (!existingAccount) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      if (existingAccount.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      const updatedAccount = await storage.updateBankAccount(accountId, updates);
+      res.json(updatedAccount);
+    } catch (error) {
+      console.error("Error updating bank account:", error);
+      res.status(500).json({ message: "Failed to update bank account" });
+    }
+  });
+
+  app.delete("/api/bank-accounts/:id", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const accountId = parseInt(req.params.id, 10);
+    
+    try {
+      // Check if the account exists and belongs to the user
+      const existingAccount = await storage.getBankAccount(accountId);
+      if (!existingAccount) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      if (existingAccount.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      await storage.deleteBankAccount(accountId);
+      res.sendStatus(204); // No content
+    } catch (error) {
+      console.error("Error deleting bank account:", error);
+      res.status(500).json({ message: "Failed to delete bank account" });
+    }
+  });
+
+  app.post("/api/bank-accounts/:id/set-default", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    const accountId = parseInt(req.params.id, 10);
+    
+    try {
+      // Check if the account exists and belongs to the user
+      const existingAccount = await storage.getBankAccount(accountId);
+      if (!existingAccount) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      if (existingAccount.userId !== req.user!.id) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      const updatedAccount = await storage.setDefaultBankAccount(req.user!.id, accountId);
+      res.json(updatedAccount);
+    } catch (error) {
+      console.error("Error setting default bank account:", error);
+      res.status(500).json({ message: "Failed to set default bank account" });
+    }
+  });
+
   // Transaction endpoints
   app.get("/api/transactions", async (req, res) => {
     if (!req.isAuthenticated()) {
@@ -1244,103 +710,108 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Saved Forms endpoints
-  app.get("/api/bets/saved-forms", async (req, res) => {
+  // Withdrawal endpoints
+  app.post("/api/withdraw/bank", async (req, res) => {
     if (!req.isAuthenticated()) {
       return res.status(401).json({ message: "Not authenticated" });
     }
     
     try {
       const userId = req.user!.id;
+      const { amount, accountId } = req.body;
       
-      // Query for saved forms in the DB
-      const savedForms = await db
-        .select()
-        .from(savedBetForms)
-        .where(eq(savedBetForms.userId, userId));
-      
-      res.json(savedForms);
-    } catch (error) {
-      console.error("Error fetching saved forms:", error);
-      res.status(500).json({ message: "Failed to fetch saved forms" });
-    }
-  });
-  
-  app.post("/api/bets/saved-forms", async (req, res) => {
-    if (!req.isAuthenticated()) {
-      return res.status(401).json({ message: "Not authenticated" });
-    }
-    
-    try {
-      const userId = req.user!.id;
-      const { formType, formData } = req.body;
-      
-      if (!formType || !formData) {
-        return res.status(400).json({ message: "Missing required fields" });
+      if (!amount || !accountId) {
+        return res.status(400).json({ message: "Missing required parameters" });
       }
       
-      // Check if a saved form already exists
-      const existingForm = await db
-        .select()
-        .from(savedBetForms)
-        .where(eq(savedBetForms.userId, userId))
-        .where(eq(savedBetForms.formType, formType));
-      
-      if (existingForm.length > 0) {
-        // Update existing form
-        const updatedForm = await db
-          .update(savedBetForms)
-          .set({ 
-            formData: formData,
-            updatedAt: new Date()
-          })
-          .where(eq(savedBetForms.id, existingForm[0].id))
-          .returning();
-          
-        res.json(updatedForm[0]);
-      } else {
-        // Create new form
-        const newForm = await db
-          .insert(savedBetForms)
-          .values({
-            userId,
-            formType,
-            formData,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          })
-          .returning();
-          
-        res.status(201).json(newForm[0]);
+      // Validate the amount
+      if (amount < 10) {
+        return res.status(400).json({ message: "Minimum withdrawal amount is $10" });
       }
-    } catch (error) {
-      console.error("Error saving form data:", error);
-      res.status(500).json({ message: "Failed to save form data" });
-    }
-  });
-  
-  app.delete("/api/bets/saved-forms/:formType", async (req, res) => {
-    if (!req.isAuthenticated()) {
-      return res.status(401).json({ message: "Not authenticated" });
-    }
-    
-    try {
-      const userId = req.user!.id;
-      const { formType } = req.params;
       
-      // Delete the form
+      // Get user
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      // Check if user has sufficient balance
+      if (parseFloat(user.balance.toString()) < amount) {
+        return res.status(400).json({ message: "Insufficient balance" });
+      }
+      
+      // Get bank account
+      const account = await storage.getBankAccount(accountId);
+      if (!account) {
+        return res.status(404).json({ message: "Bank account not found" });
+      }
+      
+      // Verify ownership
+      if (account.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized access to bank account" });
+      }
+      
+      // Generate a reference ID for the withdrawal
+      const referenceId = crypto.randomUUID();
+      
+      // Create transaction and update user balance
+      const transaction = await storage.createTransaction({
+        userId,
+        amount: -amount, // Negative amount for withdrawal
+        type: "bank_withdrawal",
+        status: "processing",
+        referenceId: referenceId,
+        description: `Bank withdrawal to ${account.bankName || 'account'} ****${account.accountNumber.slice(-4)}`,
+      });
+      
+      // Update user balance
       await db
-        .delete(savedBetForms)
-        .where(eq(savedBetForms.userId, userId))
-        .where(eq(savedBetForms.formType, formType));
+        .update(users)
+        .set({ 
+          balance: parseFloat(user.balance.toString()) - amount,
+          updatedAt: new Date() 
+        })
+        .where(eq(users.id, userId));
       
-      res.status(200).json({ message: "Form data deleted successfully" });
+      // Return success response
+      res.status(201).json({
+        success: true,
+        transactionId: transaction.id,
+        referenceId,
+        status: "processing",
+        amount,
+        accountLast4: account.accountNumber.slice(-4),
+        estimatedArrival: "1-3 business days"
+      });
     } catch (error) {
-      console.error("Error deleting form data:", error);
-      res.status(500).json({ message: "Failed to delete form data" });
+      console.error("Error processing bank withdrawal:", error);
+      res.status(500).json({ message: "Failed to process withdrawal" });
     }
   });
-
+  
+  app.get("/api/withdrawals", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+    
+    try {
+      const userId = req.user!.id;
+      
+      // Get all transactions
+      const transactions = await storage.getUserTransactions(userId);
+      
+      // Filter to only include withdrawals
+      const withdrawals = transactions.filter(tx => 
+        tx.type.includes("withdrawal") && parseFloat(tx.amount.toString()) < 0
+      );
+      
+      res.json(withdrawals);
+    } catch (error) {
+      console.error("Error fetching withdrawals:", error);
+      res.status(500).json({ message: "Failed to fetch withdrawals" });
+    }
+  });
+  
   // Create HTTP server and attach Express app
   const httpServer = createServer(app);
   
@@ -1442,11 +913,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           await storage.updateStripeCustomerId(user.id, customerId);
         }
         
-        // Ensure customerId is not null before proceeding
-        if (!customerId) {
-          return res.status(500).json({ message: "Failed to create or retrieve Stripe customer" });
-        }
-        
         if (!process.env.STRIPE_PRICE_ID) {
           return res.status(500).json({ message: "Stripe price ID not configured" });
         }
@@ -1475,99 +941,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     });
   }
-  
-  // Initialize automatic payout services
-  const raceCompletionService = new RaceCompletionService();
-  const payoutService = new PayoutService();
-  
-  // Race completion and automatic payout endpoints
-  app.post("/api/races/:id/complete", async (req, res) => {
-    try {
-      const raceId = parseInt(req.params.id);
-      const { results } = req.body;
-      
-      if (!results) {
-        return res.status(400).json({ message: "Race results are required" });
-      }
-      
-      const result = await raceCompletionService.handleRaceCompletion(raceId, results);
-      
-      res.json({
-        success: result.success,
-        message: result.message,
-        raceId: raceId
-      });
-      
-    } catch (error: any) {
-      console.error("Error completing race:", error);
-      res.status(500).json({ 
-        success: false,
-        message: `Failed to complete race: ${error.message}` 
-      });
-    }
-  });
-  
-  // Manual payout trigger endpoint
-  app.post("/api/races/:id/trigger-payouts", async (req, res) => {
-    try {
-      const raceId = parseInt(req.params.id);
-      
-      const result = await raceCompletionService.triggerPayouts(raceId);
-      
-      res.json({
-        success: result.success,
-        message: result.message,
-        raceId: raceId
-      });
-      
-    } catch (error: any) {
-      console.error("Error triggering payouts:", error);
-      res.status(500).json({ 
-        success: false,
-        message: `Failed to trigger payouts: ${error.message}` 
-      });
-    }
-  });
-  
-  // Get payout status for a race
-  app.get("/api/races/:id/payout-status", async (req, res) => {
-    try {
-      const raceId = parseInt(req.params.id);
-      
-      const status = await raceCompletionService.getPayoutStatus(raceId);
-      
-      res.json(status);
-      
-    } catch (error: any) {
-      console.error("Error getting payout status:", error);
-      res.status(500).json({ 
-        error: `Failed to get payout status: ${error.message}` 
-      });
-    }
-  });
-  
-  // Get user balance
-  app.get("/api/users/balance", async (req, res) => {
-    try {
-      if (!req.user?.id) {
-        return res.status(401).json({ message: "Authentication required" });
-      }
-      
-      const balance = await payoutService.getUserBalance(req.user.id);
-      
-      res.json({
-        userId: req.user.id,
-        balance: balance,
-        formattedBalance: `$${balance.toFixed(2)}`
-      });
-      
-    } catch (error: any) {
-      console.error("Error getting user balance:", error);
-      res.status(500).json({ 
-        message: `Failed to get balance: ${error.message}` 
-      });
-    }
-  });
   
   return httpServer;
 }
