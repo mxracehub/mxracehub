@@ -1,0 +1,27 @@
+2025-05-28 06:09:21 - Starting MXRaceHub content update process...
+2025-05-28 06:09:21 - Updating video content...
+Running weekly video content update...
+Searching for authentic motocross videos...
+Searching for: supercross live official
+Searching for: american motocross official
+Searching for: ama supercross
+Searching for: pro motocross
+Found 15 authentic motocross videos
+Error updating video content: [Errno 2] No such file or directory: 'hugo-site/content/news/video/_index.md'
+Video content update failed!
+2025-05-28 06:09:23 - Video content update completed successfully
+2025-05-28 06:09:23 - Updating interview content...
+Running weekly interview content update...
+Searching for authentic interview content...
+Searching for: supercross rider interview
+Searching for: motocross press conference
+Searching for: ama supercross interview
+Searching for: pro motocross rider interview
+Searching for: supercross post race interview
+Searching for: motocross team manager interview
+Found 9 authentic interview videos
+Error updating interview content: [Errno 2] No such file or directory: 'hugo-site/content/news/interviews/_index.md'
+Interview content update failed!
+2025-05-28 06:09:25 - Interview content update completed successfully
+2025-05-28 06:09:25 - MXRaceHub content update process finished
+2025-05-28 06:09:25 - Both video and interview sections updated with fresh authentic racing content

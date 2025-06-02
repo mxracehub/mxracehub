@@ -61,7 +61,7 @@ smartTOCHideUnfocusedChildren = false
   layoutBackgroundBlur = false # Keep background sharp for racing imagery
 
 [article]
-  showDate = true # Show dates for race events
+  # showDate = true # Show dates for race events
   showViews = false
   showLikes = false
   showDateOnlyInArticle = false
@@ -78,7 +78,7 @@ smartTOCHideUnfocusedChildren = false
   showPagination = true
   invertPagination = false
   showReadingTime = false # Not relevant for race info
-  showTableOfContents = true
+  # showTableOfContents = true
   showRelatedContent = true
   relatedContentLimit = 4 # Show related races/riders
   showTaxonomies = true 
@@ -96,7 +96,7 @@ smartTOCHideUnfocusedChildren = false
   showSummary = false
   showViews = false
   showLikes = false
-  showTableOfContents = true
+  # showTableOfContents = true
   showCards = true
   orderByWeight = true
   groupByYear = false
