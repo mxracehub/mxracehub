@@ -12,3 +12,11 @@ node_modules
 # Hugo
 public
 sitemap.xml
+public/site.webmanifest
+public/index.xml
+public/index.json
+public/sitemap.xml
+public/site.webmanifest
+public/index.html
+public/index.json
+public/robots.txt
