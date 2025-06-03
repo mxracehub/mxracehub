@@ -2,5 +2,5 @@
 
 	path = public
 	url = https://github.com/mxracehub/mxracehub.github.io.git
-update = merge
-fetch = +refs/heads/*:refs/remotes/origin/*
+	update = merge
+	fetch = +refs/heads/*:refs/remotes/origin/*
