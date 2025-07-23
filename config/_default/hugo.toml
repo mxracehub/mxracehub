@@ -33,7 +33,7 @@ copyright = "© 2025 MXRaceHub - Supercross and Motocross Fan Platform"
   author = "authors"
   series = "series"
 
-[sitemap]
+ [sitemap]
   changefreq = 'always'
   filename = 'sitemap.xml'
   priority = 0.5

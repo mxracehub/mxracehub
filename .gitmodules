@@ -1,9 +1,0 @@
-[submodule "public"]
-
-	path = public
-	url = https://github.com/mxracehub/mxracehub.github.io.git
-	fetch = +refs/heads/*:refs/remotes/origin/*
-	active = true
-	branch = main
-	update = merge
-	

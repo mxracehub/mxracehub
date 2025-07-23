@@ -2,7 +2,7 @@
 public/
 resources/
 exampleSite/resources/
-hugo server/
+
 
 # Binaries for programs and plugins
 *.exe
