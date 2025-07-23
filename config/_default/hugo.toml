@@ -34,7 +34,7 @@ copyright = "© 2025 MXRaceHub - Supercross and Motocross Fan Platform"
   series = "series"
 
  [sitemap]
-  changefreq = 'always'
+  changefreq = 'daily'
   filename = 'sitemap.xml'
   priority = 0.5
 
