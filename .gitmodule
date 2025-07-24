@@ -1,0 +1,2 @@
+[submodule "public"]
+	update = merge
