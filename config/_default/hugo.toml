@@ -2,11 +2,9 @@
 # Using Custom Theme based on Blowfish
 
 theme = ["blowfish"]
-disableKinds = []
-ignoreFiles = []
 baseURL = "https://mxracehub.site/"
 defaultContentLanguage = "en"
-disableLanguages = ["it", "ja", "zh-cn"] # Only use English for MXRaceHub
+
 
 enableRobotsTXT = true
 summaryLength = 30
