@@ -127,10 +127,10 @@ app.use((req, res, next) => {
 
 // Start server
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '127.0.0.1', () => {
   console.log(`MXRaceHub server running on port ${PORT}`);
   console.log(`Hugo server running on port 3000`);
-  console.log(`Access the site at: http://localhost:${PORT}`);
+  console.log(`Access the site at: http://st:${PORT}`);
 });
 
 // Handle process termination
